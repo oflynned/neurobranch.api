@@ -187,7 +187,7 @@ input CandidateInput {
 
 type Query {
   getTrial(trialId: String!): Trial
-  getTrials(after: Int, cursor: Cursor): TrialConnection
+  getTrials(first: Int, after: Cursor): TrialConnection
 }
 
 type Mutation {
