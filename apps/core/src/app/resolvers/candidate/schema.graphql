@@ -1,0 +1,28 @@
+input CandidateInput {
+  name: String!
+  dateOfBirth: String!
+  email: String!
+  username: String!
+}
+
+type Candidate {
+  id: ID!
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  verifiedAt: Timestamp
+  auditLog: AuditConnection
+  name: String!
+  username: String!
+  email: String!
+}
+
+type CandidateEdge {
+  node: Candidate
+  cursor: Cursor!
+}
+
+type CandidateConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [CandidateEdge]!
+}

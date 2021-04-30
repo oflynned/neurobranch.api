@@ -1,0 +1,40 @@
+enum Frequency {
+  DAILY
+  WEEKLY
+  FORTNIGHTLY
+  MONTHLY
+}
+
+type Trial {
+  id: ID!
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  title: String!
+  synopsis: String!
+  description: String!
+  tags: [String!]!
+  startTime: Timestamp!
+  endTime: Timestamp!
+  frequency: Frequency!
+  auditLog: AuditConnection
+  lead: Researcher
+  researchers: ResearcherConnection
+  participants: CandidateConnection
+  questions: [Question!]
+}
+
+type TrialEdge {
+  node: Trial
+  cursor: Cursor!
+}
+
+type TrialConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [TrialEdge]!
+}
+
+type Query {
+  getTrial(trialId: String!): Trial
+  getTrials(first: Int, after: Cursor): TrialConnection
+}

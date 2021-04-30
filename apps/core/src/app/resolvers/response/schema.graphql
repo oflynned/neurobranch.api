@@ -1,0 +1,48 @@
+# todo refactor choice to make more sense
+type Choice {
+  id: ID!
+  index: Int!
+}
+
+union Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse
+
+type ResponseEdge {
+  node: Response
+  cursor: Cursor!
+}
+
+type ResponseConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [ResponseEdge]!
+}
+
+type RadioResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Candidate
+  choices: [Choice!]
+  response: Choice
+}
+
+type CheckboxResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Candidate
+  choices: [Choice!]
+  responses: [Choice!]
+}
+
+type TextResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Candidate
+  response: String!
+}
+
+type ScaleResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Candidate
+  response: Float!
+}

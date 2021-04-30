@@ -1,0 +1,17 @@
+type Audit {
+  id: ID!
+  action: String!
+  performedAt: Timestamp!
+  performedBy: Actor
+}
+
+type AuditEdge {
+  node: Audit
+  cursor: Cursor!
+}
+
+type AuditConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [AuditEdge]!
+}

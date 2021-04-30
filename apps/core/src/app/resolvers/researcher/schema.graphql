@@ -1,0 +1,48 @@
+scalar Cursor
+
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: Cursor
+  endCursor: Cursor
+}
+
+union Actor = Candidate | Researcher
+
+type Researcher {
+  id: ID!
+  auditLog: AuditConnection
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  verifiedAt: Timestamp
+  name: String!
+  username: String!
+  email: String!
+}
+
+type ResearcherEdge {
+  node: Trial
+  cursor: Cursor!
+}
+
+type ResearcherConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [ResearcherEdge]!
+}
+
+input ResearcherInput {
+  name: String!
+  dateOfBirth: String!
+  email: String!
+  username: String!
+}
+
+type Query {
+
+}
+
+type Mutation {
+  createResearcherAccount(input: ResearcherInput): Researcher
+  createCandidateAccount(input: CandidateInput): Candidate
+}

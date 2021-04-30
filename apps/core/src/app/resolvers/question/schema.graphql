@@ -1,0 +1,15 @@
+enum QuestionType {
+  RADIO
+  CHECKBOX
+  SCALE
+  TEXT
+}
+
+type Question {
+  id: ID!
+  title: String!
+  type: QuestionType!
+  optional: Boolean!
+  choices: [Choice!]
+  trial: Trial
+}
