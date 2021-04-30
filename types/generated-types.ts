@@ -35,13 +35,6 @@ export class ResearcherInput {
     username: string;
 }
 
-export class PageInfo {
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    startCursor?: Cursor;
-    endCursor?: Cursor;
-}
-
 export class Audit {
     id: string;
     action: string;
@@ -90,6 +83,13 @@ export class CandidateConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: CandidateEdge[];
+}
+
+export class PageInfo {
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+    startCursor?: Cursor;
+    endCursor?: Cursor;
 }
 
 export class Question {
