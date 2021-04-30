@@ -31,7 +31,6 @@ export class CandidateInput {
 export class ResearcherInput {
     name: string;
     dateOfBirth: string;
-    email: string;
     username: string;
 }
 
@@ -85,13 +84,6 @@ export class CandidateConnection {
     edges: CandidateEdge[];
 }
 
-export class PageInfo {
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    startCursor?: Cursor;
-    endCursor?: Cursor;
-}
-
 export class Question {
     id: string;
     title: string;
@@ -102,7 +94,7 @@ export class Question {
 }
 
 export abstract class IMutation {
-    abstract createResearcherAccount(input?: ResearcherInput): Researcher | Promise<Researcher>;
+    abstract createResearcher(input?: ResearcherInput): Researcher | Promise<Researcher>;
 }
 
 export class Researcher {
@@ -200,6 +192,13 @@ export class TrialConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: TrialEdge[];
+}
+
+export class PageInfo {
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+    startCursor?: Cursor;
+    endCursor?: Cursor;
 }
 
 export type Timestamp = any;
