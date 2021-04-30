@@ -1,0 +1,9 @@
+scalar Timestamp
+scalar Cursor
+
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: Cursor
+  endCursor: Cursor
+}

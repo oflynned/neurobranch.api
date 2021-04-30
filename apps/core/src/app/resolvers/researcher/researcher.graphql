@@ -1,13 +1,11 @@
-scalar Cursor
-
-type PageInfo {
-  hasPreviousPage: Boolean!
-  hasNextPage: Boolean!
-  startCursor: Cursor
-  endCursor: Cursor
+type Query {
+  getResearcher(researcherId: String!): Researcher
 }
 
-union Actor = Candidate | Researcher
+type Mutation {
+  createResearcherAccount(input: ResearcherInput): Researcher
+  createCandidateAccount(input: CandidateInput): Candidate
+}
 
 type Researcher {
   id: ID!
@@ -36,13 +34,4 @@ input ResearcherInput {
   dateOfBirth: String!
   email: String!
   username: String!
-}
-
-type Query {
-
-}
-
-type Mutation {
-  createResearcherAccount(input: ResearcherInput): Researcher
-  createCandidateAccount(input: CandidateInput): Candidate
 }

@@ -1,3 +1,5 @@
+union Actor = Candidate | Researcher
+
 type Audit {
   id: ID!
   action: String!
