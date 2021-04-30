@@ -7,7 +7,7 @@
   "projects": {
     "core": {
       "root": "apps/core",
-      "sourceRoot": "apps\\core\\src",
+      "sourceRoot": "apps/core/src",
       "projectType": "application",
       "targets": {
         "build": {

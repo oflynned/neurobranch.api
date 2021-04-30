@@ -6,3 +6,4 @@ import { ResearcherResolver } from './researcher.resolver';
   providers: [ResearcherService, ResearcherResolver]
 })
 export class ResearcherModule{}
+

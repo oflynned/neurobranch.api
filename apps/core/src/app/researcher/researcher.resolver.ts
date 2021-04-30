@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { ResearcherService } from './researcher.service';
-import { Researcher } from '../../../../../../types/generated-types';
+import { Researcher } from '../../../../../types/generated-types';
 
 @Resolver(() => Researcher)
 export class ResearcherResolver {

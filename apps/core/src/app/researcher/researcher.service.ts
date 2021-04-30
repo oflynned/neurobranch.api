@@ -1,4 +1,4 @@
-import { Researcher } from '../../../../../../types/generated-types';
+import { Researcher } from '../../../../../types/generated-types';
 
 export class ResearcherService{
   async getResearcher(researcherId:string):Promise<Researcher> {

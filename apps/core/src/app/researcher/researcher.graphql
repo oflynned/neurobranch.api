@@ -4,7 +4,6 @@ type Query {
 
 type Mutation {
   createResearcherAccount(input: ResearcherInput): Researcher
-  createCandidateAccount(input: CandidateInput): Candidate
 }
 
 type Researcher {
