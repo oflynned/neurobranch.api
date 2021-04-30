@@ -60,6 +60,16 @@ export class AuditConnection {
     edges: AuditEdge[];
 }
 
+export abstract class IQuery {
+    abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
+
+    abstract getResearcher(researcherId: string): Researcher | Promise<Researcher>;
+
+    abstract getTrial(trialId: string): Trial | Promise<Trial>;
+
+    abstract getTrials(first?: number, after?: Cursor): TrialConnection | Promise<TrialConnection>;
+}
+
 export class Candidate {
     id: string;
     createdAt: Timestamp;
@@ -91,18 +101,8 @@ export class Question {
     trial?: Trial;
 }
 
-export abstract class IQuery {
-    abstract getResearcher(researcherId: string): Researcher | Promise<Researcher>;
-
-    abstract getTrial(trialId: string): Trial | Promise<Trial>;
-
-    abstract getTrials(first?: number, after?: Cursor): TrialConnection | Promise<TrialConnection>;
-}
-
 export abstract class IMutation {
     abstract createResearcherAccount(input?: ResearcherInput): Researcher | Promise<Researcher>;
-
-    abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
 }
 
 export class Researcher {
