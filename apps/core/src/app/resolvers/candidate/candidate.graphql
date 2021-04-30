@@ -1,3 +1,7 @@
+type Query {
+  createCandidateAccount(input: CandidateInput): Candidate
+}
+
 input CandidateInput {
   name: String!
   dateOfBirth: String!
