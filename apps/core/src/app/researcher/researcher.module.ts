@@ -3,7 +3,6 @@ import { ResearcherService } from './researcher.service';
 import { ResearcherResolver } from './researcher.resolver';
 
 @Module({
-  providers: [ResearcherService, ResearcherResolver]
+  providers: [ResearcherService, ResearcherResolver],
 })
-export class ResearcherModule{}
-
+export class ResearcherModule {}

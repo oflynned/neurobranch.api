@@ -1,16 +1,15 @@
-import { Researcher } from '../../../../../types/generated-types';
+import { Researcher } from './researcher.model';
 
-export class ResearcherService{
-  async getResearcher(researcherId:string):Promise<Researcher> {
+export class ResearcherService {
+  async getResearcher(researcherId: string): Promise<Researcher> {
     return {
-      auditLog: undefined,
-      createdAt: undefined,
+      createdAt: new Date(),
       deletedAt: undefined,
+      verifiedAt: undefined,
       email: 'email',
       name: 'name',
       username: 'username',
-      verifiedAt: undefined,
-      id: researcherId
-    }
+      id: researcherId,
+    };
   }
 }
