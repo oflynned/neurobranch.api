@@ -18,7 +18,6 @@
     "affected:lint": "nx affected:lint",
     "affected:dep-graph": "nx affected:dep-graph",
     "affected": "nx affected",
-    "format": "nx format:write",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
@@ -26,7 +25,8 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "lint:code:staged": "lint-staged",
-    "lint:dependencies": "sort-package-json"
+    "lint:dependencies": "sort-package-json",
+    "format:code": "prettier --write \"**/*.ts\""
   },
   "husky": {
     "hooks": {
