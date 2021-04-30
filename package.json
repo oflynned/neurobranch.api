@@ -7,8 +7,9 @@
     "nx": "nx",
     "start:core": "nx serve core",
     "build": "nx build",
-    "test": "nx test",
-    "lint": "nx workspace-lint && nx lint",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint \"**/*.ts\" --fix",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
@@ -26,10 +27,13 @@
     "help": "nx help",
     "lint:code:staged": "lint-staged",
     "lint:dependencies": "sort-package-json",
+    "lint:dependencies:versions": "ncu -e 2 --target minor",
+    "upgrade:dependencies": "ncu -u --target minor && npm install",
     "db:migrate:up": "ts-node ./apps/core/src/app/migrations/up.ts",
     "db:migrate:down": "ts-node ./apps/core/src/app/migrations/down.ts",
     "typeorm": "ts-node -r tsconfig-paths/register --project tsconfig.base.json ./node_modules/typeorm/cli.js",
-    "format:code": "prettier --write \"**/*.ts\""
+    "format:code": "prettier --write \"**/*.ts\"",
+    "typecheck": "tsc --noEmit --project tsconfig.base.json"
   },
   "husky": {
     "hooks": {
@@ -81,6 +85,7 @@
     "husky": "^4.3.8",
     "jest": "26.2.2",
     "lint-staged": "^10.5.4",
+    "npm-check-updates": "^11.5.7",
     "prettier": "2.2.1",
     "sort-package-json": "^1.49.0",
     "ts-jest": "26.4.0",
