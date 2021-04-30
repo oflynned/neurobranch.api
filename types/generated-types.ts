@@ -45,7 +45,7 @@ export interface PageInfo {
 export interface Audit {
     id: string;
     action: string;
-    performedAt: DateTime;
+    performedAt: Timestamp;
     performedBy: Actor;
 }
 
@@ -62,9 +62,9 @@ export interface AuditConnection {
 
 export interface Candidate {
     id: string;
-    createdAt: DateTime;
-    deletedAt?: DateTime;
-    verifiedAt?: DateTime;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    verifiedAt?: Timestamp;
     auditLog?: AuditConnection;
     name: string;
     username: string;
@@ -85,9 +85,9 @@ export interface CandidateConnection {
 export interface Researcher {
     id: string;
     auditLog?: AuditConnection;
-    createdAt: DateTime;
-    deletedAt?: DateTime;
-    verifiedAt?: DateTime;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    verifiedAt?: Timestamp;
     name: string;
     username: string;
     email: string;
@@ -106,14 +106,14 @@ export interface ResearcherConnection {
 
 export interface Trial {
     id: string;
-    createdAt: DateTime;
-    deletedAt?: DateTime;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
     title: string;
     synopsis: string;
     description: string;
     tags: string[];
-    startTime: DateTime;
-    endTime: DateTime;
+    startTime: Timestamp;
+    endTime: Timestamp;
     frequency: Frequency;
     auditLog?: AuditConnection;
     organisers?: ResearcherConnection;
@@ -141,7 +141,7 @@ export interface Question {
 
 export interface Answer {
     id: string;
-    respondedAt: DateTime;
+    respondedAt: Timestamp;
     response: Response;
 }
 
@@ -195,7 +195,7 @@ export interface IMutation {
     createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
 }
 
-export type DateTime = any;
+export type Timestamp = any;
 export type Cursor = any;
 export type Actor = Candidate | Researcher;
 export type Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse;
