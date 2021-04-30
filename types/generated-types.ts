@@ -7,13 +7,6 @@
 
 /* tslint:disable */
 /* eslint-disable */
-export enum Frequency {
-    DAILY = "DAILY",
-    WEEKLY = "WEEKLY",
-    FORTNIGHTLY = "FORTNIGHTLY",
-    MONTHLY = "MONTHLY"
-}
-
 export enum QuestionType {
     RADIO = "RADIO",
     CHECKBOX = "CHECKBOX",
@@ -21,46 +14,53 @@ export enum QuestionType {
     TEXT = "TEXT"
 }
 
-export interface ResearcherInput {
+export enum Frequency {
+    DAILY = "DAILY",
+    WEEKLY = "WEEKLY",
+    FORTNIGHTLY = "FORTNIGHTLY",
+    MONTHLY = "MONTHLY"
+}
+
+export class CandidateInput {
     name: string;
     dateOfBirth: string;
     email: string;
     username: string;
 }
 
-export interface CandidateInput {
+export class ResearcherInput {
     name: string;
     dateOfBirth: string;
     email: string;
     username: string;
 }
 
-export interface PageInfo {
+export class PageInfo {
     hasPreviousPage: boolean;
     hasNextPage: boolean;
     startCursor?: Cursor;
     endCursor?: Cursor;
 }
 
-export interface Audit {
+export class Audit {
     id: string;
     action: string;
     performedAt: Timestamp;
-    performedBy: Actor;
+    performedBy?: Actor;
 }
 
-export interface AuditEdge {
+export class AuditEdge {
     node?: Audit;
     cursor: Cursor;
 }
 
-export interface AuditConnection {
+export class AuditConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: AuditEdge[];
 }
 
-export interface Candidate {
+export class Candidate {
     id: string;
     createdAt: Timestamp;
     deletedAt?: Timestamp;
@@ -71,18 +71,41 @@ export interface Candidate {
     email: string;
 }
 
-export interface CandidateEdge {
+export class CandidateEdge {
     node?: Candidate;
     cursor: Cursor;
 }
 
-export interface CandidateConnection {
+export class CandidateConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: CandidateEdge[];
 }
 
-export interface Researcher {
+export class Question {
+    id: string;
+    title: string;
+    type: QuestionType;
+    optional: boolean;
+    choices?: Choice[];
+    trial?: Trial;
+}
+
+export abstract class IQuery {
+    abstract getResearcher(researcherId: string): Researcher | Promise<Researcher>;
+
+    abstract getTrial(trialId: string): Trial | Promise<Trial>;
+
+    abstract getTrials(first?: number, after?: Cursor): TrialConnection | Promise<TrialConnection>;
+}
+
+export abstract class IMutation {
+    abstract createResearcherAccount(input?: ResearcherInput): Researcher | Promise<Researcher>;
+
+    abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
+}
+
+export class Researcher {
     id: string;
     auditLog?: AuditConnection;
     createdAt: Timestamp;
@@ -93,18 +116,64 @@ export interface Researcher {
     email: string;
 }
 
-export interface ResearcherEdge {
+export class ResearcherEdge {
     node?: Trial;
     cursor: Cursor;
 }
 
-export interface ResearcherConnection {
+export class ResearcherConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: ResearcherEdge[];
 }
 
-export interface Trial {
+export class Choice {
+    id: string;
+    index: number;
+}
+
+export class ResponseEdge {
+    node?: Response;
+    cursor: Cursor;
+}
+
+export class ResponseConnection {
+    totalCount: number;
+    pageInfo: PageInfo;
+    edges: ResponseEdge[];
+}
+
+export class RadioResponse {
+    id: string;
+    type: QuestionType;
+    respondent?: Candidate;
+    choices?: Choice[];
+    response?: Choice;
+}
+
+export class CheckboxResponse {
+    id: string;
+    type: QuestionType;
+    respondent?: Candidate;
+    choices?: Choice[];
+    responses?: Choice[];
+}
+
+export class TextResponse {
+    id: string;
+    type: QuestionType;
+    respondent?: Candidate;
+    response: string;
+}
+
+export class ScaleResponse {
+    id: string;
+    type: QuestionType;
+    respondent?: Candidate;
+    response: number;
+}
+
+export class Trial {
     id: string;
     createdAt: Timestamp;
     deletedAt?: Timestamp;
@@ -116,83 +185,21 @@ export interface Trial {
     endTime: Timestamp;
     frequency: Frequency;
     auditLog?: AuditConnection;
-    organisers?: ResearcherConnection;
+    lead?: Researcher;
+    researchers?: ResearcherConnection;
     participants?: CandidateConnection;
+    questions?: Question[];
 }
 
-export interface TrialEdge {
+export class TrialEdge {
     node?: Trial;
     cursor: Cursor;
 }
 
-export interface TrialConnection {
+export class TrialConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: TrialEdge[];
-}
-
-export interface Question {
-    id: string;
-    title: string;
-    type: QuestionType;
-    answers: Answer[];
-    trial: Trial;
-}
-
-export interface Answer {
-    id: string;
-    respondedAt: Timestamp;
-    response: Response;
-}
-
-export interface ResponseEdge {
-    node?: Response;
-    cursor: Cursor;
-}
-
-export interface ResponseConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: ResponseEdge[];
-}
-
-export interface RadioResponse {
-    id: string;
-    type: QuestionType;
-    respondent: Candidate;
-    answers: Answer[];
-    response: Answer;
-}
-
-export interface CheckboxResponse {
-    id: string;
-    type: QuestionType;
-    respondent: Candidate;
-    answers: Answer[];
-    responses: Answer[];
-}
-
-export interface TextResponse {
-    id: string;
-    type: QuestionType;
-    respondent: Candidate;
-    response: string;
-}
-
-export interface ScaleResponse {
-    id: string;
-    type: QuestionType;
-    respondent: Candidate;
-    response: number;
-}
-
-export interface IQuery {
-    getTrialResponses(trialId: string): ResponseConnection | Promise<ResponseConnection>;
-}
-
-export interface IMutation {
-    createResearcherAccount(input?: ResearcherInput): Researcher | Promise<Researcher>;
-    createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
 }
 
 export type Timestamp = any;
