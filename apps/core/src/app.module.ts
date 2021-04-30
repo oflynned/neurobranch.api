@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { GraphQLModule } from '@nestjs/graphql';
-import {join} from 'path'
+import { join } from 'path';
 import { ResearcherModule } from './app/researcher/researcher.module';
 
 @Module({
@@ -11,11 +11,11 @@ import { ResearcherModule } from './app/researcher/researcher.module';
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), './types/generated-types.ts'),
-        outputAs: 'class'
+        outputAs: 'class',
       },
       debug: true,
-      playground: true
-    })
+      playground: true,
+    }),
   ],
 })
 export class AppModule {}
