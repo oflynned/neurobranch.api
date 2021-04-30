@@ -8,7 +8,7 @@ import { connectionOptions } from './config';
   });
 
   try {
-    await connection.runMigrations();
+    await connection.undoLastMigration();
   } catch (e) {
     console.error(e);
   } finally {
