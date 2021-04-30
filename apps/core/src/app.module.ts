@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { ResearcherModule } from './app/researcher/researcher.module';
+
+import { PostgresModule } from '../../../libs/orm/src';
+import { CoreConfigModule, ResearcherModule } from './app';
 
 @Module({
   imports: [
-    ResearcherModule,
+    CoreConfigModule,
+    PostgresModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       definitions: {
@@ -16,6 +18,7 @@ import { ResearcherModule } from './app/researcher/researcher.module';
       debug: true,
       playground: true,
     }),
+    ResearcherModule,
   ],
 })
 export class AppModule {}
