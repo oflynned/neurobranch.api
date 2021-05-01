@@ -10,18 +10,14 @@ export class FirebaseService {
     private readonly authServer: FirebaseAuthenticationService,
   ) {}
 
-  async verifyJwt(
-    prefix: string,
-    uid: string,
-    jwt: string,
-  ): Promise<FirebaseJwt> {
+  async verifyJwt(uid: string, jwt: string): Promise<FirebaseJwt> {
     const cachedJwt = await this.cache.getJwt(uid);
     if (cachedJwt) {
       return cachedJwt;
     }
 
     const newJwt = await this.authServer.verifyIdToken(jwt, true);
-    await this.cache.setJwt(prefix, uid, newJwt);
+    await this.cache.setJwt('firebase', uid, newJwt);
 
     return newJwt;
   }
