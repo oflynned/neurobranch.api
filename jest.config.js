@@ -6,6 +6,7 @@ module.exports = {
     '<rootDir>/libs/entities/src',
     '<rootDir>/libs/firebase/src',
     '<rootDir>/libs/graphql/src',
+    '<rootDir>/libs/cache/src',
     '<rootDir>/libs/orm/src',
   ],
   moduleFileExtensions: ['js', 'json', 'ts'],
