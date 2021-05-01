@@ -31,9 +31,9 @@
     "upgrade:dependencies": "ncu -u --target minor && npm install",
     "db:migrate:up": "ts-node ./apps/core/src/app/migrations/up.ts",
     "db:migrate:down": "ts-node ./apps/core/src/app/migrations/down.ts",
-    "typeorm": "ts-node -r tsconfig-paths/register --project tsconfig.base.json ./node_modules/typeorm/cli.js",
+    "typeorm": "ts-node -r tsconfig-paths/register --project tsconfig.json ./node_modules/typeorm/cli.js",
     "format:code": "prettier --write \"**/*.ts\"",
-    "typecheck": "tsc --noEmit --project tsconfig.base.json"
+    "typecheck": "tsc --noEmit --project tsconfig.json"
   },
   "husky": {
     "hooks": {
