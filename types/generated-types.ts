@@ -106,6 +106,7 @@ export class Researcher {
     name: string;
     username: string;
     email: string;
+    trials?: TrialConnection;
 }
 
 export class ResearcherEdge {

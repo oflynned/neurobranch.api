@@ -15,6 +15,7 @@ type Researcher {
   name: String!
   username: String!
   email: String!
+  trials: TrialConnection
 }
 
 type ResearcherEdge {
