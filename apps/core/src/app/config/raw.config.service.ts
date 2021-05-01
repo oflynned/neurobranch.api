@@ -35,7 +35,7 @@ export class RawConfigService {
   getValue(key: string, throwOnMissing = true): Optional<string> {
     const value = this.env[key];
     if (!value && throwOnMissing) {
-      throw new Error(`config error - missing env.${key}`);
+      throw new Error(`Missing key '${key}' in env`);
     }
 
     return value;
