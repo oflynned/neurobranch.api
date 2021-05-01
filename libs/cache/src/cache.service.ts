@@ -14,10 +14,6 @@ export class CacheService {
     this.cache = redis.getClient();
   }
 
-  async getTime(): Promise<[string, string]> {
-    return this.cache.time();
-  }
-
   async get(key: string): Promise<Optional<string>> {
     return this.cache.get(key);
   }
