@@ -1,4 +1,4 @@
-export class Encoder {
+export class Codec {
   encode(source: string): string {
     return Buffer.from(source).toString('base64');
   }

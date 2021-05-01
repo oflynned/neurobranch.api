@@ -13,6 +13,13 @@ services:
       - postgres
     command: npm start
 
+  redis:
+    container_name: redis
+    image: redis:6
+    restart: always
+    ports:
+      - 6379:6379
+
   postgres:
     container_name: postgres
     image: postgres:12

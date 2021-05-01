@@ -1,17 +1,17 @@
-import { Encoder } from './encoder';
+import { Codec } from './codec';
 
-const encoder = new Encoder();
+const codec = new Codec();
 
 describe('Encoder', () => {
   describe('encode', () => {
     it('should encode ascii to base64', () => {
-      expect(encoder.encode('Hello world!')).toEqual('SGVsbG8gd29ybGQh');
+      expect(codec.encode('Hello world!')).toEqual('SGVsbG8gd29ybGQh');
     });
   });
 
   describe('decode', () => {
     it('should decode base64 to ascii', () => {
-      expect(encoder.decode('SGVsbG8gd29ybGQh')).toEqual('Hello world!');
+      expect(codec.decode('SGVsbG8gd29ybGQh')).toEqual('Hello world!');
     });
   });
 });
