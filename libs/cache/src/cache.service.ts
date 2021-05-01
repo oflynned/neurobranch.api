@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as IORedis from 'ioredis';
 import { RedisService } from 'nestjs-redis';
 import { Optional } from '../../common/src';
+import { Ok } from 'ioredis';
 
 type Cache = IORedis.Redis;
 
@@ -14,18 +15,18 @@ export class CacheService {
   }
 
   async getTime(): Promise<[string, string]> {
-    return await this.cache.time();
+    return this.cache.time();
   }
 
   async get(key: string): Promise<Optional<string>> {
-    return await this.cache.get(key);
+    return this.cache.get(key);
   }
 
-  async set(key: string, value: string, ttl?: number): Promise<void> {
+  async set(key: string, value: string, ttl?: number): Promise<Ok | null> {
     if (ttl) {
-      await this.cache.setex(key, ttl, value);
+      return this.cache.setex(key, ttl, value);
     } else {
-      await this.cache.set(key, value);
+      return this.cache.set(key, value);
     }
   }
 }
