@@ -1,6 +1,12 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ResearcherService } from '../../service/researcher.service';
+import { AuthenticationError } from 'apollo-server-express';
 
 @Injectable()
 export class ResearcherGuard implements CanActivate {
@@ -8,13 +14,21 @@ export class ResearcherGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context).getContext();
-    const { email } = ctx.jwt;
 
-    try {
-      ctx.user = await this.researcherService.getResearcherByEmail(email);
-      return true;
-    } catch (e) {
-      return false;
+    if (!ctx.jwt) {
+      throw new AuthenticationError('No jwt context set');
     }
+
+    const researcher = await this.researcherService.getResearcherByEmail(
+      ctx.jwt.email,
+    );
+
+    if (!researcher) {
+      throw new UnauthorizedException('Jwt does not belong to a researcher');
+    }
+
+    ctx.user = researcher;
+
+    return true;
   }
 }
