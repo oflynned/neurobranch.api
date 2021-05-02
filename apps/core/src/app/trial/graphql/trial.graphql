@@ -1,6 +1,10 @@
 type Query {
+  getEligibleTrials: TrialConnection
   getTrial(trialId: String!): Trial
-  getTrials(first: Int, after: Cursor): TrialConnection
+}
+
+type Mutation {
+  createTrial(input: CreateTrialInput): Trial
 }
 
 enum Frequency {
@@ -37,4 +41,14 @@ type TrialConnection {
   totalCount: Int!
   pageInfo: PageInfo!
   edges: [TrialEdge]!
+}
+
+input CreateTrialInput {
+  startTime: Timestamp!
+  duration: Int!
+  title: String!
+  synopsis: String!
+  description: String!
+  tags: [String!]!
+  frequency: Frequency!
 }
