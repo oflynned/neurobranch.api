@@ -14,15 +14,20 @@ export class CacheService {
     this.cache = redis.getClient();
   }
 
-  async get(key: string): Promise<Optional<string>> {
-    return this.cache.get(key);
+  async get(prefix: string, key: string): Promise<Optional<string>> {
+    return this.cache.get(`${prefix}-${key}`);
   }
 
-  async set(key: string, value: string, ttl?: number): Promise<Ok | null> {
+  async set(
+    prefix: string,
+    key: string,
+    value: string,
+    ttl?: number,
+  ): Promise<Ok | null> {
     if (ttl) {
-      return this.cache.setex(key, ttl, value);
+      return this.cache.setex(`${prefix}-${key}`, ttl, value);
     } else {
-      return this.cache.set(key, value);
+      return this.cache.set(`${prefix}-${key}`, value);
     }
   }
 }
