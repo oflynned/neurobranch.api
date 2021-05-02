@@ -5,8 +5,8 @@ import { ResearcherRepo } from './researcher.repo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ResearcherEntity } from '../../../../../../libs/entities/src';
 import { FirebaseModule } from '../../../../../../libs/firebase/src';
-import { JwtGuard } from './guards/jwt.guard';
-import { ResearcherGuard } from './guards/researcher.guard';
+import { JwtGuard } from '../graphql/guards/jwt.guard';
+import { ResearcherGuard } from '../graphql/guards/researcher.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ResearcherEntity]), FirebaseModule],

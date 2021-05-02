@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ResearcherService } from '../researcher.service';
+import { ResearcherService } from '../../service/researcher.service';
 
 @Injectable()
 export class ResearcherGuard implements CanActivate {

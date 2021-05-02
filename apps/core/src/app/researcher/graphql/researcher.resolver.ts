@@ -7,8 +7,8 @@ import {
 import { CreateResearcherDto } from '../dto/create-researcher.dto';
 import { FirebaseJwt } from '../../../../../../libs/firebase/src';
 import { UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../service/guards/jwt.guard';
-import { ResearcherGuard } from '../service/guards/researcher.guard';
+import { JwtGuard } from './guards/jwt.guard';
+import { ResearcherGuard } from './guards/researcher.guard';
 import { ResearcherEntity } from '../../../../../../libs/entities/src';
 
 @Resolver(() => Researcher)
