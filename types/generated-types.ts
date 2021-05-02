@@ -106,6 +106,8 @@ export class Researcher {
     name: string;
     username: string;
     email: string;
+    providerId: string;
+    provider: string;
     trials?: TrialConnection;
 }
 
