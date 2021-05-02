@@ -1,11 +1,12 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ResearcherResolver } from '../graphql/researcher.resolver';
 import { ResearcherService } from './researcher.service';
 import { ResearcherRepo } from './researcher.repo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ResearcherEntity } from '../../../../../../libs/entities/src';
-import { VerifyFirebaseMiddleware } from './middleware/verify-firebase.middleware';
 import { FirebaseModule } from '../../../../../../libs/firebase/src';
+import { JwtGuard } from './guards/jwt.guard';
+import { ResearcherGuard } from './guards/researcher.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ResearcherEntity]), FirebaseModule],
@@ -13,11 +14,8 @@ import { FirebaseModule } from '../../../../../../libs/firebase/src';
     ResearcherResolver,
     ResearcherService,
     ResearcherRepo,
-    VerifyFirebaseMiddleware,
+    JwtGuard,
+    ResearcherGuard,
   ],
 })
-export class ResearcherModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    // consumer.apply(VerifyFirebaseMiddleware).forRoutes('*');
-  }
-}
+export class ResearcherModule {}
