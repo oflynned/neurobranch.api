@@ -3,11 +3,7 @@ import {
   FirebaseService,
   FirebaseTokenRequest,
 } from '../../../../../../../libs/firebase/src';
-
 import { Response, NextFunction } from 'express';
-import { Optional } from '../../../../../../../libs/common/src';
-import { parseAuthorisationHeader } from '../../../../../../../libs/firebase/src/header.parser';
-import { ApolloError } from 'apollo-server-express';
 
 @Injectable()
 export class VerifyFirebaseMiddleware implements NestMiddleware {
@@ -18,15 +14,9 @@ export class VerifyFirebaseMiddleware implements NestMiddleware {
     res: Response,
     next: NextFunction,
   ): Promise<void> {
-    const uid = req.headers['x-firebase-uid'] as Optional<string>;
+    const { uid, jwt } = this.firebaseService.parseHeaders(req.headers);
 
-    if (!uid) {
-      throw new ApolloError('x-firebase-uid is a required header', '400');
-    }
-
-    const token = parseAuthorisationHeader(req.headers['authorization']);
-
-    req.jwt = await this.firebaseService.verifyJwt(uid, token);
+    req.jwt = await this.firebaseService.verifyJwt(uid, jwt);
 
     // TODO record user client version, last active etc...
 
