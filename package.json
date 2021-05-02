@@ -36,6 +36,12 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:dependencies && npm run lint:code:staged",
+      "pre-push": "npm test"
+    }
+  },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix",
     "*.js": "eslint --cache --fix",
