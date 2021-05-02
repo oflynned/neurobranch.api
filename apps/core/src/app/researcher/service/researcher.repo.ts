@@ -18,6 +18,10 @@ export class ResearcherRepo {
     return this.repo.findOne({ email });
   }
 
+  async getResearcherById(id: string): Promise<Optional<ResearcherEntity>> {
+    return this.repo.findOne({ id });
+  }
+
   async createResearcher(
     dto: CreateResearcherDto,
     createdAt = new Date(),

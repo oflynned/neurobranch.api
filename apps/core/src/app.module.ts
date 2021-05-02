@@ -4,12 +4,17 @@ import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import { join } from 'path';
 
 import { PostgresModule } from '../../../libs/orm/src';
-import { CoreConfigModule, CoreConfigService, ResearcherModule } from './app';
+import {
+  CoreConfigModule,
+  CoreConfigService,
+  ResearcherModule,
+  TrialModule,
+} from './app';
 import { CacheModule } from '../../../libs/cache/src';
 import { RedisModule } from 'nestjs-redis';
 import { FirebaseValidator } from '../../../libs/firebase/src';
 
-const services = [ResearcherModule];
+const services = [ResearcherModule, TrialModule];
 
 @Module({
   imports: [

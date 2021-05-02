@@ -14,6 +14,10 @@ export class ResearcherService {
     return this.researcherRepo.getResearcherByEmail(email);
   }
 
+  async getResearcherById(id: string): Promise<Optional<ResearcherEntity>> {
+    return this.researcherRepo.getResearcherById(id);
+  }
+
   async createResearcher(dto: CreateResearcherDto): Promise<ResearcherEntity> {
     const researcher = await this.researcherRepo.getResearcherByEmail(
       dto.email,

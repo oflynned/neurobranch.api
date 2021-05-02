@@ -28,10 +28,19 @@ export class CandidateInput {
     username: string;
 }
 
-export class ResearcherInput {
+export class CreateResearcherInput {
     name: string;
     dateOfBirth: string;
-    username: string;
+}
+
+export class CreateTrialInput {
+    startTime: Timestamp;
+    duration: number;
+    title: string;
+    synopsis: string;
+    description: string;
+    tags: string[];
+    frequency: Frequency;
 }
 
 export class Audit {
@@ -57,9 +66,9 @@ export abstract class IQuery {
 
     abstract getResearcher(): Researcher | Promise<Researcher>;
 
-    abstract getTrial(trialId: string): Trial | Promise<Trial>;
+    abstract getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
 
-    abstract getTrials(first?: number, after?: Cursor): TrialConnection | Promise<TrialConnection>;
+    abstract getTrial(trialId: string): Trial | Promise<Trial>;
 }
 
 export class Candidate {
@@ -94,7 +103,9 @@ export class Question {
 }
 
 export abstract class IMutation {
-    abstract createResearcher(input?: ResearcherInput): Researcher | Promise<Researcher>;
+    abstract createResearcher(input?: CreateResearcherInput): Researcher | Promise<Researcher>;
+
+    abstract createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
 }
 
 export class Researcher {
@@ -104,10 +115,7 @@ export class Researcher {
     deletedAt?: Timestamp;
     verifiedAt?: Timestamp;
     name: string;
-    username: string;
     email: string;
-    providerId: string;
-    provider: string;
     trials?: TrialConnection;
 }
 
