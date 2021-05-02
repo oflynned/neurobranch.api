@@ -3,7 +3,7 @@ type Query {
 }
 
 type Mutation {
-  createResearcher(input: ResearcherInput): Researcher
+  createResearcher(input: CreateResearcherInput): Researcher
 }
 
 type Researcher {
@@ -13,10 +13,7 @@ type Researcher {
   deletedAt: Timestamp
   verifiedAt: Timestamp
   name: String!
-  username: String!
   email: String!
-  providerId: String!
-  provider: String!
   trials: TrialConnection
 }
 
@@ -31,8 +28,7 @@ type ResearcherConnection {
   edges: [ResearcherEdge]!
 }
 
-input ResearcherInput {
+input CreateResearcherInput {
   name: String!
   dateOfBirth: String!
-  username: String!
 }
