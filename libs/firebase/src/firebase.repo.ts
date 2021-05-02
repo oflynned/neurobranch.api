@@ -7,8 +7,8 @@ import { FirebaseJwt } from './types';
 export class FirebaseRepo {
   constructor(private readonly cache: CacheService) {}
 
-  async getJwt(uid: string): Promise<Optional<FirebaseJwt>> {
-    const jwt = await this.cache.get(`identity-${uid}`);
+  async getJwt(prefix: string, uid: string): Promise<Optional<FirebaseJwt>> {
+    const jwt = await this.cache.get(prefix, uid);
 
     if (!jwt) {
       return null;
@@ -23,7 +23,7 @@ export class FirebaseRepo {
     jwt: FirebaseJwt,
   ): Promise<FirebaseJwt> {
     const ttl = jwt.exp - jwt.iat;
-    await this.cache.set(`${prefix}-${uid}`, JSON.stringify(jwt), ttl);
+    await this.cache.set(prefix, uid, JSON.stringify(jwt), ttl);
 
     return jwt;
   }

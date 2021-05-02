@@ -1,5 +1,5 @@
 type Query {
-  getResearcher(researcherId: String!): Researcher
+  getResearcher: Researcher
 }
 
 type Mutation {
@@ -15,6 +15,9 @@ type Researcher {
   name: String!
   username: String!
   email: String!
+  providerId: String!
+  provider: String!
+  trials: TrialConnection
 }
 
 type ResearcherEdge {

@@ -19,14 +19,14 @@ describe('CacheService', () => {
     it('should return string value', async () => {
       redisClient.get = jest.fn().mockImplementation(async () => 'value');
 
-      await expect(cacheService.get('key')).resolves.toEqual('value');
+      await expect(cacheService.get('cache', 'key')).resolves.toEqual('value');
     });
   });
 
   describe('set', () => {
     describe('without ttl', () => {
       it('should call set', async () => {
-        await cacheService.set('key', 'value');
+        await cacheService.set('cache', 'key', 'value');
 
         expect(redisClient.set).toHaveBeenCalled();
       });
@@ -34,7 +34,7 @@ describe('CacheService', () => {
 
     describe('with ttl', () => {
       it('should call setex', async () => {
-        await cacheService.set('key', 'value', 3600);
+        await cacheService.set('cache', 'key', 'value', 3600);
 
         expect(redisClient.setex).toHaveBeenCalled();
       });

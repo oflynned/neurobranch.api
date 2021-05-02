@@ -55,7 +55,7 @@ export class AuditConnection {
 export abstract class IQuery {
     abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
 
-    abstract getResearcher(researcherId: string): Researcher | Promise<Researcher>;
+    abstract getResearcher(): Researcher | Promise<Researcher>;
 
     abstract getTrial(trialId: string): Trial | Promise<Trial>;
 
@@ -106,6 +106,9 @@ export class Researcher {
     name: string;
     username: string;
     email: string;
+    providerId: string;
+    provider: string;
+    trials?: TrialConnection;
 }
 
 export class ResearcherEdge {

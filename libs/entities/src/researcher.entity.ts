@@ -1,5 +1,4 @@
 import { BaseEntity } from './base.entity';
-import { Provider } from '@nestjs/common';
 import { Column, Entity } from 'typeorm';
 
 @Entity('researchers')
@@ -17,7 +16,7 @@ export class ResearcherEntity extends BaseEntity {
   username: string;
 
   @Column('varchar', { nullable: false })
-  provider: Provider;
+  provider: string;
 
   @Column('varchar', { nullable: false })
   providerId: string;

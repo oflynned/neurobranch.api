@@ -12,8 +12,10 @@ export class ResearcherRepo {
     private readonly repo: Repository<ResearcherEntity>,
   ) {}
 
-  async getResearcherById(id: string): Promise<Optional<ResearcherEntity>> {
-    return this.repo.findOne({ id });
+  async getResearcherByEmail(
+    email: string,
+  ): Promise<Optional<ResearcherEntity>> {
+    return this.repo.findOne({ email });
   }
 
   async createResearcher(
