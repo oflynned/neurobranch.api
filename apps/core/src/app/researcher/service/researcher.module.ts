@@ -18,6 +18,6 @@ import { FirebaseModule } from '../../../../../../libs/firebase/src';
 })
 export class ResearcherModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(VerifyFirebaseMiddleware).forRoutes('*');
+    // consumer.apply(VerifyFirebaseMiddleware).forRoutes('*');
   }
 }
