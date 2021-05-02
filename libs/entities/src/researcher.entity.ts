@@ -1,8 +1,15 @@
 import { BaseEntity } from './base.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Researcher } from '../../../types/generated-types';
+import { TrialEntity } from './trial.entity';
+
+type PartialResearcher = Pick<
+  Researcher,
+  'id' | 'name' | 'email' | 'createdAt' | 'verifiedAt' | 'deletedAt'
+>;
 
 @Entity('researchers')
-export class ResearcherEntity extends BaseEntity {
+export class ResearcherEntity extends BaseEntity implements PartialResearcher {
   @Column('varchar', { nullable: false })
   name: string;
 
@@ -13,9 +20,6 @@ export class ResearcherEntity extends BaseEntity {
   dateOfBirth: string;
 
   @Column('varchar', { nullable: false })
-  username: string;
-
-  @Column('varchar', { nullable: false })
   provider: string;
 
   @Column('varchar', { nullable: false })
@@ -23,4 +27,7 @@ export class ResearcherEntity extends BaseEntity {
 
   @Column('timestamptz', { nullable: true })
   verifiedAt?: Date;
+
+  @OneToMany(() => TrialEntity, (trial: TrialEntity) => trial.researcher)
+  trials: TrialEntity[];
 }
