@@ -1,6 +1,6 @@
-import { ResearcherInput } from '../../../../../../types/generated-types';
+import { CreateResearcherInput } from '../../../../../../types/generated-types';
 
-export type CreateResearcherDto = ResearcherInput & {
+export type CreateResearcherDto = CreateResearcherInput & {
   email: string;
   providerId: string;
   provider: string;
