@@ -11,6 +11,7 @@ import { JwtGuard } from '../../researcher/graphql/guards';
 import {
   CreateTrialInput,
   Frequency,
+  Trial,
 } from '../../../../../../types/generated-types';
 import {
   ResearcherEntity,
@@ -46,7 +47,7 @@ export class TrialResolver {
   }
 
   @ResolveField('lead')
-  async getTrialLead(@Parent() trial: TrialEntity): Promise<ResearcherEntity> {
+  async getTrialLead(@Parent() trial: Trial): Promise<ResearcherEntity> {
     return this.trialService.getTrialLead(trial);
   }
 }

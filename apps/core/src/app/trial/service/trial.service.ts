@@ -5,6 +5,7 @@ import {
   TrialEntity,
 } from '../../../../../../libs/entities/src';
 import { CreateTrialDto } from '../dto/create-trial.dto';
+import { Trial } from '../../../../../../types/generated-types';
 
 @Injectable()
 export class TrialService {
@@ -17,7 +18,7 @@ export class TrialService {
     return this.trialRepo.createTrial(dto, researcher);
   }
 
-  async getTrialLead(trial: TrialEntity): Promise<ResearcherEntity> {
+  async getTrialLead(trial: Trial): Promise<ResearcherEntity> {
     return this.trialRepo.getTrialLead(trial);
   }
 
