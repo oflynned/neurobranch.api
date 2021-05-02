@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ResearcherService } from '../service/researcher.service';
 import {
   Researcher,
@@ -6,8 +6,7 @@ import {
 } from '../../../../../../types/generated-types';
 import { ApolloError } from 'apollo-server-express';
 import { CreateResearcherDto } from '../dto/create-researcher.dto';
-
-import { internet, datatype } from 'faker';
+import { FirebaseJwt } from '../../../../../../libs/firebase/src';
 
 @Resolver(() => Researcher)
 export class ResearcherResolver {
@@ -16,9 +15,12 @@ export class ResearcherResolver {
   @Query('getResearcher')
   async getResearcher(
     @Args('researcherId') researcherId: string,
+    @Context() context: { req: { jwt: FirebaseJwt } },
   ): Promise<Researcher> {
     try {
-      return await this.researcherService.getResearcher(researcherId);
+      return await this.researcherService.getResearcherByEmail(
+        context.req.jwt.email,
+      );
     } catch (e) {
       throw new ApolloError(
         `Researcher with id ${researcherId} could not be found`,
@@ -30,12 +32,14 @@ export class ResearcherResolver {
   @Mutation('createResearcher')
   async createResearcher(
     @Args('input') input: ResearcherInput,
+    @Context() context: { req: { jwt: FirebaseJwt } },
   ): Promise<Researcher> {
+    const { jwt } = context.req;
     const dto: CreateResearcherDto = {
       ...input,
-      email: internet.email(input.name),
-      providerId: datatype.uuid(),
-      provider: 'GOOGLE',
+      email: jwt.email,
+      providerId: jwt.uid,
+      provider: jwt.firebase.sign_in_provider,
     };
 
     return await this.researcherService.createResearcher(dto);
