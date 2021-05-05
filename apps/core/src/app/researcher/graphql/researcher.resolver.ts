@@ -56,9 +56,9 @@ export class ResearcherResolver {
   @ResolveField('trials')
   async getTrials(
     @Parent() researcher: ResearcherEntity,
-    @Args('pagination') paginationArgs: PaginationArgs,
+    @Args('pagination') paginationArgs?: PaginationArgs,
   ): Promise<TrialConnection> {
-    const { limit, offset } = Pagination.validatePagination(paginationArgs);
+    const { limit, offset } = Pagination.validate(paginationArgs);
     const totalCount = await this.trialService.getResearcherTrialsCount(
       researcher,
     );
