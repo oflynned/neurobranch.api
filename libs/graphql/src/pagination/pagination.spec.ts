@@ -17,7 +17,7 @@ describe('Pagination', () => {
     it('should return encoded offset with pagination', () => {
       const pagination = new Pagination([1, 2, 3], 3, 0);
 
-      expect(pagination.getEndCursor()).toEqual('Mg==');
+      expect(pagination.getEndCursor()).toEqual('Mw==');
     });
 
     it('should return encoded offset when pagination is empty', () => {
