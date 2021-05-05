@@ -24,31 +24,29 @@ export class Pagination<T> {
     private readonly codec = new Codec(),
   ) {}
 
-  static validatePagination(args: PaginationArgs) {
+  static validate(args?: PaginationArgs) {
     const codec: Codec = new Codec();
 
-    const { after, first } = args;
+    const { after, first } = args ?? {};
     const limit = first ?? 25;
 
     const uncheckedOffset = codec.decode(after);
-    let offset;
+    const offset = Number.parseInt(uncheckedOffset.trim());
 
-    try {
-      offset = Number.parseInt(uncheckedOffset);
-    } catch (e) {
-      offset = 0;
+    if (Number.isNaN(+uncheckedOffset)) {
+      throw new BadRequestException('After must be a valid integer');
     }
 
     if (limit < 1) {
-      throw new BadRequestException('Limit cannot be less than 1');
+      throw new BadRequestException('First cannot be less than 1');
     }
 
     if (limit > 100) {
-      throw new BadRequestException('Limit cannot be greater than 100');
+      throw new BadRequestException('First cannot be greater than 100');
     }
 
     if (offset < 0) {
-      throw new BadRequestException('Offset cannot be less than 0');
+      throw new BadRequestException('First cannot be less than 0');
     }
 
     return { limit, offset };
@@ -59,7 +57,7 @@ export class Pagination<T> {
   }
 
   getEndCursor(): string {
-    return this.codec.encode(this.pagination.length - 1 + this.offset);
+    return this.codec.encode(this.pagination.length + this.offset);
   }
 
   getCursor(index: number, offset?: number): string {
@@ -71,6 +69,10 @@ export class Pagination<T> {
   }
 
   hasPreviousPage(): boolean {
+    if (this.totalCount === 0) {
+      return false;
+    }
+
     return this.offset > 0 && this.pagination.length > 0;
   }
 
