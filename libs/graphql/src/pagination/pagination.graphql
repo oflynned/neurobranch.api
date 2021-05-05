@@ -1,0 +1,11 @@
+input PaginationArgs {
+  first: Int
+  after: Cursor
+}
+
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: Cursor
+  endCursor: Cursor
+}
