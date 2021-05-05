@@ -1,2 +1,2 @@
-export * from './researcher.entity';
-export * from './trial.entity';
+export { buildMockResearcher, Sex, ResearcherEntity } from './researcher';
+export { TrialEntity } from './trial';
