@@ -31,7 +31,7 @@ export class TrialResolver {
   async createTrial(
     @Args('input') input: CreateTrialInput,
     @Context('user') researcher: ResearcherEntity,
-  ): Promise<TrialEntity> {
+  ): Promise<Trial> {
     const timestamp = new Date();
     const dto: CreateTrialDto = {
       title: input.title,
@@ -47,7 +47,7 @@ export class TrialResolver {
   }
 
   @ResolveField('lead')
-  async getTrialLead(@Parent() trial: Trial): Promise<ResearcherEntity> {
+  async getTrialLead(@Parent() trial: TrialEntity): Promise<ResearcherEntity> {
     return this.trialService.getTrialLead(trial);
   }
 }

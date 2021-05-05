@@ -5,7 +5,7 @@ import {
   TrialEntity,
 } from '../../../../../../libs/entities/src';
 import { CreateTrialDto } from '../dto/create-trial.dto';
-import { Trial } from '../../../../../../types/generated-types';
+import { ServicePagination } from '../../../../../../libs/graphql/src/pagination/pagination';
 
 @Injectable()
 export class TrialService {
@@ -18,13 +18,27 @@ export class TrialService {
     return this.trialRepo.createTrial(dto, researcher);
   }
 
-  async getTrialLead(trial: Trial): Promise<ResearcherEntity> {
+  async getTrialLead(trial: TrialEntity): Promise<ResearcherEntity> {
     return this.trialRepo.getTrialLead(trial);
   }
 
-  async getTrialsByResearcher(
+  async getResearcherTrials(
     researcher: ResearcherEntity,
-  ): Promise<TrialEntity[]> {
-    return this.trialRepo.getResearcherTrials(researcher);
+    limit: number,
+    offset: number,
+  ): Promise<ServicePagination<TrialEntity>> {
+    const results = await this.trialRepo.getResearcherTrials(
+      researcher,
+      limit,
+      offset,
+    );
+
+    return { results, limit, offset };
+  }
+
+  async getResearcherTrialsCount(
+    researcher: ResearcherEntity,
+  ): Promise<number> {
+    return this.trialRepo.getResearcherTrialCount(researcher);
   }
 }
