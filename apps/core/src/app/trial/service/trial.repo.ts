@@ -46,6 +46,9 @@ export class TrialRepo {
       where: { researcher },
       take: limit,
       skip: offset,
+      order: {
+        createdAt: 'DESC',
+      },
     });
   }
 
