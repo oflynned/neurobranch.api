@@ -14,7 +14,7 @@ type Researcher {
   verifiedAt: Timestamp
   name: String!
   email: String!
-  trials: TrialConnection
+  trials(pagination: PaginationArgs): TrialConnection
 }
 
 type ResearcherEdge {

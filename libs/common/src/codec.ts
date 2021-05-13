@@ -1,6 +1,6 @@
 export class Codec {
-  encode(source: string): string {
-    return Buffer.from(source).toString('base64');
+  encode(source: string | number): string {
+    return Buffer.from(`${source}`).toString('base64');
   }
 
   decode(source: string): string {

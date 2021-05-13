@@ -1,7 +1,7 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '../base.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { Frequency, Trial } from '../../../types/generated-types';
-import { ResearcherEntity } from './researcher.entity';
+import { Frequency, Trial } from '../../../../types/generated-types';
+import { ResearcherEntity } from '../researcher';
 
 @Entity('trials')
 export class TrialEntity extends BaseEntity implements Trial {

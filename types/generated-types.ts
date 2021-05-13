@@ -43,6 +43,11 @@ export class CreateTrialInput {
     frequency: Frequency;
 }
 
+export class PaginationArgs {
+    first?: number;
+    after?: Cursor;
+}
+
 export class Audit {
     id: string;
     action: string;

@@ -6,7 +6,6 @@ import {
   TrialEntity,
 } from '../../../../../../libs/entities/src';
 import { CreateTrialDto } from '../dto/create-trial.dto';
-import { Trial } from '../../../../../../types/generated-types';
 
 @Injectable()
 export class TrialRepo {
@@ -29,7 +28,7 @@ export class TrialRepo {
     return this.repo.save(entity);
   }
 
-  async getTrialLead(trial: Trial): Promise<ResearcherEntity> {
+  async getTrialLead(trial: TrialEntity): Promise<ResearcherEntity> {
     const joinedTrial = await this.repo.findOne({
       where: { id: trial.id },
       relations: ['researcher'],
@@ -40,7 +39,20 @@ export class TrialRepo {
 
   async getResearcherTrials(
     researcher: ResearcherEntity,
+    limit: number,
+    offset: number,
   ): Promise<TrialEntity[]> {
-    return this.repo.find({ researcher });
+    return this.repo.find({
+      where: { researcher },
+      take: limit,
+      skip: offset,
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  }
+
+  async getResearcherTrialCount(researcher: ResearcherEntity): Promise<number> {
+    return this.repo.count({ researcher });
   }
 }
