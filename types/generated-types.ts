@@ -21,16 +21,16 @@ export enum Frequency {
     MONTHLY = "MONTHLY"
 }
 
+export class CreateInvestigatorInput {
+    name: string;
+    dateOfBirth: string;
+}
+
 export class ParticipantInput {
     name: string;
     dateOfBirth: string;
     email: string;
     username: string;
-}
-
-export class CreateInvestigatorInput {
-    name: string;
-    dateOfBirth: string;
 }
 
 export class CreateTrialInput {
@@ -67,35 +67,13 @@ export class AuditConnection {
 }
 
 export abstract class IQuery {
-    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
-
     abstract getInvestigator(): Investigator | Promise<Investigator>;
+
+    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
 
     abstract getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
 
     abstract getTrial(trialId: string): Trial | Promise<Trial>;
-}
-
-export class Participant {
-    id: string;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    verifiedAt?: Timestamp;
-    auditLog?: AuditConnection;
-    name: string;
-    username: string;
-    email: string;
-}
-
-export class ParticipantEdge {
-    node?: Participant;
-    cursor: Cursor;
-}
-
-export class ParticipantConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: ParticipantEdge[];
 }
 
 export abstract class IMutation {
@@ -124,6 +102,28 @@ export class InvestigatorConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: InvestigatorEdge[];
+}
+
+export class Participant {
+    id: string;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    verifiedAt?: Timestamp;
+    auditLog?: AuditConnection;
+    name: string;
+    username: string;
+    email: string;
+}
+
+export class ParticipantEdge {
+    node?: Participant;
+    cursor: Cursor;
+}
+
+export class ParticipantConnection {
+    totalCount: number;
+    pageInfo: PageInfo;
+    edges: ParticipantEdge[];
 }
 
 export class Question {
