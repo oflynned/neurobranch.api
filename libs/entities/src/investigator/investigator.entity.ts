@@ -1,10 +1,10 @@
 import { BaseEntity } from '../base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
-import { Researcher } from '../../../../types/generated-types';
+import { Investigator } from '../../../../types/generated-types';
 import { TrialEntity } from '../trial/trial.entity';
 
-type PartialResearcher = Pick<
-  Researcher,
+type PartialInvestigator = Pick<
+  Investigator,
   'id' | 'name' | 'email' | 'createdAt' | 'verifiedAt' | 'deletedAt'
 >;
 
@@ -13,8 +13,10 @@ export enum Sex {
   FEMALE = 'female',
 }
 
-@Entity('researchers')
-export class ResearcherEntity extends BaseEntity implements PartialResearcher {
+@Entity('Investigators')
+export class InvestigatorEntity
+  extends BaseEntity
+  implements PartialInvestigator {
   @Column('varchar', { nullable: false })
   name: string;
 
@@ -36,6 +38,6 @@ export class ResearcherEntity extends BaseEntity implements PartialResearcher {
   @Column('timestamptz', { nullable: true })
   verifiedAt?: Date;
 
-  @OneToMany(() => TrialEntity, (trial: TrialEntity) => trial.researcher)
+  @OneToMany(() => TrialEntity, (trial: TrialEntity) => trial.investigator)
   trials: TrialEntity[];
 }

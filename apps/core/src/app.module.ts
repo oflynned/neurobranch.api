@@ -7,14 +7,14 @@ import { PostgresModule } from '../../../libs/orm/src';
 import {
   CoreConfigModule,
   CoreConfigService,
-  ResearcherModule,
+  InvestigatorModule,
   TrialModule,
 } from './app';
 import { CacheModule } from '../../../libs/cache/src';
 import { RedisModule } from 'nestjs-redis';
 import { FirebaseValidator } from '../../../libs/firebase/src';
 
-const services = [ResearcherModule, TrialModule];
+const services = [InvestigatorModule, TrialModule];
 
 @Module({
   imports: [

@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TrialRepo } from './trial.repo';
 import { TrialService } from './trial.service';
 import { TrialEntity } from '../../../../../../libs/entities/src';
-import { ResearcherModule } from '../../researcher';
+import { InvestigatorModule } from '../../investigator';
 import { FirebaseModule } from '../../../../../../libs/firebase/src';
 import { TrialResolver } from '../graphql/trial.resolver';
 
@@ -11,7 +11,7 @@ import { TrialResolver } from '../graphql/trial.resolver';
   imports: [
     TypeOrmModule.forFeature([TrialEntity]),
     FirebaseModule,
-    forwardRef(() => ResearcherModule),
+    forwardRef(() => InvestigatorModule),
   ],
   exports: [TrialService],
   providers: [TrialResolver, TrialService, TrialRepo],

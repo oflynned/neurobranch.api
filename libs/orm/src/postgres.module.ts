@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ResearcherEntity, TrialEntity } from '../../entities/src';
+import { InvestigatorEntity, TrialEntity } from '../../entities/src';
 import { BaseConfigModule, BaseConfigService } from '../../config/src';
 
-const entities = [ResearcherEntity, TrialEntity];
+const entities = [InvestigatorEntity, TrialEntity];
 
 @Module({
   imports: [

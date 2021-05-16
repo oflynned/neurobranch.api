@@ -1,7 +1,7 @@
 import { BaseEntity } from '../base.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { Frequency, Trial } from '../../../../types/generated-types';
-import { ResearcherEntity } from '../researcher';
+import { InvestigatorEntity } from '../investigator';
 
 @Entity('trials')
 export class TrialEntity extends BaseEntity implements Trial {
@@ -27,8 +27,8 @@ export class TrialEntity extends BaseEntity implements Trial {
   frequency: Frequency;
 
   @ManyToOne(
-    () => ResearcherEntity,
-    (researcher: ResearcherEntity) => researcher.trials,
+    () => InvestigatorEntity,
+    (investigator: InvestigatorEntity) => investigator.trials,
   )
-  researcher: ResearcherEntity;
+  investigator: InvestigatorEntity;
 }

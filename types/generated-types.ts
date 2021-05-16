@@ -28,7 +28,7 @@ export class CandidateInput {
     username: string;
 }
 
-export class CreateResearcherInput {
+export class CreateInvestigatorInput {
     name: string;
     dateOfBirth: string;
 }
@@ -69,7 +69,7 @@ export class AuditConnection {
 export abstract class IQuery {
     abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
 
-    abstract getResearcher(): Researcher | Promise<Researcher>;
+    abstract getInvestigator(): Investigator | Promise<Investigator>;
 
     abstract getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
 
@@ -98,22 +98,13 @@ export class CandidateConnection {
     edges: CandidateEdge[];
 }
 
-export class Question {
-    id: string;
-    title: string;
-    type: QuestionType;
-    optional: boolean;
-    choices?: Choice[];
-    trial?: Trial;
-}
-
 export abstract class IMutation {
-    abstract createResearcher(input?: CreateResearcherInput): Researcher | Promise<Researcher>;
+    abstract createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
 
     abstract createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
 }
 
-export class Researcher {
+export class Investigator {
     id: string;
     auditLog?: AuditConnection;
     createdAt: Timestamp;
@@ -124,15 +115,24 @@ export class Researcher {
     trials?: TrialConnection;
 }
 
-export class ResearcherEdge {
+export class InvestigatorEdge {
     node?: Trial;
     cursor: Cursor;
 }
 
-export class ResearcherConnection {
+export class InvestigatorConnection {
     totalCount: number;
     pageInfo: PageInfo;
-    edges: ResearcherEdge[];
+    edges: InvestigatorEdge[];
+}
+
+export class Question {
+    id: string;
+    title: string;
+    type: QuestionType;
+    optional: boolean;
+    choices?: Choice[];
+    trial?: Trial;
 }
 
 export class Choice {
@@ -193,8 +193,8 @@ export class Trial {
     endTime: Timestamp;
     frequency: Frequency;
     auditLog?: AuditConnection;
-    lead?: Researcher;
-    researchers?: ResearcherConnection;
+    lead?: Investigator;
+    investigators?: InvestigatorConnection;
     participants?: CandidateConnection;
     questions?: Question[];
 }
@@ -219,5 +219,5 @@ export class PageInfo {
 
 export type Timestamp = any;
 export type Cursor = any;
-export type Actor = Candidate | Researcher;
+export type Actor = Candidate | Investigator;
 export type Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse;

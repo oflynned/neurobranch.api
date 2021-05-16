@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
-  ResearcherEntity,
+  InvestigatorEntity,
   TrialEntity,
 } from '../../../../../../libs/entities/src';
 import { CreateTrialDto } from '../dto/create-trial.dto';
@@ -16,34 +16,34 @@ export class TrialRepo {
 
   async createTrial(
     dto: CreateTrialDto,
-    researcher: ResearcherEntity,
+    investigator: InvestigatorEntity,
     createdAt = new Date(),
   ): Promise<TrialEntity> {
     const entity = {
       ...dto,
-      researcher,
+      investigator,
       createdAt,
     };
 
     return this.repo.save(entity);
   }
 
-  async getTrialLead(trial: TrialEntity): Promise<ResearcherEntity> {
+  async getTrialLead(trial: TrialEntity): Promise<InvestigatorEntity> {
     const joinedTrial = await this.repo.findOne({
       where: { id: trial.id },
-      relations: ['researcher'],
+      relations: ['investigator'],
     });
 
-    return joinedTrial.researcher;
+    return joinedTrial.investigator;
   }
 
-  async getResearcherTrials(
-    researcher: ResearcherEntity,
+  async getInvestigatorTrials(
+    investigator: InvestigatorEntity,
     limit: number,
     offset: number,
   ): Promise<TrialEntity[]> {
     return this.repo.find({
-      where: { researcher },
+      where: { investigator },
       take: limit,
       skip: offset,
       order: {
@@ -52,7 +52,9 @@ export class TrialRepo {
     });
   }
 
-  async getResearcherTrialCount(researcher: ResearcherEntity): Promise<number> {
-    return this.repo.count({ researcher });
+  async getInvestigatorTrialCount(
+    investigator: InvestigatorEntity,
+  ): Promise<number> {
+    return this.repo.count({ investigator });
   }
 }

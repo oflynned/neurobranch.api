@@ -7,17 +7,17 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../../researcher/graphql/guards';
+import { JwtGuard } from '../../investigator/graphql/guards';
 import {
   CreateTrialInput,
   Frequency,
   Trial,
 } from '../../../../../../types/generated-types';
 import {
-  ResearcherEntity,
+  InvestigatorEntity,
   TrialEntity,
 } from '../../../../../../libs/entities/src';
-import { ResearcherGuard } from '../../researcher/graphql/guards';
+import { InvestigatorGuard } from '../../investigator/graphql/guards';
 import { TrialService } from '../service/trial.service';
 import { CreateTrialDto } from '../dto/create-trial.dto';
 
@@ -27,10 +27,10 @@ export class TrialResolver {
   constructor(private readonly trialService: TrialService) {}
 
   @Mutation('createTrial')
-  @UseGuards(ResearcherGuard)
+  @UseGuards(InvestigatorGuard)
   async createTrial(
     @Args('input') input: CreateTrialInput,
-    @Context('user') researcher: ResearcherEntity,
+    @Context('user') investigator: InvestigatorEntity,
   ): Promise<Trial> {
     const timestamp = new Date();
     const dto: CreateTrialDto = {
@@ -43,11 +43,13 @@ export class TrialResolver {
       endTime: timestamp,
     };
 
-    return this.trialService.createTrial(dto, researcher);
+    return this.trialService.createTrial(dto, investigator);
   }
 
   @ResolveField('lead')
-  async getTrialLead(@Parent() trial: TrialEntity): Promise<ResearcherEntity> {
+  async getTrialLead(
+    @Parent() trial: TrialEntity,
+  ): Promise<InvestigatorEntity> {
     return this.trialService.getTrialLead(trial);
   }
 }

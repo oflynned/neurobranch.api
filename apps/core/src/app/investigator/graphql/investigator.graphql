@@ -1,12 +1,12 @@
 type Query {
-  getResearcher: Researcher
+  getInvestigator: Investigator
 }
 
 type Mutation {
-  createResearcher(input: CreateResearcherInput): Researcher
+  createInvestigator(input: CreateInvestigatorInput): Investigator
 }
 
-type Researcher {
+type Investigator {
   id: ID!
   auditLog: AuditConnection
   createdAt: Timestamp!
@@ -17,18 +17,18 @@ type Researcher {
   trials(pagination: PaginationArgs): TrialConnection
 }
 
-type ResearcherEdge {
+type InvestigatorEdge {
   node: Trial
   cursor: Cursor!
 }
 
-type ResearcherConnection {
+type InvestigatorConnection {
   totalCount: Int!
   pageInfo: PageInfo!
-  edges: [ResearcherEdge]!
+  edges: [InvestigatorEdge]!
 }
 
-input CreateResearcherInput {
+input CreateInvestigatorInput {
   name: String!
   dateOfBirth: String!
 }
