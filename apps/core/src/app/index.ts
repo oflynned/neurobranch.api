@@ -1,3 +1,3 @@
 export * from './config';
-export * from './researcher';
+export * from './investigator';
 export * from './trial';

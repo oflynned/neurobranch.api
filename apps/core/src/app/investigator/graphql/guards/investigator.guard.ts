@@ -5,12 +5,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ResearcherService } from '../../service/researcher.service';
+import { InvestigatorService } from '../../service/investigator.service';
 import { AuthenticationError } from 'apollo-server-express';
 
 @Injectable()
-export class ResearcherGuard implements CanActivate {
-  constructor(private readonly researcherService: ResearcherService) {}
+export class InvestigatorGuard implements CanActivate {
+  constructor(private readonly investigatorService: InvestigatorService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context).getContext();
@@ -19,15 +19,15 @@ export class ResearcherGuard implements CanActivate {
       throw new AuthenticationError('No jwt context set');
     }
 
-    const researcher = await this.researcherService.getResearcherByEmail(
+    const investigator = await this.investigatorService.getInvestigatorByEmail(
       ctx.jwt.email,
     );
 
-    if (!researcher) {
-      throw new UnauthorizedException('Jwt does not belong to a researcher');
+    if (!investigator) {
+      throw new UnauthorizedException('Jwt does not belong to a investigator');
     }
 
-    ctx.user = researcher;
+    ctx.user = investigator;
 
     return true;
   }

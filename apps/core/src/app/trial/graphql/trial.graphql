@@ -26,8 +26,8 @@ type Trial {
   endTime: Timestamp!
   frequency: Frequency!
   auditLog: AuditConnection
-  lead: Researcher
-  researchers: ResearcherConnection
+  lead: Investigator
+  investigators: InvestigatorConnection
   participants: CandidateConnection
   questions: [Question!]
 }
