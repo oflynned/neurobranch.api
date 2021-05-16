@@ -21,7 +21,7 @@ export enum Frequency {
     MONTHLY = "MONTHLY"
 }
 
-export class CandidateInput {
+export class ParticipantInput {
     name: string;
     dateOfBirth: string;
     email: string;
@@ -67,7 +67,7 @@ export class AuditConnection {
 }
 
 export abstract class IQuery {
-    abstract createCandidateAccount(input?: CandidateInput): Candidate | Promise<Candidate>;
+    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
 
     abstract getInvestigator(): Investigator | Promise<Investigator>;
 
@@ -76,7 +76,7 @@ export abstract class IQuery {
     abstract getTrial(trialId: string): Trial | Promise<Trial>;
 }
 
-export class Candidate {
+export class Participant {
     id: string;
     createdAt: Timestamp;
     deletedAt?: Timestamp;
@@ -87,15 +87,15 @@ export class Candidate {
     email: string;
 }
 
-export class CandidateEdge {
-    node?: Candidate;
+export class ParticipantEdge {
+    node?: Participant;
     cursor: Cursor;
 }
 
-export class CandidateConnection {
+export class ParticipantConnection {
     totalCount: number;
     pageInfo: PageInfo;
-    edges: CandidateEdge[];
+    edges: ParticipantEdge[];
 }
 
 export abstract class IMutation {
@@ -154,7 +154,7 @@ export class ResponseConnection {
 export class RadioResponse {
     id: string;
     type: QuestionType;
-    respondent?: Candidate;
+    respondent?: Participant;
     choices?: Choice[];
     response?: Choice;
 }
@@ -162,7 +162,7 @@ export class RadioResponse {
 export class CheckboxResponse {
     id: string;
     type: QuestionType;
-    respondent?: Candidate;
+    respondent?: Participant;
     choices?: Choice[];
     responses?: Choice[];
 }
@@ -170,14 +170,14 @@ export class CheckboxResponse {
 export class TextResponse {
     id: string;
     type: QuestionType;
-    respondent?: Candidate;
+    respondent?: Participant;
     response: string;
 }
 
 export class ScaleResponse {
     id: string;
     type: QuestionType;
-    respondent?: Candidate;
+    respondent?: Participant;
     response: number;
 }
 
@@ -195,7 +195,7 @@ export class Trial {
     auditLog?: AuditConnection;
     lead?: Investigator;
     investigators?: InvestigatorConnection;
-    participants?: CandidateConnection;
+    participants?: ParticipantConnection;
     questions?: Question[];
 }
 
@@ -219,5 +219,5 @@ export class PageInfo {
 
 export type Timestamp = any;
 export type Cursor = any;
-export type Actor = Candidate | Investigator;
+export type Actor = Participant | Investigator;
 export type Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse;

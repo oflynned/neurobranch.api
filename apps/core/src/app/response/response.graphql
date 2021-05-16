@@ -20,7 +20,7 @@ type ResponseConnection {
 type RadioResponse {
   id: ID!
   type: QuestionType!
-  respondent: Candidate
+  respondent: Participant
   choices: [Choice!]
   response: Choice
 }
@@ -28,7 +28,7 @@ type RadioResponse {
 type CheckboxResponse {
   id: ID!
   type: QuestionType!
-  respondent: Candidate
+  respondent: Participant
   choices: [Choice!]
   responses: [Choice!]
 }
@@ -36,13 +36,13 @@ type CheckboxResponse {
 type TextResponse {
   id: ID!
   type: QuestionType!
-  respondent: Candidate
+  respondent: Participant
   response: String!
 }
 
 type ScaleResponse {
   id: ID!
   type: QuestionType!
-  respondent: Candidate
+  respondent: Participant
   response: Float!
 }

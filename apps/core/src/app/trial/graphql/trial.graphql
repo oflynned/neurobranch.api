@@ -28,7 +28,7 @@ type Trial {
   auditLog: AuditConnection
   lead: Investigator
   investigators: InvestigatorConnection
-  participants: CandidateConnection
+  participants: ParticipantConnection
   questions: [Question!]
 }
 
