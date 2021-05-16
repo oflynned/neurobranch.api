@@ -1,15 +1,15 @@
 type Query {
-  createCandidateAccount(input: CandidateInput): Candidate
+  createParticipantAccount(input: ParticipantInput): Participant
 }
 
-input CandidateInput {
+input ParticipantInput {
   name: String!
   dateOfBirth: String!
   email: String!
   username: String!
 }
 
-type Candidate {
+type Participant {
   id: ID!
   createdAt: Timestamp!
   deletedAt: Timestamp
@@ -20,13 +20,13 @@ type Candidate {
   email: String!
 }
 
-type CandidateEdge {
-  node: Candidate
+type ParticipantEdge {
+  node: Participant
   cursor: Cursor!
 }
 
-type CandidateConnection {
+type ParticipantConnection {
   totalCount: Int!
   pageInfo: PageInfo!
-  edges: [CandidateEdge]!
+  edges: [ParticipantEdge]!
 }

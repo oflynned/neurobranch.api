@@ -1,4 +1,4 @@
-union Actor = Candidate | Investigator
+union Actor = Participant | Investigator
 
 type Audit {
   id: ID!
