@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InvestigatorEntity } from '../../../../../../libs/entities/src';
 import { Optional } from '../../../../../../libs/common/src';
 import { InvestigatorRepo } from './investigator.repo';
@@ -26,7 +26,7 @@ export class InvestigatorService {
     );
 
     if (investigator) {
-      throw new ConflictException('Investigator email already taken');
+      return investigator;
     }
 
     // TODO validate dto fields
