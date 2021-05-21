@@ -11,7 +11,7 @@ services:
       - 3000:3000
     depends_on:
       - postgres
-    command: npm start
+    command: npm run start:core
 
   redis:
     container_name: redis
