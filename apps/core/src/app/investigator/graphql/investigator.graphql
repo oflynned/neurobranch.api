@@ -13,8 +13,16 @@ type Investigator {
   deletedAt: Timestamp
   verifiedAt: Timestamp
   name: String!
+  dateOfBirth: String!
+  sex: Sex!
   email: String!
   trials(pagination: PaginationArgs): TrialConnection
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
 }
 
 type InvestigatorEdge {
@@ -31,4 +39,5 @@ type InvestigatorConnection {
 input CreateInvestigatorInput {
   name: String!
   dateOfBirth: String!
+  sex: Sex!
 }

@@ -34,6 +34,8 @@ const services = [InvestigatorModule, TrialModule];
       }),
     }),
     GraphQLModule.forRoot({
+      useGlobalPrefix: true,
+      path: '/v1/gql',
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), './types/generated-types.ts'),
