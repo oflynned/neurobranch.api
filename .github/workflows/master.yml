@@ -1,0 +1,127 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code for errors
+        run: npm run lint
+
+      - name: Check types
+        run: npm run typecheck
+
+  build-core-image:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: eu-west-1
+
+      - name: Build and push image to ECR
+        run: |
+          TAG=$ECR_SECRET/core:latest &&
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_SECRET &&
+          docker build --file=apps/core/Dockerfile --tag=$TAG --no-cache . &&
+          docker push $TAG
+        env:
+          ECR_SECRET: ${{ secrets.ECR_SECRET }}
+
+  deploy-images:
+    needs: [build-core-image]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v1
+
+      - name: Configure SSH keys
+        run: |
+          which ssh-agent || ( apt-get install -qq openssh-client ) &&
+          eval $(ssh-agent -s) &&
+          mkdir -p ~/.ssh &&
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config &&
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa &&
+          echo "$SSH_PUBLIC_KEY" > ~/.ssh/id_rsa.pub &&
+          chmod 400 ~/.ssh/id_rsa &&
+          chmod 400 ~/.ssh/id_rsa.pub &&
+          ssh-add ~/.ssh/id_rsa
+        env:
+          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: eu-west-1
+
+      - name: Deploy apps to Dokku
+        run: |
+          ssh -tt root@syzible.com "\
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_SECRET && \
+          docker pull $ECR_SECRET/neurobranch-core:latest && \
+          docker tag $ECR_SECRET/neurobranch-core dokku/core:latest && \
+          dokku tags:deploy core latest && \
+          "
+        env:
+          ECR_SECRET: ${{ secrets.ECR_SECRET }}
