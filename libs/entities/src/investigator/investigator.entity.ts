@@ -1,7 +1,7 @@
 import { BaseEntity } from '../base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { Investigator } from '../../../../types/generated-types';
-import { TrialEntity } from '../trial/trial.entity';
+import { TrialEntity } from '../trial';
 
 type PartialInvestigator = Pick<
   Investigator,
@@ -9,8 +9,9 @@ type PartialInvestigator = Pick<
 >;
 
 export enum Sex {
-  MALE = 'male',
-  FEMALE = 'female',
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
 }
 
 @Entity('Investigators')

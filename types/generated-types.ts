@@ -7,6 +7,12 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum Sex {
+    MALE = "MALE",
+    FEMALE = "FEMALE",
+    OTHER = "OTHER"
+}
+
 export enum QuestionType {
     RADIO = "RADIO",
     CHECKBOX = "CHECKBOX",
@@ -21,16 +27,17 @@ export enum Frequency {
     MONTHLY = "MONTHLY"
 }
 
+export class CreateInvestigatorInput {
+    name: string;
+    dateOfBirth: string;
+    sex: Sex;
+}
+
 export class ParticipantInput {
     name: string;
     dateOfBirth: string;
     email: string;
     username: string;
-}
-
-export class CreateInvestigatorInput {
-    name: string;
-    dateOfBirth: string;
 }
 
 export class CreateTrialInput {
@@ -67,13 +74,43 @@ export class AuditConnection {
 }
 
 export abstract class IQuery {
-    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
-
     abstract getInvestigator(): Investigator | Promise<Investigator>;
+
+    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
 
     abstract getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
 
     abstract getTrial(trialId: string): Trial | Promise<Trial>;
+}
+
+export abstract class IMutation {
+    abstract createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
+
+    abstract createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
+}
+
+export class Investigator {
+    id: string;
+    auditLog?: AuditConnection;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    verifiedAt?: Timestamp;
+    name: string;
+    dateOfBirth: string;
+    sex: Sex;
+    email: string;
+    trials?: TrialConnection;
+}
+
+export class InvestigatorEdge {
+    node?: Trial;
+    cursor: Cursor;
+}
+
+export class InvestigatorConnection {
+    totalCount: number;
+    pageInfo: PageInfo;
+    edges: InvestigatorEdge[];
 }
 
 export class Participant {
@@ -96,34 +133,6 @@ export class ParticipantConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: ParticipantEdge[];
-}
-
-export abstract class IMutation {
-    abstract createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
-
-    abstract createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
-}
-
-export class Investigator {
-    id: string;
-    auditLog?: AuditConnection;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    verifiedAt?: Timestamp;
-    name: string;
-    email: string;
-    trials?: TrialConnection;
-}
-
-export class InvestigatorEdge {
-    node?: Trial;
-    cursor: Cursor;
-}
-
-export class InvestigatorConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: InvestigatorEdge[];
 }
 
 export class Question {
