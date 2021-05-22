@@ -12,6 +12,7 @@ import {
 import { CacheModule } from '../../../libs/cache/src';
 import { RedisModule } from 'nestjs-redis';
 import { FirebaseValidator } from '../../../libs/firebase/src';
+import { join } from 'path';
 
 const services = [InvestigatorModule, TrialModule];
 
@@ -32,15 +33,22 @@ const services = [InvestigatorModule, TrialModule];
         url: config.getRedisUrl(),
       }),
     }),
-    GraphQLModule.forRoot({
-      useGlobalPrefix: true,
-      path: '/v1/gql',
-      typePaths:
-        process.env.NODE_ENV === 'production'
-          ? ['./assets/schema.graphql']
-          : ['./app/**/*.graphql'],
-      debug: true,
-      playground: true,
+    GraphQLModule.forRootAsync({
+      imports: [CoreConfigModule],
+      inject: [CoreConfigService],
+      useFactory: async (config: CoreConfigService) => {
+        const typePath = config.isProduction()
+          ? './assets/schema.graphql'
+          : './app/**/*.graphql';
+
+        return {
+          useGlobalPrefix: true,
+          path: '/v1/gql',
+          typePaths: [join(__dirname, typePath)],
+          debug: true,
+          playground: true,
+        };
+      },
     }),
     ...services,
   ],
