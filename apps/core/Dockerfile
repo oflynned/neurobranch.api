@@ -9,7 +9,6 @@ COPY . .
 
 RUN npm install
 RUN npm run nx -- build core --production --no-cache
-
 RUN npm prune --production
 RUN /usr/local/bin/node-prune
 
