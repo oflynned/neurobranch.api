@@ -2,7 +2,7 @@ import { InvestigatorResolver } from './investigator.resolver';
 import { InvestigatorService } from '../service/investigator.service';
 import { mock } from 'jest-mock-extended';
 import { TrialService } from '../../trial';
-import { buildMockInvestigator } from '../../../../../../libs/entities/src/investigator';
+import { buildMockInvestigator } from '../../../../../../libs/entities/src/investigator/investigator.entity.factory';
 
 const mockInvestigatorService = mock<InvestigatorService>();
 const mockTrialService = mock<TrialService>();
