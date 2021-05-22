@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
-import { join } from 'path';
 
 import { PostgresModule } from '../../../libs/orm/src';
 import {
