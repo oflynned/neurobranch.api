@@ -10,7 +10,6 @@
     "apollo-server-express": "^2.23.0",
     "class-validator": "^0.13.1",
     "graphql": "^15.5.0",
-    "graphql-tools": "^7.0.4",
     "ioredis": "^4.27.1",
     "nestjs-redis": "^1.3.3",
     "pg": "^8.6.0",
@@ -39,6 +38,7 @@
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "faker": "^5.5.3",
+    "graphql-tools": "^7.0.5",
     "husky": "^4.3.8",
     "jest": "26.2.2",
     "jest-mock-extended": "^1.0.14",
@@ -94,7 +94,8 @@
     "update": "nx migrate latest",
     "upgrade:dependencies": "ncu -u --target minor && npm install",
     "workspace-generator": "nx workspace-generator",
-    "types:gen": "ts-node ./libs/graphql/src/generate-typings.ts"
+    "types:gen": "ts-node ./libs/graphql/src/generate-typings.ts",
+    "types:core:merge": "ts-node ./apps/core/src/merge-definitions.ts"
   },
   "version": "0.0.1"
 }

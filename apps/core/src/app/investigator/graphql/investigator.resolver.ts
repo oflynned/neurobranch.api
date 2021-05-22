@@ -26,7 +26,7 @@ import { Pagination } from '../../../../../../libs/graphql/src/pagination/pagina
 @UseGuards(JwtGuard)
 export class InvestigatorResolver {
   constructor(
-    private readonly InvestigatorService: InvestigatorService,
+    private readonly investigatorService: InvestigatorService,
     private readonly trialService: TrialService,
   ) {}
 
@@ -50,7 +50,7 @@ export class InvestigatorResolver {
       provider: jwt.firebase.sign_in_provider,
     };
 
-    return this.InvestigatorService.createInvestigator(dto);
+    return this.investigatorService.createInvestigator(dto);
   }
 
   @ResolveField('trials')

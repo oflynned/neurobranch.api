@@ -1,0 +1,227 @@
+union Actor = Participant | Investigator
+
+type Audit {
+  id: ID!
+  action: String!
+  performedAt: Timestamp!
+  performedBy: Actor
+}
+
+type AuditEdge {
+  node: Audit
+  cursor: Cursor!
+}
+
+type AuditConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [AuditEdge]!
+}
+
+type Query {
+  createParticipantAccount(input: ParticipantInput): Participant
+  getInvestigator: Investigator
+  getEligibleTrials: TrialConnection
+  getTrial(trialId: String!): Trial
+}
+
+input ParticipantInput {
+  name: String!
+  dateOfBirth: String!
+  email: String!
+  username: String!
+}
+
+type Participant {
+  id: ID!
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  verifiedAt: Timestamp
+  auditLog: AuditConnection
+  name: String!
+  username: String!
+  email: String!
+}
+
+type ParticipantEdge {
+  node: Participant
+  cursor: Cursor!
+}
+
+type ParticipantConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [ParticipantEdge]!
+}
+
+type Choice {
+  id: ID!
+  index: Int!
+}
+
+union Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse
+
+type ResponseEdge {
+  node: Response
+  cursor: Cursor!
+}
+
+type ResponseConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [ResponseEdge]!
+}
+
+type RadioResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Participant
+  choices: [Choice!]
+  response: Choice
+}
+
+type CheckboxResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Participant
+  choices: [Choice!]
+  responses: [Choice!]
+}
+
+type TextResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Participant
+  response: String!
+}
+
+type ScaleResponse {
+  id: ID!
+  type: QuestionType!
+  respondent: Participant
+  response: Float!
+}
+
+enum QuestionType {
+  RADIO
+  CHECKBOX
+  SCALE
+  TEXT
+}
+
+type Question {
+  id: ID!
+  title: String!
+  type: QuestionType!
+  optional: Boolean!
+  choices: [Choice!]
+  trial: Trial
+}
+
+type Mutation {
+  createInvestigator(input: CreateInvestigatorInput): Investigator
+  createTrial(input: CreateTrialInput): Trial
+}
+
+type Investigator {
+  id: ID!
+  auditLog: AuditConnection
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  verifiedAt: Timestamp
+  name: String!
+  dateOfBirth: String!
+  sex: Sex!
+  email: String!
+  trials(pagination: PaginationArgs): TrialConnection
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+}
+
+type InvestigatorEdge {
+  node: Trial
+  cursor: Cursor!
+}
+
+type InvestigatorConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [InvestigatorEdge]!
+}
+
+input CreateInvestigatorInput {
+  name: String!
+  dateOfBirth: String!
+  sex: Sex!
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  FORTNIGHTLY
+  MONTHLY
+}
+
+type Trial {
+  id: ID!
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  title: String!
+  synopsis: String!
+  description: String!
+  tags: [String!]!
+  startTime: Timestamp!
+  endTime: Timestamp!
+  frequency: Frequency!
+  auditLog: AuditConnection
+  lead: Investigator
+  investigators: InvestigatorConnection
+  participants: ParticipantConnection
+  questions: [Question!]
+}
+
+type TrialEdge {
+  node: Trial
+  cursor: Cursor!
+}
+
+type TrialConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [TrialEdge]!
+}
+
+input CreateTrialInput {
+  startTime: Timestamp!
+  duration: Int!
+  title: String!
+  synopsis: String!
+  description: String!
+  tags: [String!]!
+  frequency: Frequency!
+}
+
+input PaginationArgs {
+  first: Int
+  after: Cursor
+}
+
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: Cursor
+  endCursor: Cursor
+}
+
+scalar Timestamp
+
+scalar Cursor
+
+schema {
+  query: Query
+  mutation: Mutation
+}
