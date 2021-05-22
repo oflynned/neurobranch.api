@@ -120,8 +120,8 @@ jobs:
           ssh -tt root@syzible.com "\
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_SECRET && \
           docker pull $ECR_SECRET/neurobranch-core:latest && \
-          docker tag $ECR_SECRET/neurobranch-core dokku/core:latest && \
-          dokku tags:deploy core latest && \
+          docker tag $ECR_SECRET/neurobranch-core dokku/neurobranch-core:latest && \
+          dokku tags:deploy neurobranch-core latest && \
           "
         env:
           ECR_SECRET: ${{ secrets.ECR_SECRET }}
