@@ -12,7 +12,7 @@ import {
   CreateTrialInput,
   Frequency,
   Trial,
-} from '../../../../../../types/generated-types';
+} from '../../../../../../libs/graphql/src';
 import {
   InvestigatorEntity,
   TrialEntity,

@@ -1,7 +1,7 @@
 import { BaseEntity } from '../base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
-import { Investigator } from '../../../../types/generated-types';
 import { TrialEntity } from '../trial';
+import { Investigator } from '../../../graphql/src';
 
 type PartialInvestigator = Pick<
   Investigator,

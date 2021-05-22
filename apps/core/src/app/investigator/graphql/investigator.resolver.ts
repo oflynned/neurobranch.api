@@ -13,7 +13,7 @@ import {
   PaginationArgs,
   Trial,
   TrialConnection,
-} from '../../../../../../types/generated-types';
+} from '../../../../../../libs/graphql/src';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
 import { FirebaseJwt } from '../../../../../../libs/firebase/src';
 import { UseGuards } from '@nestjs/common';

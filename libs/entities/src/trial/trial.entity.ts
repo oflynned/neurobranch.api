@@ -1,6 +1,6 @@
 import { BaseEntity } from '../base.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { Frequency, Trial } from '../../../../types/generated-types';
+import { Frequency, Trial } from '../../../graphql/src';
 import { InvestigatorEntity } from '../investigator';
 
 @Entity('trials')

@@ -1,4 +1,4 @@
-import { CreateInvestigatorInput } from '../../../../types/generated-types';
+import { CreateInvestigatorInput } from '../../../graphql/src';
 import { InvestigatorEntity, Sex } from './investigator.entity';
 
 import { date, internet, name, datatype } from 'faker/locale/en_IE';

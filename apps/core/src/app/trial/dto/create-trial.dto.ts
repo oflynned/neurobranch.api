@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { Frequency } from '../../../../../../types/generated-types';
+import { Frequency } from '../../../../../../libs/graphql/src';
 
 export class CreateTrialDto {
   @IsNotEmpty()

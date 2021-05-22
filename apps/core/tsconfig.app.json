@@ -8,5 +8,5 @@
     "target": "es2015"
   },
   "exclude": ["**/*.spec.ts", "**/*.factory.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.graphql"]
 }

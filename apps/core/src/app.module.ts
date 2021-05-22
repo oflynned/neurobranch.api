@@ -37,10 +37,6 @@ const services = [InvestigatorModule, TrialModule];
       useGlobalPrefix: true,
       path: '/v1/gql',
       typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), './types/generated-types.ts'),
-        outputAs: 'class',
-      },
       debug: true,
       playground: true,
     }),

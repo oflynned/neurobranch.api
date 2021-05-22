@@ -1,4 +1,4 @@
-import { CreateInvestigatorInput } from '../../../../../../types/generated-types';
+import { CreateInvestigatorInput } from '../../../../../../libs/graphql/src';
 
 export type CreateInvestigatorDto = CreateInvestigatorInput & {
   email: string;

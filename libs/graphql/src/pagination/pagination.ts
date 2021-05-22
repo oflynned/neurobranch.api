@@ -1,6 +1,6 @@
 import { Codec } from '../../../common/src/codec';
 import { BadRequestException } from '@nestjs/common';
-import { PageInfo, PaginationArgs } from '../../../../types/generated-types';
+import { PageInfo, PaginationArgs } from '../types';
 
 export type ServicePagination<T> = {
   results: T[];
