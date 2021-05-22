@@ -94,7 +94,8 @@
     "update": "nx migrate latest",
     "upgrade:dependencies": "ncu -u --target minor && npm install",
     "workspace-generator": "nx workspace-generator",
-    "types:gen": "ts-node libs/graphql/src/generate-typings.ts"
+    "types:gen": "ts-node ./libs/graphql/src/generate-typings.ts",
+    "types:core:merge": "ts-node ./apps/core/src/merge-definitions.ts"
   },
   "version": "0.0.1"
 }
