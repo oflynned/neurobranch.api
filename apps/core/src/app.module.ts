@@ -35,7 +35,10 @@ const services = [InvestigatorModule, TrialModule];
     GraphQLModule.forRoot({
       useGlobalPrefix: true,
       path: '/v1/gql',
-      typePaths: ['./**/*.graphql'],
+      typePaths:
+        process.env.NODE_ENV === 'production'
+          ? ['./assets/schema.graphql']
+          : ['./app/**/*.graphql'],
       debug: true,
       playground: true,
     }),
