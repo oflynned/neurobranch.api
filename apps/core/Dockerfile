@@ -8,7 +8,6 @@ WORKDIR /src
 COPY . .
 
 RUN npm install
-#RUN rm -rf **/*.{spec,factory}.ts
 
 RUN npm run nx -- build core --production --no-cache
 RUN npm prune --production
