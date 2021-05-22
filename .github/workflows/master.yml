@@ -75,7 +75,7 @@ jobs:
 
       - name: Build and push image to ECR
         run: |
-          TAG=$ECR_SECRET/core:latest &&
+          TAG=$ECR_SECRET/neurobranch-core:latest &&
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_SECRET &&
           docker build --file=apps/core/Dockerfile --tag=$TAG --no-cache . &&
           docker push $TAG
