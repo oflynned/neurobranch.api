@@ -97,5 +97,5 @@
     "types:gen": "ts-node ./libs/graphql/src/generate-typings.ts",
     "types:merge": "ts-node ./apps/core/src/merge-definitions.ts"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
