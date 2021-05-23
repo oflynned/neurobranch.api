@@ -18,6 +18,17 @@ export class InvestigatorRepo {
     return this.repo.findOne({ email });
   }
 
+  async updateInvestigator(
+    id: string,
+    dto: Partial<
+      Pick<InvestigatorEntity, 'email' | 'provider' | 'name' | 'dateOfBirth'>
+    >,
+  ): Promise<InvestigatorEntity> {
+    await this.repo.update({ id }, dto);
+
+    return this.getInvestigatorById(id);
+  }
+
   async getInvestigatorById(id: string): Promise<Optional<InvestigatorEntity>> {
     return this.repo.findOne({ id });
   }

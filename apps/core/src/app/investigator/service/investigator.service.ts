@@ -14,10 +14,6 @@ export class InvestigatorService {
     return this.investigatorRepo.getInvestigatorByEmail(email);
   }
 
-  async getinvestigatorById(id: string): Promise<Optional<InvestigatorEntity>> {
-    return this.investigatorRepo.getInvestigatorById(id);
-  }
-
   async createInvestigator(
     dto: CreateInvestigatorDto,
   ): Promise<InvestigatorEntity> {
