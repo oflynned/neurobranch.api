@@ -10,6 +10,7 @@ import {
 import { InvestigatorService } from '../service/investigator.service';
 import {
   CreateInvestigatorInput,
+  Investigator,
   PaginationArgs,
   Trial,
   TrialConnection,
@@ -33,9 +34,9 @@ export class InvestigatorResolver {
   @Query('getInvestigator')
   @UseGuards(InvestigatorGuard)
   async getInvestigator(
-    @Context('user') Investigator: InvestigatorEntity,
+    @Context('user') investigator: InvestigatorEntity,
   ): Promise<InvestigatorEntity> {
-    return Investigator;
+    return investigator;
   }
 
   @Mutation('createInvestigator')
