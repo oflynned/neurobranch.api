@@ -13,9 +13,9 @@ export class TrialService {
 
   async createTrial(
     dto: CreateTrialDto,
-    Investigator: InvestigatorEntity,
+    investigator: InvestigatorEntity,
   ): Promise<TrialEntity> {
-    return this.trialRepo.createTrial(dto, Investigator);
+    return this.trialRepo.createTrial(dto, investigator);
   }
 
   async getTrialLead(trial: TrialEntity): Promise<InvestigatorEntity> {
@@ -23,12 +23,12 @@ export class TrialService {
   }
 
   async getInvestigatorTrials(
-    Investigator: InvestigatorEntity,
+    investigator: InvestigatorEntity,
     limit: number,
     offset: number,
   ): Promise<ServicePagination<TrialEntity>> {
     const results = await this.trialRepo.getInvestigatorTrials(
-      Investigator,
+      investigator,
       limit,
       offset,
     );
@@ -37,8 +37,8 @@ export class TrialService {
   }
 
   async getInvestigatorTrialsCount(
-    Investigator: InvestigatorEntity,
+    investigator: InvestigatorEntity,
   ): Promise<number> {
-    return this.trialRepo.getInvestigatorTrialCount(Investigator);
+    return this.trialRepo.getInvestigatorTrialCount(investigator);
   }
 }
