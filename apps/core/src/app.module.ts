@@ -47,6 +47,7 @@ const services = [InvestigatorModule, TrialModule];
           typePaths: [join(__dirname, typePath)],
           debug: true,
           playground: true,
+          introspection: true,
         };
       },
     }),
