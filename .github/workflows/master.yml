@@ -47,13 +47,6 @@ jobs:
           yml: codecov.yml
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Bump version
-        uses: 'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          commit-message: 'Release: bump version to {{version}} [skip ci]'
-
   pre-release:
     needs: test
     runs-on: ubuntu-latest
@@ -85,6 +78,13 @@ jobs:
         run: npx apollo service:push --graph=Neurobranch --key=$APOLLO_STUDIO_KEY --variant=current --localSchemaFile=./apps/core/src/assets/schema.graphql
         env:
           APOLLO_STUDIO_KEY: ${{ secrets.APOLLO_STUDIO_KEY }}
+
+      - name: Bump version
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit-message: 'Release: bump version to {{version}} [skip ci]'
 
   build-core-image:
     needs: pre-release
