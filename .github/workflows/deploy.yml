@@ -33,7 +33,7 @@ jobs:
         run: npm run types:merge
 
       - name: Update Apollo Studio types
-        run: npx apollo service:push --graph=Neurobranch --key=$APOLLO_STUDIO_KEY --variant=current --localSchemaFile=./assets/schema.graphql
+        run: npx apollo service:push --graph=Neurobranch --key=$APOLLO_STUDIO_KEY --variant=current --localSchemaFile=./apps/core/src/assets/schema.graphql
         env:
           APOLLO_STUDIO_KEY: ${{ secrets.APOLLO_STUDIO_KEY }}
 
