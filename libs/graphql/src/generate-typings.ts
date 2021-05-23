@@ -11,10 +11,9 @@ import { join } from 'path';
         join(process.cwd(), './libs/**/*.graphql'),
       ],
       path: join(__dirname, './types.ts'),
-      outputAs: 'class',
+      outputAs: 'interface',
     });
   } catch (e) {
     console.log(e);
-    console.log('ooops');
   }
 })();

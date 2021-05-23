@@ -3,10 +3,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { TrialEntity } from '../trial';
 import { Investigator } from '../../../graphql/src';
 
-type PartialInvestigator = Pick<
-  Investigator,
-  'id' | 'name' | 'email' | 'createdAt' | 'verifiedAt' | 'deletedAt'
->;
+type PartialInvestigator = Omit<Investigator, 'trials'>;
 
 export enum Sex {
   MALE = 'MALE',
