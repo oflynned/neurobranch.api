@@ -7,7 +7,6 @@ on:
 
 jobs:
   pre-release:
-    needs: [ deploy-images ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
