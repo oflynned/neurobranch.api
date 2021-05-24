@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { TrialRepo } from './trial.repo';
+import { CreateTrialDto } from '../dto/create-trial.dto';
+import { ServicePagination } from '../../../../../../libs/graphql/src/pagination/pagination';
 import {
   InvestigatorEntity,
   TrialEntity,
-} from '../../../../../../libs/entities/src';
-import { CreateTrialDto } from '../dto/create-trial.dto';
-import { ServicePagination } from '../../../../../../libs/graphql/src/pagination/pagination';
+} from '../../../../../../prisma/nestjs';
 
 @Injectable()
 export class TrialService {
@@ -13,32 +13,34 @@ export class TrialService {
 
   async createTrial(
     dto: CreateTrialDto,
-    investigator: InvestigatorEntity,
+    investigatorId: string,
   ): Promise<TrialEntity> {
-    return this.trialRepo.createTrial(dto, investigator);
+    return this.trialRepo.createTrial(dto, investigatorId);
   }
 
-  async getTrialLead(trial: TrialEntity): Promise<InvestigatorEntity> {
-    return this.trialRepo.getTrialLead(trial);
+  async getTrialLead(trialId: string): Promise<InvestigatorEntity> {
+    return this.trialRepo.getTrialLead(trialId);
   }
 
   async getInvestigatorTrials(
-    investigator: InvestigatorEntity,
+    investigatorId: string,
     limit: number,
     offset: number,
   ): Promise<ServicePagination<TrialEntity>> {
     const results = await this.trialRepo.getInvestigatorTrials(
-      investigator,
+      investigatorId,
       limit,
       offset,
     );
 
-    return { results, limit, offset };
+    return {
+      results,
+      limit,
+      offset,
+    };
   }
 
-  async getInvestigatorTrialsCount(
-    investigator: InvestigatorEntity,
-  ): Promise<number> {
-    return this.trialRepo.getInvestigatorTrialCount(investigator);
+  async getInvestigatorTrialsCount(investigatorId: string): Promise<number> {
+    return this.trialRepo.getInvestigatorTrialCount(investigatorId);
   }
 }

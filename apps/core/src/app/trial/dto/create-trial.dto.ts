@@ -1,14 +1,6 @@
-import { IsNotEmpty } from 'class-validator';
-import { Frequency } from '../../../../../../libs/graphql/src';
+import { TrialEntity } from '../../../../../../prisma/nestjs';
 
-export class CreateTrialDto {
-  @IsNotEmpty()
-  title: string;
-
-  startTime: Date;
-  endTime: Date;
-  synopsis: string;
-  description: string;
-  tags: string[];
-  frequency: Frequency;
-}
+export type CreateTrialDto = Pick<
+  TrialEntity,
+  'title' | 'description' | 'synopsis' | 'tags' | 'startTime' | 'endTime'
+>;

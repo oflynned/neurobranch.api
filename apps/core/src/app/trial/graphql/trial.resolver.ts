@@ -7,19 +7,17 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../../investigator/graphql/guards';
+import { InvestigatorGuard, JwtGuard } from '../../investigator/graphql/guards';
 import {
   CreateTrialInput,
-  Frequency,
+  Investigator,
+  Sex,
   Trial,
+  TrialState,
 } from '../../../../../../libs/graphql/src';
-import {
-  InvestigatorEntity,
-  TrialEntity,
-} from '../../../../../../libs/entities/src';
-import { InvestigatorGuard } from '../../investigator/graphql/guards';
 import { TrialService } from '../service/trial.service';
 import { CreateTrialDto } from '../dto/create-trial.dto';
+import { InvestigatorEntity } from '../../../../../../prisma/nestjs';
 
 @Resolver('Trial')
 @UseGuards(JwtGuard)
@@ -35,21 +33,28 @@ export class TrialResolver {
     const timestamp = new Date();
     const dto: CreateTrialDto = {
       title: input.title,
-      description: 'description',
-      synopsis: 'synopsis',
-      frequency: Frequency.DAILY,
-      tags: ['tag'],
+      description: input.description,
+      synopsis: input.synopsis,
+      tags: input.tags,
       startTime: timestamp,
       endTime: timestamp,
     };
 
-    return this.trialService.createTrial(dto, investigator);
+    return this.trialService.createTrial(dto, investigator.id);
   }
 
   @ResolveField('lead')
-  async getTrialLead(
-    @Parent() trial: TrialEntity,
-  ): Promise<InvestigatorEntity> {
-    return this.trialService.getTrialLead(trial);
+  async getLead(@Parent() trial: Trial): Promise<Investigator> {
+    const lead = await this.trialService.getTrialLead(trial.id);
+
+    return {
+      ...lead,
+      sex: lead.sex as Sex,
+    };
+  }
+
+  @ResolveField('state')
+  async getState(@Parent() trial: Trial): Promise<TrialState> {
+    return TrialState.DRAFT;
   }
 }
