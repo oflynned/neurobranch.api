@@ -20,11 +20,22 @@ export enum QuestionType {
     TEXT = "TEXT"
 }
 
-export enum Frequency {
-    DAILY = "DAILY",
-    WEEKLY = "WEEKLY",
-    FORTNIGHTLY = "FORTNIGHTLY",
-    MONTHLY = "MONTHLY"
+export enum Epoch {
+    HOURS = "HOURS",
+    DAYS = "DAYS",
+    WEEKS = "WEEKS",
+    MONTHS = "MONTHS"
+}
+
+export enum TrialState {
+    DRAFT = "DRAFT",
+    PUBLISHED = "PUBLISHED",
+    ENLISTING = "ENLISTING",
+    STARTABLE = "STARTABLE",
+    ONGOING = "ONGOING",
+    DONE = "DONE",
+    ARCHIVED = "ARCHIVED",
+    CANCELLED = "CANCELLED"
 }
 
 export interface CreateInvestigatorInput {
@@ -47,7 +58,6 @@ export interface CreateTrialInput {
     synopsis: string;
     description: string;
     tags: string[];
-    frequency: Frequency;
 }
 
 export interface PaginationArgs {
@@ -96,6 +106,7 @@ export interface Investigator {
     sex: Sex;
     email: string;
     trials?: TrialConnection;
+    isOnboarded?: boolean;
 }
 
 export interface InvestigatorEdge {
@@ -107,6 +118,35 @@ export interface InvestigatorConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: InvestigatorEdge[];
+}
+
+export interface Organisation {
+    id: string;
+    auditLog?: AuditConnection;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    name: string;
+    slug: string;
+    logo?: Image;
+    creator: Investigator;
+    collaborators?: InvestigatorConnection;
+    observers?: InvestigatorConnection;
+    admins?: InvestigatorConnection;
+}
+
+export interface Team {
+    id: string;
+    auditLog?: AuditConnection;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    name: string;
+    description?: string;
+    members?: InvestigatorConnection;
+}
+
+export interface Image {
+    id: string;
+    url: string;
 }
 
 export interface Participant {
@@ -138,6 +178,17 @@ export interface Question {
     optional: boolean;
     choices?: Choice[];
     trial?: Trial;
+}
+
+export interface QuestionEdge {
+    node?: Question;
+    cursor: Cursor;
+}
+
+export interface QuestionConnection {
+    totalCount: number;
+    pageInfo: PageInfo;
+    edges: QuestionEdge[];
 }
 
 export interface Choice {
@@ -186,22 +237,46 @@ export interface ScaleResponse {
     response: number;
 }
 
+export interface TriggerTime {
+    hour: number;
+    minute: number;
+}
+
+export interface TriggerFrequency {
+    count: number;
+    unit: Epoch;
+}
+
+export interface Factor {
+    condition?: string[];
+}
+
+export interface Criteria {
+    inclusion?: Factor;
+    exclusion?: Factor;
+}
+
 export interface Trial {
     id: string;
     createdAt: Timestamp;
+    lastUpdatedAt?: Timestamp;
     deletedAt?: Timestamp;
-    title: string;
-    synopsis: string;
-    description: string;
-    tags: string[];
-    startTime: Timestamp;
-    endTime: Timestamp;
-    frequency: Frequency;
     auditLog?: AuditConnection;
+    criteria?: Criteria;
     lead?: Investigator;
     investigators?: InvestigatorConnection;
     participants?: ParticipantConnection;
-    questions?: Question[];
+    minimumParticipantCount?: number;
+    state?: TrialState;
+    title?: string;
+    synopsis?: string;
+    description?: string;
+    tags?: string[];
+    startTime?: Timestamp;
+    endTime?: Timestamp;
+    triggerTime?: TriggerTime;
+    triggerFrequency?: TriggerFrequency;
+    questions?: QuestionConnection;
 }
 
 export interface TrialEdge {
