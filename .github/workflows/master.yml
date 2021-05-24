@@ -47,7 +47,7 @@ jobs:
           yml: codecov.yml
           token: ${{ secrets.CODECOV_TOKEN }}
 
-  pre-release:
+  build:
     needs: test
     runs-on: ubuntu-latest
     strategy:
@@ -79,47 +79,19 @@ jobs:
         env:
           APOLLO_STUDIO_KEY: ${{ secrets.APOLLO_STUDIO_KEY }}
 
-      - name: Bump version
-        uses: 'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          commit-message: 'Release: bump version to {{version}} [skip ci]'
-
-  build-core-image:
-    needs: pre-release
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 14.x ]
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: eu-west-1
+
+      - name: Bump version
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit-message: 'Release: bump version to {{version}} [skip ci]'
 
       - name: Build and push image to ECR
         run: |
@@ -130,8 +102,11 @@ jobs:
         env:
           ECR_SECRET: ${{ secrets.ECR_SECRET }}
 
-  deploy-images:
-    needs: build-core-image
+      - name: Run migrations
+        run: npm run migrate:up
+
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
