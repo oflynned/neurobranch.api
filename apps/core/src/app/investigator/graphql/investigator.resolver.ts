@@ -22,6 +22,7 @@ import { UseGuards } from '@nestjs/common';
 import { JwtGuard, InvestigatorGuard } from './guards';
 import { TrialService } from '../../trial';
 import { Pagination } from '../../../../../../libs/graphql/src/pagination/pagination';
+import { InvestigatorEntity } from '../../../../../../prisma';
 
 @Resolver('Investigator')
 @UseGuards(JwtGuard)
@@ -34,9 +35,12 @@ export class InvestigatorResolver {
   @Query('getInvestigator')
   @UseGuards(InvestigatorGuard)
   async getInvestigator(
-    @Context('user') investigator: Investigator,
+    @Context('user') investigator: InvestigatorEntity,
   ): Promise<Investigator> {
-    return investigator;
+    return {
+      ...investigator,
+      sex: investigator.sex as Sex,
+    };
   }
 
   @Mutation('createInvestigator')
