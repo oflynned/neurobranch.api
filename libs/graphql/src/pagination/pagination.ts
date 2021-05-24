@@ -29,11 +29,12 @@ export class Pagination<T> {
 
     const { after, first } = args ?? {};
     const limit = first ?? 25;
+    const defaultOffset = 0;
 
-    const uncheckedOffset = codec.decode(after);
+    const uncheckedOffset = codec.decode(after ?? codec.encode(defaultOffset));
     const offset = Number.parseInt(uncheckedOffset.trim());
 
-    if (Number.isNaN(+uncheckedOffset)) {
+    if (Number.isNaN(+offset)) {
       throw new BadRequestException('After must be a valid integer');
     }
 
