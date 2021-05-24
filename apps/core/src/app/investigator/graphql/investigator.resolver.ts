@@ -12,6 +12,7 @@ import {
   CreateInvestigatorInput,
   Investigator,
   PaginationArgs,
+  Sex,
   Trial,
   TrialConnection,
 } from '../../../../../../libs/graphql/src';
@@ -20,7 +21,6 @@ import { FirebaseJwt } from '../../../../../../libs/firebase/src';
 import { UseGuards } from '@nestjs/common';
 import { JwtGuard, InvestigatorGuard } from './guards';
 import { TrialService } from '../../trial';
-import { InvestigatorEntity } from '../../../../../../libs/entities/src';
 import { Pagination } from '../../../../../../libs/graphql/src/pagination/pagination';
 
 @Resolver('Investigator')
@@ -34,8 +34,8 @@ export class InvestigatorResolver {
   @Query('getInvestigator')
   @UseGuards(InvestigatorGuard)
   async getInvestigator(
-    @Context('user') investigator: InvestigatorEntity,
-  ): Promise<InvestigatorEntity> {
+    @Context('user') investigator: Investigator,
+  ): Promise<Investigator> {
     return investigator;
   }
 
@@ -43,7 +43,7 @@ export class InvestigatorResolver {
   async createInvestigator(
     @Args('input') input: CreateInvestigatorInput,
     @Context('jwt') jwt: FirebaseJwt,
-  ): Promise<InvestigatorEntity> {
+  ): Promise<Investigator> {
     const dto: CreateInvestigatorDto = {
       ...input,
       email: jwt.email,
@@ -51,26 +51,35 @@ export class InvestigatorResolver {
       provider: jwt.firebase.sign_in_provider,
     };
 
-    return this.investigatorService.createInvestigator(dto);
+    const investigator = await this.investigatorService.createInvestigator(dto);
+
+    return {
+      ...investigator,
+      sex: investigator.sex as Sex,
+    };
   }
 
   @ResolveField('trials')
   async getTrials(
-    @Parent() investigator: InvestigatorEntity,
-    @Args('pagination') paginationArgs?: PaginationArgs,
+    @Parent() investigator: Investigator,
+    @Args('pagination') args?: PaginationArgs,
   ): Promise<TrialConnection> {
-    const { limit, offset } = Pagination.validate(paginationArgs);
+    const { limit, offset } = Pagination.validate(args);
     const totalCount = await this.trialService.getInvestigatorTrialsCount(
-      investigator,
+      investigator.id,
     );
+
     const { results } = await this.trialService.getInvestigatorTrials(
-      investigator,
+      investigator.id,
       limit,
       offset,
     );
 
-    const pagination = new Pagination<Trial>(results, totalCount, offset);
+    return new Pagination<Trial>(results, totalCount, offset).getConnection();
+  }
 
-    return pagination.getConnection();
+  @ResolveField('isOnboarded')
+  async isOnboarded(@Parent() investigator: Investigator): Promise<boolean> {
+    return !!investigator.name && !!investigator.dateOfBirth;
   }
 }

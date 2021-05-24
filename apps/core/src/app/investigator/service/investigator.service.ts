@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { InvestigatorEntity } from '../../../../../../libs/entities/src';
-import { Optional } from '../../../../../../libs/common/src';
 import { InvestigatorRepo } from './investigator.repo';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
+import { InvestigatorEntity } from '../../../../../../prisma/nestjs';
 
 @Injectable()
 export class InvestigatorService {
   constructor(private readonly investigatorRepo: InvestigatorRepo) {}
 
-  async getInvestigatorByEmail(
-    email: string,
-  ): Promise<Optional<InvestigatorEntity>> {
+  async getInvestigatorByEmail(email: string): Promise<InvestigatorEntity> {
     return this.investigatorRepo.getInvestigatorByEmail(email);
   }
 
@@ -24,8 +21,6 @@ export class InvestigatorService {
     if (investigator) {
       return investigator;
     }
-
-    // TODO validate dto fields
 
     return this.investigatorRepo.createInvestigator(dto);
   }
