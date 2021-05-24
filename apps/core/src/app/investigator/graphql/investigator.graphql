@@ -17,6 +17,7 @@ type Investigator {
   sex: Sex!
   email: String!
   trials(pagination: PaginationArgs): TrialConnection
+  isOnboarded: Boolean
 }
 
 enum Sex {

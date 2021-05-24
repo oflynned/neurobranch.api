@@ -7,29 +7,68 @@ type Mutation {
   createTrial(input: CreateTrialInput): Trial
 }
 
-enum Frequency {
-  DAILY
-  WEEKLY
-  FORTNIGHTLY
-  MONTHLY
+enum Epoch {
+  HOURS
+  DAYS
+  WEEKS
+  MONTHS
+}
+
+type TriggerTime {
+  hour: Int!
+  minute: Int!
+}
+
+type TriggerFrequency {
+  count: Int!
+  unit: Epoch!
+}
+
+type Factor {
+  condition: [String!]
+}
+
+type Criteria {
+  inclusion: Factor
+  exclusion: Factor
 }
 
 type Trial {
   id: ID!
   createdAt: Timestamp!
+  lastUpdatedAt: Timestamp
   deletedAt: Timestamp
-  title: String!
-  synopsis: String!
-  description: String!
-  tags: [String!]!
-  startTime: Timestamp!
-  endTime: Timestamp!
-  frequency: Frequency!
   auditLog: AuditConnection
+
+  criteria: Criteria
+
   lead: Investigator
   investigators: InvestigatorConnection
   participants: ParticipantConnection
-  questions: [Question!]
+
+  minimumParticipantCount: Int
+  state: TrialState
+  title: String
+  synopsis: String
+  description: String
+  tags: [String!]
+  startTime: Timestamp
+  endTime: Timestamp
+  triggerTime: TriggerTime
+  triggerFrequency: TriggerFrequency
+
+  questions: QuestionConnection
+}
+
+enum TrialState {
+  DRAFT
+  PUBLISHED
+  ENLISTING
+  STARTABLE
+  ONGOING
+  DONE
+  ARCHIVED
+  CANCELLED
 }
 
 type TrialEdge {
@@ -50,5 +89,4 @@ input CreateTrialInput {
   synopsis: String!
   description: String!
   tags: [String!]!
-  frequency: Frequency!
 }

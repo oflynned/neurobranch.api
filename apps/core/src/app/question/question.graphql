@@ -13,3 +13,14 @@ type Question {
   choices: [Choice!]
   trial: Trial
 }
+
+type QuestionEdge {
+  node: Question
+  cursor: Cursor!
+}
+
+type QuestionConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [QuestionEdge]!
+}

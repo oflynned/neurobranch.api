@@ -1,60 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { CreateTrialDto } from '../dto/create-trial.dto';
 import {
   InvestigatorEntity,
+  PrismaService,
   TrialEntity,
-} from '../../../../../../libs/entities/src';
-import { CreateTrialDto } from '../dto/create-trial.dto';
+} from '../../../../../../prisma/nestjs';
 
 @Injectable()
 export class TrialRepo {
-  constructor(
-    @InjectRepository(TrialEntity)
-    private readonly repo: Repository<TrialEntity>,
-  ) {}
+  constructor(private readonly repo: PrismaService) {}
 
   async createTrial(
     dto: CreateTrialDto,
-    investigator: InvestigatorEntity,
+    investigatorId: string,
     createdAt = new Date(),
   ): Promise<TrialEntity> {
-    const entity = {
+    const entity: Omit<TrialEntity, 'id'> = {
       ...dto,
-      investigator,
       createdAt,
+      deletedAt: null,
+      leadId: investigatorId,
     };
 
-    return this.repo.save(entity);
+    return this.repo.trial.create({ data: entity });
   }
 
-  async getTrialLead(trial: TrialEntity): Promise<InvestigatorEntity> {
-    const joinedTrial = await this.repo.findOne({
-      where: { id: trial.id },
-      relations: ['investigator'],
-    });
-
-    return joinedTrial.investigator;
+  async getTrialLead(trialId: string): Promise<InvestigatorEntity> {
+    return this.repo.trial.findUnique({ where: { id: trialId } }).lead();
   }
 
   async getInvestigatorTrials(
-    investigator: InvestigatorEntity,
+    investigatorId: string,
     limit: number,
     offset: number,
   ): Promise<TrialEntity[]> {
-    return this.repo.find({
-      where: { investigator },
+    return this.repo.trial.findMany({
+      where: { leadId: investigatorId },
       take: limit,
       skip: offset,
-      order: {
-        createdAt: 'DESC',
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }
 
-  async getInvestigatorTrialCount(
-    investigator: InvestigatorEntity,
-  ): Promise<number> {
-    return this.repo.count({ investigator });
+  async getInvestigatorTrialCount(investigatorId: string): Promise<number> {
+    return this.repo.trial.count({
+      where: { leadId: investigatorId },
+    });
   }
 }

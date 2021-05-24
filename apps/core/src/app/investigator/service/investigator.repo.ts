@@ -1,31 +1,42 @@
-import { InvestigatorEntity } from '../../../../../../libs/entities/src';
-import { Optional } from '../../../../../../libs/common/src';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
+import {
+  PrismaService,
+  InvestigatorEntity,
+} from '../../../../../../prisma/nestjs';
+
+type UpdateInvestigatorDto = Partial<
+  Pick<
+    InvestigatorEntity,
+    'email' | 'providerId' | 'provider' | 'name' | 'dateOfBirth'
+  >
+>;
 
 @Injectable()
 export class InvestigatorRepo {
-  constructor(
-    @InjectRepository(InvestigatorEntity)
-    private readonly repo: Repository<InvestigatorEntity>,
-  ) {}
+  constructor(private readonly repo: PrismaService) {}
 
   async getInvestigatorByEmail(
     email: string,
-  ): Promise<Optional<InvestigatorEntity>> {
-    return this.repo.findOne({ email });
+  ): Promise<InvestigatorEntity | null> {
+    return this.repo.investigator.findFirst({ where: { email } });
   }
 
-  async getInvestigatorById(id: string): Promise<Optional<InvestigatorEntity>> {
-    return this.repo.findOne({ id });
+  async updateInvestigator(
+    id: string,
+    dto: UpdateInvestigatorDto,
+  ): Promise<InvestigatorEntity> {
+    return this.repo.investigator.update({ where: { id }, data: dto });
+  }
+
+  async getInvestigatorById(id: string): Promise<InvestigatorEntity | null> {
+    return this.repo.investigator.findFirst({ where: { id } });
   }
 
   async createInvestigator(
     dto: CreateInvestigatorDto,
     createdAt = new Date(),
   ): Promise<InvestigatorEntity> {
-    return this.repo.save({ ...dto, createdAt });
+    return this.repo.investigator.create({ data: { ...dto, createdAt } });
   }
 }

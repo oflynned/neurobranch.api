@@ -20,76 +20,82 @@ export enum QuestionType {
     TEXT = "TEXT"
 }
 
-export enum Frequency {
-    DAILY = "DAILY",
-    WEEKLY = "WEEKLY",
-    FORTNIGHTLY = "FORTNIGHTLY",
-    MONTHLY = "MONTHLY"
+export enum Epoch {
+    HOURS = "HOURS",
+    DAYS = "DAYS",
+    WEEKS = "WEEKS",
+    MONTHS = "MONTHS"
 }
 
-export class CreateInvestigatorInput {
+export enum TrialState {
+    DRAFT = "DRAFT",
+    PUBLISHED = "PUBLISHED",
+    ENLISTING = "ENLISTING",
+    STARTABLE = "STARTABLE",
+    ONGOING = "ONGOING",
+    DONE = "DONE",
+    ARCHIVED = "ARCHIVED",
+    CANCELLED = "CANCELLED"
+}
+
+export interface CreateInvestigatorInput {
     name: string;
     dateOfBirth: string;
     sex: Sex;
 }
 
-export class ParticipantInput {
+export interface ParticipantInput {
     name: string;
     dateOfBirth: string;
     email: string;
     username: string;
 }
 
-export class CreateTrialInput {
+export interface CreateTrialInput {
     startTime: Timestamp;
     duration: number;
     title: string;
     synopsis: string;
     description: string;
     tags: string[];
-    frequency: Frequency;
 }
 
-export class PaginationArgs {
+export interface PaginationArgs {
     first?: number;
     after?: Cursor;
 }
 
-export class Audit {
+export interface Audit {
     id: string;
     action: string;
     performedAt: Timestamp;
     performedBy?: Actor;
 }
 
-export class AuditEdge {
+export interface AuditEdge {
     node?: Audit;
     cursor: Cursor;
 }
 
-export class AuditConnection {
+export interface AuditConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: AuditEdge[];
 }
 
-export abstract class IQuery {
-    abstract getInvestigator(): Investigator | Promise<Investigator>;
-
-    abstract createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
-
-    abstract getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
-
-    abstract getTrial(trialId: string): Trial | Promise<Trial>;
+export interface IQuery {
+    getInvestigator(): Investigator | Promise<Investigator>;
+    createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
+    getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
+    getTrial(trialId: string): Trial | Promise<Trial>;
 }
 
-export abstract class IMutation {
-    abstract createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
-
-    abstract createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
+export interface IMutation {
+    createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
+    createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
 }
 
-export class Investigator {
+export interface Investigator {
     id: string;
     auditLog?: AuditConnection;
     createdAt: Timestamp;
@@ -100,20 +106,50 @@ export class Investigator {
     sex: Sex;
     email: string;
     trials?: TrialConnection;
+    isOnboarded?: boolean;
 }
 
-export class InvestigatorEdge {
+export interface InvestigatorEdge {
     node?: Trial;
     cursor: Cursor;
 }
 
-export class InvestigatorConnection {
+export interface InvestigatorConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: InvestigatorEdge[];
 }
 
-export class Participant {
+export interface Organisation {
+    id: string;
+    auditLog?: AuditConnection;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    name: string;
+    slug: string;
+    logo?: Image;
+    creator: Investigator;
+    collaborators?: InvestigatorConnection;
+    observers?: InvestigatorConnection;
+    admins?: InvestigatorConnection;
+}
+
+export interface Team {
+    id: string;
+    auditLog?: AuditConnection;
+    createdAt: Timestamp;
+    deletedAt?: Timestamp;
+    name: string;
+    description?: string;
+    members?: InvestigatorConnection;
+}
+
+export interface Image {
+    id: string;
+    url: string;
+}
+
+export interface Participant {
     id: string;
     createdAt: Timestamp;
     deletedAt?: Timestamp;
@@ -124,18 +160,18 @@ export class Participant {
     email: string;
 }
 
-export class ParticipantEdge {
+export interface ParticipantEdge {
     node?: Participant;
     cursor: Cursor;
 }
 
-export class ParticipantConnection {
+export interface ParticipantConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: ParticipantEdge[];
 }
 
-export class Question {
+export interface Question {
     id: string;
     title: string;
     type: QuestionType;
@@ -144,23 +180,34 @@ export class Question {
     trial?: Trial;
 }
 
-export class Choice {
+export interface QuestionEdge {
+    node?: Question;
+    cursor: Cursor;
+}
+
+export interface QuestionConnection {
+    totalCount: number;
+    pageInfo: PageInfo;
+    edges: QuestionEdge[];
+}
+
+export interface Choice {
     id: string;
     index: number;
 }
 
-export class ResponseEdge {
+export interface ResponseEdge {
     node?: Response;
     cursor: Cursor;
 }
 
-export class ResponseConnection {
+export interface ResponseConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: ResponseEdge[];
 }
 
-export class RadioResponse {
+export interface RadioResponse {
     id: string;
     type: QuestionType;
     respondent?: Participant;
@@ -168,7 +215,7 @@ export class RadioResponse {
     response?: Choice;
 }
 
-export class CheckboxResponse {
+export interface CheckboxResponse {
     id: string;
     type: QuestionType;
     respondent?: Participant;
@@ -176,50 +223,74 @@ export class CheckboxResponse {
     responses?: Choice[];
 }
 
-export class TextResponse {
+export interface TextResponse {
     id: string;
     type: QuestionType;
     respondent?: Participant;
     response: string;
 }
 
-export class ScaleResponse {
+export interface ScaleResponse {
     id: string;
     type: QuestionType;
     respondent?: Participant;
     response: number;
 }
 
-export class Trial {
+export interface TriggerTime {
+    hour: number;
+    minute: number;
+}
+
+export interface TriggerFrequency {
+    count: number;
+    unit: Epoch;
+}
+
+export interface Factor {
+    condition?: string[];
+}
+
+export interface Criteria {
+    inclusion?: Factor;
+    exclusion?: Factor;
+}
+
+export interface Trial {
     id: string;
     createdAt: Timestamp;
+    lastUpdatedAt?: Timestamp;
     deletedAt?: Timestamp;
-    title: string;
-    synopsis: string;
-    description: string;
-    tags: string[];
-    startTime: Timestamp;
-    endTime: Timestamp;
-    frequency: Frequency;
     auditLog?: AuditConnection;
+    criteria?: Criteria;
     lead?: Investigator;
     investigators?: InvestigatorConnection;
     participants?: ParticipantConnection;
-    questions?: Question[];
+    minimumParticipantCount?: number;
+    state?: TrialState;
+    title?: string;
+    synopsis?: string;
+    description?: string;
+    tags?: string[];
+    startTime?: Timestamp;
+    endTime?: Timestamp;
+    triggerTime?: TriggerTime;
+    triggerFrequency?: TriggerFrequency;
+    questions?: QuestionConnection;
 }
 
-export class TrialEdge {
+export interface TrialEdge {
     node?: Trial;
     cursor: Cursor;
 }
 
-export class TrialConnection {
+export interface TrialConnection {
     totalCount: number;
     pageInfo: PageInfo;
     edges: TrialEdge[];
 }
 
-export class PageInfo {
+export interface PageInfo {
     hasPreviousPage: boolean;
     hasNextPage: boolean;
     startCursor?: Cursor;

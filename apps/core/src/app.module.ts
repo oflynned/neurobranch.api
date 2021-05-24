@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 
-import { PostgresModule } from '../../../libs/orm/src';
 import {
   CoreConfigModule,
   CoreConfigService,
@@ -13,6 +12,7 @@ import { CacheModule } from '../../../libs/cache/src';
 import { RedisModule } from 'nestjs-redis';
 import { FirebaseValidator } from '../../../libs/firebase/src';
 import { join } from 'path';
+import { PrismaModule } from '../../../prisma/nestjs';
 
 const services = [InvestigatorModule, TrialModule];
 
@@ -20,7 +20,7 @@ const services = [InvestigatorModule, TrialModule];
   imports: [
     CoreConfigModule,
     CacheModule,
-    PostgresModule,
+    PrismaModule,
     FirebaseAdminModule.forRootAsync({
       useFactory: () => ({
         credential: FirebaseValidator.applicationDefault(),
