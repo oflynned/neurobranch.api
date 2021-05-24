@@ -11,7 +11,5 @@
 - Cache
 - Common
 - Config
-- Entities
 - Firebase
 - GraphQL
-- ORM
