@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Investigator {
+  id            String                 @id @default(uuid())
+  createdAt     DateTime
+  deletedAt     DateTime?
+  name          String
+  sex           Sex
+  email         String
+  dateOfBirth   String
+  provider      String
+  providerId    String
+  verifiedAt    DateTime?
+  leadingTrials Trial[]
+}
+
+model Trial {
+  id             String                 @id @default(uuid())
+  createdAt      DateTime
+  deletedAt      DateTime?
+  startTime      DateTime
+  endTime        DateTime
+  title          String
+  synopsis       String
+  description    String
+  tags           String[]
+  leadId         String
+  lead           Investigator           @relation(fields: [leadId], references: [id])
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+}
