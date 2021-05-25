@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InvestigatorRepo } from './investigator.repo';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
-import { InvestigatorEntity } from '../../../../../../prisma/nestjs';
+import { InvestigatorEntity } from '@db';
 
 @Injectable()
 export class InvestigatorService {

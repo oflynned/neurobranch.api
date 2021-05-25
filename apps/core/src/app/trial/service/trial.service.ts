@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TrialRepo } from './trial.repo';
 import { CreateTrialDto } from '../dto/create-trial.dto';
 import { ServicePagination } from '../../../../../../libs/graphql/src/pagination/pagination';
-import {
-  InvestigatorEntity,
-  TrialEntity,
-} from '../../../../../../prisma/nestjs';
+import { InvestigatorEntity, TrialEntity } from '@db';
 
 @Injectable()
 export class TrialService {

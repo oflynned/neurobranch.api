@@ -5,7 +5,7 @@ import { TrialModule } from '../../trial';
 import { InvestigatorService } from './investigator.service';
 import { InvestigatorResolver } from '../graphql/investigator.resolver';
 import { InvestigatorRepo } from './investigator.repo';
-import { PrismaModule } from '../../../../../../prisma/nestjs';
+import { PrismaModule } from '@db';
 
 @Module({
   imports: [PrismaModule, FirebaseModule, forwardRef(() => TrialModule)],

@@ -17,7 +17,7 @@ import {
 } from '../../../../../../libs/graphql/src';
 import { TrialService } from '../service/trial.service';
 import { CreateTrialDto } from '../dto/create-trial.dto';
-import { InvestigatorEntity } from '../../../../../../prisma/nestjs';
+import { InvestigatorEntity } from '@db';
 
 @Resolver('Trial')
 @UseGuards(JwtGuard)
