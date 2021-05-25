@@ -74,6 +74,7 @@ jobs:
       - name: Generate merged types
         run: npm run types:merge
 
+      # TODO wrap this and use a glob so that types do not have to be merged twice
       - name: Update Apollo Studio types
         run: npx apollo service:push --graph=Neurobranch --key=$APOLLO_STUDIO_KEY --variant=current --localSchemaFile=./apps/core/src/assets/schema.graphql
         env:
