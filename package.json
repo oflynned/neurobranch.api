@@ -90,7 +90,7 @@
     "migrate:up": "prisma migrate deploy",
     "nx": "nx",
     "start": "npm run start:core",
-    "start:core": "MODE=development nx serve core",
+    "start:core": "npm run types:merge && MODE=production nx serve core",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "typecheck": "tsc --noEmit --project tsconfig.json",

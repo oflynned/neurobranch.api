@@ -1,4 +1,4 @@
-import { TrialEntity } from '../../../../../../prisma/nestjs';
+import { TrialEntity } from '@db';
 
 export type CreateTrialDto = Pick<
   TrialEntity,

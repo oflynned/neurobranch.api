@@ -12,7 +12,7 @@ import { CacheModule } from '../../../libs/cache/src';
 import { RedisModule } from 'nestjs-redis';
 import { FirebaseValidator } from '../../../libs/firebase/src';
 import { join } from 'path';
-import { PrismaModule } from '../../../prisma/nestjs';
+import { PrismaModule } from '@db';
 
 const services = [InvestigatorModule, TrialModule];
 

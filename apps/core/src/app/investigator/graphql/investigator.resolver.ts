@@ -22,7 +22,7 @@ import { UseGuards } from '@nestjs/common';
 import { JwtGuard, InvestigatorGuard } from './guards';
 import { TrialService } from '../../trial';
 import { Pagination } from '../../../../../../libs/graphql/src/pagination/pagination';
-import { InvestigatorEntity } from '../../../../../../prisma';
+import { InvestigatorEntity } from '@db';
 
 @Resolver('Investigator')
 @UseGuards(JwtGuard)
