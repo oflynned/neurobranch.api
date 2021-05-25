@@ -100,5 +100,5 @@
     "upgrade:dependencies": "ncu -u --target minor && npm install",
     "workspace-generator": "nx workspace-generator"
   },
-  "version": "0.0.7"
+  "version": "0.0.8"
 }
