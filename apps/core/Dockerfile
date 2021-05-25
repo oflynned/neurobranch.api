@@ -9,6 +9,7 @@ COPY . .
 
 RUN npm install
 RUN npm run types:merge
+RUN npm run prisma:core:generate
 RUN npm run nx -- build core --production --no-cache
 RUN npm prune --production
 RUN /usr/local/bin/node-prune
