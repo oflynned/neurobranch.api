@@ -24,6 +24,8 @@ model Investigator {
 
 model Organisation {
   id            String                    @id @default(uuid())
+  createdAt     DateTime
+  deletedAt     DateTime?
   name          String
   slug          String
   creatorId     String
