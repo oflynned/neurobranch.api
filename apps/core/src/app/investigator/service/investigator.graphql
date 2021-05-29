@@ -1,8 +1,8 @@
-type Query {
+extend type Query {
   getInvestigator: Investigator
 }
 
-type Mutation {
+extend type Mutation {
   createInvestigator(input: CreateInvestigatorInput): Investigator
 }
 
@@ -16,8 +16,10 @@ type Investigator {
   dateOfBirth: String!
   sex: Sex!
   email: String!
-  trials(pagination: PaginationArgs): TrialConnection
   isOnboarded: Boolean
+  organisations(pagination: PaginationArgs): OrganisationConnection
+  teams(pagination: PaginationArgs): TeamConnection
+  trials(pagination: PaginationArgs): TrialConnection
 }
 
 enum Sex {

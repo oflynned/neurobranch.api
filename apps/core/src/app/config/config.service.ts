@@ -1,4 +1,4 @@
-import { BaseConfigService } from '../../../../../libs/config/src';
+import { BaseConfigService } from '@config';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 

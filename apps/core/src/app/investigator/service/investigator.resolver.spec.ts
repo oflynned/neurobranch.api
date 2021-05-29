@@ -1,5 +1,5 @@
 import { InvestigatorResolver } from './investigator.resolver';
-import { InvestigatorService } from '../service/investigator.service';
+import { InvestigatorService } from './investigator.service';
 import { mock } from 'jest-mock-extended';
 import { TrialService } from '../../trial';
 

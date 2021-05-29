@@ -1,9 +1,9 @@
-type Query {
-  getEligibleTrials: TrialConnection
+extend type Query {
+  getEligibleTrials(pagination: PaginationArgs): TrialConnection
   getTrial(trialId: String!): Trial
 }
 
-type Mutation {
+extend type Mutation {
   createTrial(input: CreateTrialInput): Trial
 }
 
@@ -43,8 +43,8 @@ type Trial {
   criteria: Criteria
 
   lead: Investigator
-  investigators: InvestigatorConnection
-  participants: ParticipantConnection
+  investigators(pagination: PaginationArgs): InvestigatorConnection
+  participants(pagination: PaginationArgs): ParticipantConnection
 
   minimumParticipantCount: Int
   state: TrialState
@@ -57,7 +57,7 @@ type Trial {
   triggerTime: TriggerTime
   triggerFrequency: TriggerFrequency
 
-  questions: QuestionConnection
+  questions(pagination: PaginationArgs): QuestionConnection
 }
 
 enum TrialState {

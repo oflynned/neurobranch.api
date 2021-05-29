@@ -1,11 +1,10 @@
-import { Optional } from '../../../../../libs/common/src';
-import { Codec } from '../../../../../libs/common/src/codec';
+import { Optional, Codec } from '@common';
 import {
   FirebaseServiceAccount,
   CredentialStore,
   FirebaseConfig,
   FirebaseValidator,
-} from '../../../../../libs/firebase/src';
+} from '@firebase';
 
 export class RawConfigService {
   private env: Record<string, Optional<string>>;

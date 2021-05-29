@@ -1,21 +1,14 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { FirebaseModule } from '../../../../../../libs/firebase/src';
-import { JwtGuard, InvestigatorGuard } from '../graphql/guards';
-import { TrialModule } from '../../trial';
-import { InvestigatorService } from './investigator.service';
-import { InvestigatorResolver } from '../graphql/investigator.resolver';
-import { InvestigatorRepo } from './investigator.repo';
+import { FirebaseModule } from '@firebase';
 import { PrismaModule } from '@db';
+import { InvestigatorResolver } from './investigator.resolver';
+import { InvestigatorService } from './investigator.service';
+import { InvestigatorRepo } from './investigator.repo';
+import { TrialModule } from '../../trial';
 
 @Module({
   imports: [PrismaModule, FirebaseModule, forwardRef(() => TrialModule)],
-  exports: [InvestigatorService, JwtGuard, InvestigatorGuard],
-  providers: [
-    InvestigatorResolver,
-    InvestigatorService,
-    InvestigatorRepo,
-    JwtGuard,
-    InvestigatorGuard,
-  ],
+  exports: [InvestigatorService],
+  providers: [InvestigatorResolver, InvestigatorService, InvestigatorRepo],
 })
 export class InvestigatorModule {}

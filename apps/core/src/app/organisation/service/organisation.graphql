@@ -1,0 +1,43 @@
+extend type Query {
+  getOrganisation(organisationId: String!): Organisation
+}
+
+extend type Mutation {
+  createOrganisation(input: CreateOrganisationInput!): Organisation
+}
+
+input CreateOrganisationInput {
+  name: String!
+  slug: String!
+}
+
+type Organisation {
+  id: ID!
+  auditLog: AuditConnection
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  name: String!
+  slug: String!
+  logo: Image
+  creator: Investigator!
+  admins(pagination: PaginationArgs): InvestigatorConnection
+  collaborators(pagination: PaginationArgs): InvestigatorConnection
+  observers(pagination: PaginationArgs): InvestigatorConnection
+  teams(pagination: PaginationArgs): TeamConnection
+}
+
+type OrganisationEdge {
+  node: Organisation
+  cursor: Cursor!
+}
+
+type OrganisationConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [OrganisationEdge]!
+}
+
+type Image {
+  id: ID!
+  url: String!
+}

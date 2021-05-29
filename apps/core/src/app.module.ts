@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
-
 import {
   CoreConfigModule,
   CoreConfigService,
   InvestigatorModule,
+  OrganisationModule,
   TrialModule,
 } from './app';
-import { CacheModule } from '../../../libs/cache/src';
+import { CacheModule } from '@cache';
 import { RedisModule } from 'nestjs-redis';
-import { FirebaseValidator } from '../../../libs/firebase/src';
+import { FirebaseValidator } from '@firebase';
 import { join } from 'path';
 import { PrismaModule } from '@db';
 
-const services = [InvestigatorModule, TrialModule];
+const services = [InvestigatorModule, OrganisationModule, TrialModule];
 
 @Module({
   imports: [

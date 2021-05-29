@@ -7,25 +7,25 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { InvestigatorGuard, JwtGuard } from '../../investigator/graphql/guards';
 import {
   CreateTrialInput,
   Investigator,
   Sex,
   Trial,
   TrialState,
-} from '../../../../../../libs/graphql/src';
-import { TrialService } from '../service/trial.service';
+} from '@graphql';
+import { TrialService } from './trial.service';
 import { CreateTrialDto } from '../dto/create-trial.dto';
 import { InvestigatorEntity } from '@db';
+import { JwtGuard } from '../../guards/jwt.guard';
+import { InvestigatorGuard } from '../../guards/investigator.guard';
 
 @Resolver('Trial')
-@UseGuards(JwtGuard)
+@UseGuards(JwtGuard, InvestigatorGuard)
 export class TrialResolver {
   constructor(private readonly trialService: TrialService) {}
 
   @Mutation('createTrial')
-  @UseGuards(InvestigatorGuard)
   async createTrial(
     @Args('input') input: CreateTrialInput,
     @Context('user') investigator: InvestigatorEntity,

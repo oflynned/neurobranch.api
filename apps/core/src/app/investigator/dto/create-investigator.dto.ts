@@ -1,4 +1,4 @@
-import { CreateInvestigatorInput } from '../../../../../../libs/graphql/src';
+import { CreateInvestigatorInput } from '@graphql';
 
 export type CreateInvestigatorDto = CreateInvestigatorInput & {
   email: string;
