@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Investigator {
-  id            String                 @id @default(uuid())
+  id            String                    @id @default(uuid())
   createdAt     DateTime
   deletedAt     DateTime?
   name          String
@@ -19,20 +19,29 @@ model Investigator {
   providerId    String
   verifiedAt    DateTime?
   leadingTrials Trial[]
+  organisations Organisation[]
+}
+
+model Organisation {
+  id            String                    @id @default(uuid())
+  name          String
+  slug          String
+  creatorId     String
+  creator       Investigator              @relation(fields: [creatorId], references: [id])
 }
 
 model Trial {
-  id             String                 @id @default(uuid())
-  createdAt      DateTime
-  deletedAt      DateTime?
-  startTime      DateTime
-  endTime        DateTime
-  title          String
-  synopsis       String
-  description    String
-  tags           String[]
-  leadId         String
-  lead           Investigator           @relation(fields: [leadId], references: [id])
+  id              String                  @id @default(uuid())
+  createdAt       DateTime
+  deletedAt       DateTime?
+  startTime       DateTime
+  endTime         DateTime
+  title           String
+  synopsis        String
+  description     String
+  tags            String[]
+  leadId          String
+  lead            Investigator            @relation(fields: [leadId], references: [id])
 }
 
 enum Sex {
