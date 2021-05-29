@@ -1,4 +1,3 @@
-
 /*
  * ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -8,296 +7,344 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum Sex {
-    MALE = "MALE",
-    FEMALE = "FEMALE",
-    OTHER = "OTHER"
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
 }
 
 export enum QuestionType {
-    RADIO = "RADIO",
-    CHECKBOX = "CHECKBOX",
-    SCALE = "SCALE",
-    TEXT = "TEXT"
+  RADIO = 'RADIO',
+  CHECKBOX = 'CHECKBOX',
+  SCALE = 'SCALE',
+  TEXT = 'TEXT',
 }
 
 export enum Epoch {
-    HOURS = "HOURS",
-    DAYS = "DAYS",
-    WEEKS = "WEEKS",
-    MONTHS = "MONTHS"
+  HOURS = 'HOURS',
+  DAYS = 'DAYS',
+  WEEKS = 'WEEKS',
+  MONTHS = 'MONTHS',
 }
 
 export enum TrialState {
-    DRAFT = "DRAFT",
-    PUBLISHED = "PUBLISHED",
-    ENLISTING = "ENLISTING",
-    STARTABLE = "STARTABLE",
-    ONGOING = "ONGOING",
-    DONE = "DONE",
-    ARCHIVED = "ARCHIVED",
-    CANCELLED = "CANCELLED"
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  ENLISTING = 'ENLISTING',
+  STARTABLE = 'STARTABLE',
+  ONGOING = 'ONGOING',
+  DONE = 'DONE',
+  ARCHIVED = 'ARCHIVED',
+  CANCELLED = 'CANCELLED',
 }
 
 export interface CreateInvestigatorInput {
-    name: string;
-    dateOfBirth: string;
-    sex: Sex;
+  name: string;
+  dateOfBirth: string;
+  sex: Sex;
+}
+
+export interface CreateOrganisationInput {
+  name: string;
+  slug: string;
 }
 
 export interface ParticipantInput {
-    name: string;
-    dateOfBirth: string;
-    email: string;
-    username: string;
+  name: string;
+  dateOfBirth: string;
+  email: string;
+  username: string;
 }
 
 export interface CreateTrialInput {
-    startTime: Timestamp;
-    duration: number;
-    title: string;
-    synopsis: string;
-    description: string;
-    tags: string[];
+  startTime: Timestamp;
+  duration: number;
+  title: string;
+  synopsis: string;
+  description: string;
+  tags: string[];
 }
 
 export interface PaginationArgs {
-    first?: number;
-    after?: Cursor;
+  first?: number;
+  after?: Cursor;
 }
 
 export interface Audit {
-    id: string;
-    action: string;
-    performedAt: Timestamp;
-    performedBy?: Actor;
+  id: string;
+  action: string;
+  performedAt: Timestamp;
+  performedBy?: Actor;
 }
 
 export interface AuditEdge {
-    node?: Audit;
-    cursor: Cursor;
+  node?: Audit;
+  cursor: Cursor;
 }
 
 export interface AuditConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: AuditEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: AuditEdge[];
 }
 
 export interface IQuery {
-    getInvestigator(): Investigator | Promise<Investigator>;
-    createParticipantAccount(input?: ParticipantInput): Participant | Promise<Participant>;
-    getEligibleTrials(): TrialConnection | Promise<TrialConnection>;
-    getTrial(trialId: string): Trial | Promise<Trial>;
+  getInvestigator(): Investigator | Promise<Investigator>;
+  getOrganisation(organisationId: string): Organisation | Promise<Organisation>;
+  getEligibleTrials(
+    pagination?: PaginationArgs,
+  ): TrialConnection | Promise<TrialConnection>;
+  getTrial(trialId: string): Trial | Promise<Trial>;
+  getServerTime(): Timestamp | Promise<Timestamp>;
 }
 
 export interface IMutation {
-    createInvestigator(input?: CreateInvestigatorInput): Investigator | Promise<Investigator>;
-    createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
+  createInvestigator(
+    input?: CreateInvestigatorInput,
+  ): Investigator | Promise<Investigator>;
+  createOrganisation(
+    input: CreateOrganisationInput,
+  ): Organisation | Promise<Organisation>;
+  createParticipantAccount(
+    input?: ParticipantInput,
+  ): Participant | Promise<Participant>;
+  createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
+  getServerTime(): Timestamp | Promise<Timestamp>;
 }
 
 export interface Investigator {
-    id: string;
-    auditLog?: AuditConnection;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    verifiedAt?: Timestamp;
-    name: string;
-    dateOfBirth: string;
-    sex: Sex;
-    email: string;
-    trials?: TrialConnection;
-    isOnboarded?: boolean;
+  id: string;
+  auditLog?: AuditConnection;
+  createdAt: Timestamp;
+  deletedAt?: Timestamp;
+  verifiedAt?: Timestamp;
+  name: string;
+  dateOfBirth: string;
+  sex: Sex;
+  email: string;
+  isOnboarded?: boolean;
+  organisations?: OrganisationConnection;
+  teams?: TeamConnection;
+  trials?: TrialConnection;
 }
 
 export interface InvestigatorEdge {
-    node?: Trial;
-    cursor: Cursor;
+  node?: Trial;
+  cursor: Cursor;
 }
 
 export interface InvestigatorConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: InvestigatorEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: InvestigatorEdge[];
 }
 
 export interface Organisation {
-    id: string;
-    auditLog?: AuditConnection;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    name: string;
-    slug: string;
-    logo?: Image;
-    creator: Investigator;
-    collaborators?: InvestigatorConnection;
-    observers?: InvestigatorConnection;
-    admins?: InvestigatorConnection;
+  id: string;
+  auditLog?: AuditConnection;
+  createdAt: Timestamp;
+  deletedAt?: Timestamp;
+  name: string;
+  slug: string;
+  logo?: Image;
+  creator: Investigator;
+  admins?: InvestigatorConnection;
+  collaborators?: InvestigatorConnection;
+  observers?: InvestigatorConnection;
+  teams?: TeamConnection;
 }
 
-export interface Team {
-    id: string;
-    auditLog?: AuditConnection;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    name: string;
-    description?: string;
-    members?: InvestigatorConnection;
+export interface OrganisationEdge {
+  node?: Organisation;
+  cursor: Cursor;
+}
+
+export interface OrganisationConnection {
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: OrganisationEdge[];
 }
 
 export interface Image {
-    id: string;
-    url: string;
+  id: string;
+  url: string;
 }
 
 export interface Participant {
-    id: string;
-    createdAt: Timestamp;
-    deletedAt?: Timestamp;
-    verifiedAt?: Timestamp;
-    auditLog?: AuditConnection;
-    name: string;
-    username: string;
-    email: string;
+  id: string;
+  createdAt: Timestamp;
+  deletedAt?: Timestamp;
+  verifiedAt?: Timestamp;
+  auditLog?: AuditConnection;
+  name: string;
+  username: string;
+  email: string;
 }
 
 export interface ParticipantEdge {
-    node?: Participant;
-    cursor: Cursor;
+  node?: Participant;
+  cursor: Cursor;
 }
 
 export interface ParticipantConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: ParticipantEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: ParticipantEdge[];
 }
 
 export interface Question {
-    id: string;
-    title: string;
-    type: QuestionType;
-    optional: boolean;
-    choices?: Choice[];
-    trial?: Trial;
+  id: string;
+  title: string;
+  type: QuestionType;
+  optional: boolean;
+  choices?: Choice[];
+  trial?: Trial;
 }
 
 export interface QuestionEdge {
-    node?: Question;
-    cursor: Cursor;
+  node?: Question;
+  cursor: Cursor;
 }
 
 export interface QuestionConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: QuestionEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: QuestionEdge[];
 }
 
 export interface Choice {
-    id: string;
-    index: number;
+  id: string;
+  index: number;
 }
 
 export interface ResponseEdge {
-    node?: Response;
-    cursor: Cursor;
+  node?: Response;
+  cursor: Cursor;
 }
 
 export interface ResponseConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: ResponseEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: ResponseEdge[];
 }
 
 export interface RadioResponse {
-    id: string;
-    type: QuestionType;
-    respondent?: Participant;
-    choices?: Choice[];
-    response?: Choice;
+  id: string;
+  type: QuestionType;
+  respondent?: Participant;
+  choices?: Choice[];
+  response?: Choice;
 }
 
 export interface CheckboxResponse {
-    id: string;
-    type: QuestionType;
-    respondent?: Participant;
-    choices?: Choice[];
-    responses?: Choice[];
+  id: string;
+  type: QuestionType;
+  respondent?: Participant;
+  choices?: Choice[];
+  responses?: Choice[];
 }
 
 export interface TextResponse {
-    id: string;
-    type: QuestionType;
-    respondent?: Participant;
-    response: string;
+  id: string;
+  type: QuestionType;
+  respondent?: Participant;
+  response: string;
 }
 
 export interface ScaleResponse {
-    id: string;
-    type: QuestionType;
-    respondent?: Participant;
-    response: number;
+  id: string;
+  type: QuestionType;
+  respondent?: Participant;
+  response: number;
+}
+
+export interface Team {
+  id: string;
+  auditLog?: AuditConnection;
+  createdAt: Timestamp;
+  deletedAt?: Timestamp;
+  name: string;
+  description?: string;
+  members?: InvestigatorConnection;
+  organisation: Organisation;
+  trials?: TrialConnection;
+}
+
+export interface TeamEdge {
+  node?: Team;
+  cursor: Cursor;
+}
+
+export interface TeamConnection {
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: TeamEdge[];
 }
 
 export interface TriggerTime {
-    hour: number;
-    minute: number;
+  hour: number;
+  minute: number;
 }
 
 export interface TriggerFrequency {
-    count: number;
-    unit: Epoch;
+  count: number;
+  unit: Epoch;
 }
 
 export interface Factor {
-    condition?: string[];
+  condition?: string[];
 }
 
 export interface Criteria {
-    inclusion?: Factor;
-    exclusion?: Factor;
+  inclusion?: Factor;
+  exclusion?: Factor;
 }
 
 export interface Trial {
-    id: string;
-    createdAt: Timestamp;
-    lastUpdatedAt?: Timestamp;
-    deletedAt?: Timestamp;
-    auditLog?: AuditConnection;
-    criteria?: Criteria;
-    lead?: Investigator;
-    investigators?: InvestigatorConnection;
-    participants?: ParticipantConnection;
-    minimumParticipantCount?: number;
-    state?: TrialState;
-    title?: string;
-    synopsis?: string;
-    description?: string;
-    tags?: string[];
-    startTime?: Timestamp;
-    endTime?: Timestamp;
-    triggerTime?: TriggerTime;
-    triggerFrequency?: TriggerFrequency;
-    questions?: QuestionConnection;
+  id: string;
+  createdAt: Timestamp;
+  lastUpdatedAt?: Timestamp;
+  deletedAt?: Timestamp;
+  auditLog?: AuditConnection;
+  criteria?: Criteria;
+  lead?: Investigator;
+  investigators?: InvestigatorConnection;
+  participants?: ParticipantConnection;
+  minimumParticipantCount?: number;
+  state?: TrialState;
+  title?: string;
+  synopsis?: string;
+  description?: string;
+  tags?: string[];
+  startTime?: Timestamp;
+  endTime?: Timestamp;
+  triggerTime?: TriggerTime;
+  triggerFrequency?: TriggerFrequency;
+  questions?: QuestionConnection;
 }
 
 export interface TrialEdge {
-    node?: Trial;
-    cursor: Cursor;
+  node?: Trial;
+  cursor: Cursor;
 }
 
 export interface TrialConnection {
-    totalCount: number;
-    pageInfo: PageInfo;
-    edges: TrialEdge[];
+  totalCount: number;
+  pageInfo: PageInfo;
+  edges: TrialEdge[];
 }
 
 export interface PageInfo {
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    startCursor?: Cursor;
-    endCursor?: Cursor;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor?: Cursor;
+  endCursor?: Cursor;
 }
 
 export type Timestamp = any;
 export type Cursor = any;
 export type Actor = Participant | Investigator;
-export type Response = RadioResponse | CheckboxResponse | ScaleResponse | TextResponse;
+export type Response =
+  | RadioResponse
+  | CheckboxResponse
+  | ScaleResponse
+  | TextResponse;

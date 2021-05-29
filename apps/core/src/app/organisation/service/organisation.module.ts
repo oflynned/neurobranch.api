@@ -7,7 +7,8 @@ import { InvestigatorModule } from '../../investigator';
 import { FirebaseModule } from '@firebase';
 
 @Module({
-  imports: [PrismaModule, FirebaseModule, forwardRef(() => InvestigatorModule)],
+  imports: [PrismaModule, FirebaseModule, InvestigatorModule],
   providers: [OrganisationResolver, OrganisationService, OrganisationRepo],
+  exports: [OrganisationService],
 })
 export class OrganisationModule {}
