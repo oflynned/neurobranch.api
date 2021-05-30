@@ -1,0 +1,22 @@
+type Team {
+  id: ID!
+  auditLog: AuditConnection
+  createdAt: Timestamp!
+  deletedAt: Timestamp
+  name: String!
+  description: String
+  members(pagination: PaginationArgs): InvestigatorConnection
+  organisation: Organisation!
+  trials(pagination: PaginationArgs): TrialConnection
+}
+
+type TeamEdge {
+  node: Team
+  cursor: Cursor!
+}
+
+type TeamConnection {
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [TeamEdge]!
+}

@@ -25,6 +25,36 @@
       ],
       "@db/*": [
         "libs/prisma/src/*"
+      ],
+      "@firebase": [
+        "libs/firebase/src"
+      ],
+      "@firebase/*": [
+        "libs/firebase/src/*"
+      ],
+      "@graphql": [
+        "libs/graphql/src"
+      ],
+      "@graphql/*": [
+        "libs/graphql/src/*"
+      ],
+      "@config": [
+        "libs/config/src"
+      ],
+      "@config/*": [
+        "libs/config/src/*"
+      ],
+      "@common": [
+        "libs/common/src"
+      ],
+      "@common/*": [
+        "libs/common/src/*"
+      ],
+      "@cache": [
+        "libs/cache/src"
+      ],
+      "@cache/*": [
+        "libs/cache/src/*"
       ]
     }
   },

@@ -1,4 +1,4 @@
-type Query {
+extend type Mutation {
   createParticipantAccount(input: ParticipantInput): Participant
 }
 

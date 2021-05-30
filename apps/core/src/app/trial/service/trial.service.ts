@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TrialRepo } from './trial.repo';
 import { CreateTrialDto } from '../dto/create-trial.dto';
-import { ServicePagination } from '../../../../../../libs/graphql/src/pagination/pagination';
+import { PaginationResult } from '@graphql';
 import { InvestigatorEntity, TrialEntity } from '@db';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class TrialService {
     investigatorId: string,
     limit: number,
     offset: number,
-  ): Promise<ServicePagination<TrialEntity>> {
+  ): Promise<PaginationResult<TrialEntity>> {
     const results = await this.trialRepo.getInvestigatorTrials(
       investigatorId,
       limit,

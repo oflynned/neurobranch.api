@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { InvestigatorService } from '../service/investigator.service';
+import { InvestigatorService } from './investigator.service';
 import {
   CreateInvestigatorInput,
   Investigator,
@@ -15,14 +15,15 @@ import {
   Sex,
   Trial,
   TrialConnection,
-} from '../../../../../../libs/graphql/src';
+  Pagination,
+} from '@graphql';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
-import { FirebaseJwt } from '../../../../../../libs/firebase/src';
-import { UseGuards } from '@nestjs/common';
-import { JwtGuard, InvestigatorGuard } from './guards';
-import { TrialService } from '../../trial';
-import { Pagination } from '../../../../../../libs/graphql/src/pagination/pagination';
+import { FirebaseJwt } from '@firebase';
 import { InvestigatorEntity } from '@db';
+import { TrialService } from '../../trial';
+import { JwtGuard } from '../../guards/jwt.guard';
+import { UseGuards } from '@nestjs/common';
+import { InvestigatorGuard } from '../../guards/investigator.guard';
 
 @Resolver('Investigator')
 @UseGuards(JwtGuard)

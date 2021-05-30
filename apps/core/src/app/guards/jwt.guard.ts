@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { FirebaseService } from '../../../../../../../libs/firebase/src';
+import { FirebaseService } from '@firebase';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()

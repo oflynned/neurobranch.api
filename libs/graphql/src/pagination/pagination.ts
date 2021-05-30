@@ -1,8 +1,8 @@
-import { Codec } from '../../../common/src/codec';
+import { Codec } from '@common';
 import { BadRequestException } from '@nestjs/common';
 import { PageInfo, PaginationArgs } from '../types';
 
-export type ServicePagination<T> = {
+export type PaginationResult<T> = {
   results: T[];
   limit: number;
   offset: number;
