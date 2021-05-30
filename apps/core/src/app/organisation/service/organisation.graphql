@@ -1,5 +1,6 @@
 extend type Query {
-  getOrganisation(organisationId: String!): Organisation
+  getOrganisationById(id: String!): Organisation
+  getOrganisationBySlug(slug: String!): Organisation
 }
 
 extend type Mutation {

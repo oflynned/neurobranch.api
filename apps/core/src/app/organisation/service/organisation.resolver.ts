@@ -16,11 +16,16 @@ type MinimalOrganisation = Pick<
 export class OrganisationResolver {
   constructor(private readonly organisationService: OrganisationService) {}
 
-  @Query('getOrganisation')
-  async getOrganisation(
-    @Args('organisationId') id: string,
-  ): Promise<MinimalOrganisation> {
+  @Query('getOrganisationById')
+  async getOrganisation(@Args('id') id: string): Promise<MinimalOrganisation> {
     return this.organisationService.getOrganisationById(id);
+  }
+
+  @Query('getOrganisationBySlug')
+  async getOrganisationBySlug(
+    @Args('slug') slug: string,
+  ): Promise<MinimalOrganisation> {
+    return this.organisationService.getOrganisationBySlug(slug);
   }
 
   @Mutation('createOrganisation')

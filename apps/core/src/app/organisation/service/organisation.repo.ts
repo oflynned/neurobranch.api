@@ -10,6 +10,10 @@ export class OrganisationRepo {
     return this.repo.organisation.create({ data: dto });
   }
 
+  async getOrganisationBySlug(slug: string): Promise<OrganisationEntity> {
+    return this.repo.organisation.findFirst({ where: { slug } });
+  }
+
   async getOrganisationById(
     organisationId: string,
   ): Promise<OrganisationEntity> {
