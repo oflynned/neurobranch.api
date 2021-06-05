@@ -55,4 +55,27 @@ describe('Investigator resolver', () => {
       });
     });
   });
+
+  describe('isOnboarded', () => {
+    it('should return false with no name', async () => {
+      const investigator = new InvestigatorFactory().withName('').build();
+      await expect(
+        resolver.isOnboarded(investigator as Investigator),
+      ).resolves.toBeFalsy();
+    });
+
+    it('should return false with no dob', async () => {
+      const investigator = new InvestigatorFactory().withDob('').build();
+      await expect(
+        resolver.isOnboarded(investigator as Investigator),
+      ).resolves.toBeFalsy();
+    });
+
+    it('should return true with both name and dob', async () => {
+      const investigator = new InvestigatorFactory().build();
+      await expect(
+        resolver.isOnboarded(investigator as Investigator),
+      ).resolves.toBeTruthy();
+    });
+  });
 });
