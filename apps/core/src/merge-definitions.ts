@@ -1,8 +1,8 @@
-import { join } from 'path';
 import { loadFiles } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { print } from 'graphql';
 import { writeFileSync } from 'fs';
+import { print } from 'graphql';
+import { join } from 'path';
 
 (async () => {
   try {

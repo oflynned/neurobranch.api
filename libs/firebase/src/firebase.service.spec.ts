@@ -1,8 +1,8 @@
-import { FirebaseService } from './firebase.service';
-import { FirebaseRepo } from './firebase.repo';
-import { mock } from 'jest-mock-extended';
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { mock } from 'jest-mock-extended';
+import { FirebaseRepo } from './firebase.repo';
+import { FirebaseService } from './firebase.service';
 
 const mockCache = mock<FirebaseRepo>();
 const mockAuthServer = mock<FirebaseAuthenticationService>();

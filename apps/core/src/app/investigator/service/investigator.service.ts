@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { InvestigatorRepo } from './investigator.repo';
-import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
 import { InvestigatorEntity } from '@db';
+import { Injectable } from '@nestjs/common';
+import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
+import { InvestigatorRepo } from './investigator.repo';
 
 @Injectable()
 export class InvestigatorService {

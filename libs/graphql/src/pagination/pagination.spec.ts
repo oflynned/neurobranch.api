@@ -1,6 +1,6 @@
-import { Pagination } from './pagination';
-import { Codec } from '../../../common/src/codec';
 import { BadRequestException } from '@nestjs/common';
+import { Codec } from '../../../common/src/codec';
+import { Pagination } from './pagination';
 
 const codec = new Codec();
 

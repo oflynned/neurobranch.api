@@ -1,6 +1,6 @@
 import { BaseConfigService } from '@config';
-import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CoreConfigService extends BaseConfigService {

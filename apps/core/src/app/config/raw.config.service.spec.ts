@@ -1,6 +1,6 @@
-import { RawConfigService } from './raw.config.service';
 import { Codec } from '@common';
 import { CredentialStore } from '@firebase';
+import { RawConfigService } from './raw.config.service';
 
 const codec = new Codec();
 

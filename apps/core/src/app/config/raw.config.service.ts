@@ -1,8 +1,8 @@
-import { Optional, Codec } from '@common';
+import { Codec, Optional } from '@common';
 import {
-  FirebaseServiceAccount,
   CredentialStore,
   FirebaseConfig,
+  FirebaseServiceAccount,
   FirebaseValidator,
 } from '@firebase';
 

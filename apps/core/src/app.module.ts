@@ -1,6 +1,11 @@
+import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
+import { CacheModule } from '@cache';
+import { PrismaModule } from '@db';
+import { FirebaseValidator } from '@firebase';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
+import { RedisModule } from 'nestjs-redis';
+import { join } from 'path';
 import {
   CoreConfigModule,
   CoreConfigService,
@@ -8,11 +13,6 @@ import {
   OrganisationModule,
   TrialModule,
 } from './app';
-import { CacheModule } from '@cache';
-import { RedisModule } from 'nestjs-redis';
-import { FirebaseValidator } from '@firebase';
-import { join } from 'path';
-import { PrismaModule } from '@db';
 
 const services = [InvestigatorModule, OrganisationModule, TrialModule];
 

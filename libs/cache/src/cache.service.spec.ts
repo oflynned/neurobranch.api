@@ -1,6 +1,6 @@
+import * as IORedis from 'ioredis';
 import { RedisService } from 'nestjs-redis';
 import { CacheService } from './cache.service';
-import * as IORedis from 'ioredis';
 
 const redisClient = ({
   get: jest.fn(),

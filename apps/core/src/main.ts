@@ -1,9 +1,8 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
-import { AppModule } from './app.module';
 import * as Firebase from 'firebase-admin';
 import { RawConfigService } from './app';
+import { AppModule } from './app.module';
 
 const firebaseConfig = RawConfigService.getInstance()
   .ensureValues(['FIREBASE_SERVICE_ACCOUNT'])

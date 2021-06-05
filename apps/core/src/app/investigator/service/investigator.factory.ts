@@ -1,8 +1,8 @@
 import { InvestigatorEntity } from '@db';
-import { v4 as uuid } from 'uuid';
-import { date, internet, name, random } from 'faker';
 import { Sex } from '@graphql';
 import { format } from 'date-fns';
+import { date, internet, name, random } from 'faker';
+import { v4 as uuid } from 'uuid';
 
 const sexSelection = ['MALE', 'FEMALE'];
 

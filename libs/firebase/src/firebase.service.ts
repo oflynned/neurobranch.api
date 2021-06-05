@@ -1,12 +1,12 @@
+import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
+import { Optional } from '@common';
 import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { FirebaseRepo } from './firebase.repo';
 import { FirebaseJwt } from './types';
-import { Optional } from '@common';
 
 @Injectable()
 export class FirebaseService {

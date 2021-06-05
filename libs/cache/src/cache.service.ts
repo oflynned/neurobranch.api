@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as IORedis from 'ioredis';
+import { Ok } from 'ioredis';
 import { RedisService } from 'nestjs-redis';
 import { Optional } from '../../common/src';
-import { Ok } from 'ioredis';
 
 type Cache = IORedis.Redis;
 

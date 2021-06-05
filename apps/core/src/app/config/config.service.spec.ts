@@ -1,6 +1,6 @@
-import { CoreConfigService } from './config.service';
-import { mock } from 'jest-mock-extended';
 import { ConfigService } from '@nestjs/config';
+import { mock } from 'jest-mock-extended';
+import { CoreConfigService } from './config.service';
 
 const configService = mock<ConfigService>();
 const coreConfigService = new CoreConfigService(configService);

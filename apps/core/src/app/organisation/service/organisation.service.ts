@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { OrganisationRepo } from './organisation.repo';
 import { InvestigatorEntity, OrganisationEntity } from '@db';
 import { CreateOrganisationInput } from '@graphql';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrganisationDto } from '../dto/create-organisation.dto';
+import { OrganisationRepo } from './organisation.repo';
 
 @Injectable()
 export class OrganisationService {
