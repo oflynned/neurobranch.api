@@ -19,6 +19,8 @@ module.exports = {
     '!**/*.module.ts',
     '!**/migrations/*',
     '!**/main.ts',
+    '!**/types.ts',
+    '!**/*.factory.ts',
   ],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
