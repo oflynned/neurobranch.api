@@ -46,8 +46,8 @@ describe('Firebase service', () => {
 
     it('should return uid and jwt', () => {
       const result = firebaseService.parseHeaders({
-        'x-firebase-uid': 'dWlk',
-        authorization: 'Bearer dG9rZW4=',
+        'x-firebase-uid': 'uid',
+        authorization: 'Bearer token',
       });
 
       expect(result).toEqual({ uid: 'uid', jwt: 'token' });
