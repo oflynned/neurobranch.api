@@ -1,8 +1,8 @@
-import { FirebaseService } from './firebase.service';
-import { FirebaseRepo } from './firebase.repo';
-import { mock } from 'jest-mock-extended';
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { mock } from 'jest-mock-extended';
+import { FirebaseRepo } from './firebase.repo';
+import { FirebaseService } from './firebase.service';
 
 const mockCache = mock<FirebaseRepo>();
 const mockAuthServer = mock<FirebaseAuthenticationService>();
@@ -46,8 +46,8 @@ describe('Firebase service', () => {
 
     it('should return uid and jwt', () => {
       const result = firebaseService.parseHeaders({
-        'x-firebase-uid': 'dWlk',
-        authorization: 'Bearer dG9rZW4=',
+        'x-firebase-uid': 'uid',
+        authorization: 'Bearer token',
       });
 
       expect(result).toEqual({ uid: 'uid', jwt: 'token' });

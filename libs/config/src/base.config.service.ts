@@ -1,8 +1,6 @@
+import { Optional } from '@common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Optional } from '../../common/src';
-
-const defaultKeys = ['DATABASE_URL', 'MODE'];
 
 @Injectable()
 export class BaseConfigService {
@@ -40,11 +38,5 @@ export class BaseConfigService {
     }
 
     return value ?? null;
-  }
-
-  protected ensureValues(keys: string[]): BaseConfigService {
-    [...keys, ...defaultKeys].forEach((key) => this.getValue<unknown>(key));
-
-    return this;
   }
 }

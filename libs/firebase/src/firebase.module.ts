@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { FirebaseService } from './firebase.service';
-import { FirebaseRepo } from './firebase.repo';
 import { CacheModule } from '@cache';
+import { Module } from '@nestjs/common';
+import { FirebaseRepo } from './firebase.repo';
+import { FirebaseService } from './firebase.service';
 
 @Module({
   imports: [CacheModule],

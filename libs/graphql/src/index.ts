@@ -1,3 +1,3 @@
 // export * from './scalars';
-export * from './types';
 export * from './pagination';
+export * from './types';

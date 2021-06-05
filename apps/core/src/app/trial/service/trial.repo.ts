@@ -1,6 +1,6 @@
+import { InvestigatorEntity, PrismaService, TrialEntity } from '@db';
 import { Injectable } from '@nestjs/common';
 import { CreateTrialDto } from '../dto/create-trial.dto';
-import { InvestigatorEntity, PrismaService, TrialEntity } from '@db';
 
 @Injectable()
 export class TrialRepo {

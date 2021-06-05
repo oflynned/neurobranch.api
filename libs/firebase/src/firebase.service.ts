@@ -1,18 +1,15 @@
+import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
+import { Optional } from '@common';
 import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { FirebaseRepo } from './firebase.repo';
 import { FirebaseJwt } from './types';
-import { Codec } from '../../common/src/codec';
-import { Optional } from '../../common/src';
 
 @Injectable()
 export class FirebaseService {
-  private readonly codec = new Codec();
-
   constructor(
     private readonly cache: FirebaseRepo,
     private readonly authServer: FirebaseAuthenticationService,
@@ -20,9 +17,9 @@ export class FirebaseService {
 
   parseHeaders(headers: unknown): { jwt: string; uid: string } {
     // send the uid along for cache lookup
-    const encodedUid = headers['x-firebase-uid'] as Optional<string>;
+    const uid = headers['x-firebase-uid'] as Optional<string>;
 
-    if (!encodedUid) {
+    if (!uid) {
       throw new BadRequestException('x-firebase-uid is a required header');
     }
 
@@ -32,22 +29,19 @@ export class FirebaseService {
       throw new UnauthorizedException('Authorization is a required header');
     }
 
-    const [realm, encodedJwt] = authHeader.split(' ');
+    const [realm, jwt] = authHeader.split(' ');
 
     if (realm !== 'Bearer') {
       throw new UnauthorizedException('Authorization realm must be bearer');
     }
 
-    if (!encodedJwt) {
+    if (!jwt) {
       throw new UnauthorizedException(
         'Authorization token must contain a base64 encoded value',
       );
     }
 
-    return {
-      uid: this.codec.decode(encodedUid),
-      jwt: this.codec.decode(encodedJwt),
-    };
+    return { uid, jwt };
   }
 
   async verifyJwt(uid: string, jwt: string): Promise<FirebaseJwt> {

@@ -1,3 +1,12 @@
+import { InvestigatorEntity } from '@db';
+import {
+  CreateTrialInput,
+  Investigator,
+  Sex,
+  Trial,
+  TrialState,
+} from '@graphql';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -6,22 +15,12 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
-import {
-  CreateTrialInput,
-  Investigator,
-  Sex,
-  Trial,
-  TrialState,
-} from '@graphql';
-import { TrialService } from './trial.service';
-import { CreateTrialDto } from '../dto/create-trial.dto';
-import { InvestigatorEntity } from '@db';
 import { JwtGuard } from '../../guards/jwt.guard';
-import { InvestigatorGuard } from '../../guards/investigator.guard';
+import { CreateTrialDto } from '../dto/create-trial.dto';
+import { TrialService } from './trial.service';
 
 @Resolver('Trial')
-@UseGuards(JwtGuard, InvestigatorGuard)
+@UseGuards(JwtGuard)
 export class TrialResolver {
   constructor(private readonly trialService: TrialService) {}
 

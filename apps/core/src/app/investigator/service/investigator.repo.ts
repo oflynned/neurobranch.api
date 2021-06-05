@@ -1,6 +1,6 @@
+import { InvestigatorEntity, PrismaService } from '@db';
 import { Injectable } from '@nestjs/common';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
-import { PrismaService, InvestigatorEntity } from '@db';
 
 type UpdateInvestigatorDto = Partial<
   Pick<

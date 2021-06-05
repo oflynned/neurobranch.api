@@ -1,4 +1,4 @@
-import { ServiceAccount, auth, credential, AppOptions } from 'firebase-admin';
+import { AppOptions, auth, credential, ServiceAccount } from 'firebase-admin';
 
 export type FirebaseServiceAccount = ServiceAccount;
 

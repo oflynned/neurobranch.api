@@ -1,10 +1,10 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
-import { OrganisationService } from './organisation.service';
 import { InvestigatorEntity, OrganisationEntity } from '@db';
-import { JwtGuard } from '../../guards/jwt.guard';
-import { InvestigatorGuard } from '../../guards/investigator.guard';
 import { CreateOrganisationInput } from '@graphql';
+import { UseGuards } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { InvestigatorGuard } from '../../guards/investigator.guard';
+import { JwtGuard } from '../../guards/jwt.guard';
+import { OrganisationService } from './organisation.service';
 
 type MinimalOrganisation = Pick<
   OrganisationEntity,

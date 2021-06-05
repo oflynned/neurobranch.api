@@ -1,10 +1,10 @@
-import { forwardRef, Module } from '@nestjs/common';
 import { PrismaModule } from '@db';
-import { OrganisationService } from './organisation.service';
+import { FirebaseModule } from '@firebase';
+import { Module } from '@nestjs/common';
+import { InvestigatorModule } from '../../investigator';
 import { OrganisationRepo } from './organisation.repo';
 import { OrganisationResolver } from './organisation.resolver';
-import { InvestigatorModule } from '../../investigator';
-import { FirebaseModule } from '@firebase';
+import { OrganisationService } from './organisation.service';
 
 @Module({
   imports: [PrismaModule, FirebaseModule, InvestigatorModule],
