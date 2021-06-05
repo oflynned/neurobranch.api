@@ -15,13 +15,12 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { InvestigatorGuard } from '../../guards/investigator.guard';
 import { JwtGuard } from '../../guards/jwt.guard';
 import { CreateTrialDto } from '../dto/create-trial.dto';
 import { TrialService } from './trial.service';
 
 @Resolver('Trial')
-@UseGuards(JwtGuard, InvestigatorGuard)
+@UseGuards(JwtGuard)
 export class TrialResolver {
   constructor(private readonly trialService: TrialService) {}
 
