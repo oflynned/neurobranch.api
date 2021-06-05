@@ -6,12 +6,10 @@ import {
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 import { FirebaseRepo } from './firebase.repo';
 import { FirebaseJwt } from './types';
-import { Codec, Optional } from '@common';
+import { Optional } from '@common';
 
 @Injectable()
 export class FirebaseService {
-  private readonly codec = new Codec();
-
   constructor(
     private readonly cache: FirebaseRepo,
     private readonly authServer: FirebaseAuthenticationService,
