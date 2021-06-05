@@ -2,6 +2,7 @@ import { InvestigatorResolver } from './investigator.resolver';
 import { InvestigatorService } from './investigator.service';
 import { mock } from 'jest-mock-extended';
 import { TrialService } from '../../trial';
+import { InvestigatorFactory } from './investigator.factory';
 
 const mockInvestigatorService = mock<InvestigatorService>();
 const mockTrialService = mock<TrialService>();
@@ -10,23 +11,18 @@ const resolver = new InvestigatorResolver(
   mockTrialService,
 );
 
-describe.skip('Investigator resolver', () => {
-  describe('getTrials', () => {
-    it('should return pagination', async () => {
-      // mockTrialService.getInvestigatorTrialsCount.mockImplementation(
-      //   async () => 0,
-      // );
-      // mockTrialService.getInvestigatorTrials.mockImplementation(async () => ({
-      //   results: [],
-      //   limit: 0,
-      //   offset: 0,
-      // }));
-      //
-      // const mockInvestigator = buildMockInvestigator();
-      //
-      // const results = await resolver.getTrials(mockInvestigator);
-      //
-      // expect(results).toEqual({});
+describe('Investigator resolver', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('getInvestigator', () => {
+    it('should return investigator from context', async () => {
+      const mockInvestigator = new InvestigatorFactory().build();
+
+      await expect(resolver.getInvestigator(mockInvestigator)).resolves.toEqual(
+        mockInvestigator,
+      );
     });
   });
 });
