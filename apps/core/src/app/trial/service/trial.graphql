@@ -1,5 +1,5 @@
 extend type Query {
-  getEligibleTrials(pagination: PaginationArgs): TrialConnection
+  getEligibleTrials(pagination: PaginationInput): TrialConnection
   getTrial(trialId: String!): Trial
 }
 
@@ -41,8 +41,8 @@ type Trial {
   auditLog: AuditConnection
   criteria: Criteria
   lead: Investigator
-  investigators(pagination: PaginationArgs): InvestigatorConnection
-  participants(pagination: PaginationArgs): ParticipantConnection
+  investigators(pagination: PaginationInput): InvestigatorConnection
+  participants(pagination: PaginationInput): ParticipantConnection
 
   minimumParticipantCount: Int
   state: TrialState
@@ -54,7 +54,7 @@ type Trial {
   endTime: Timestamp
   triggerTime: TriggerTime
   triggerFrequency: TriggerFrequency
-  questions(pagination: PaginationArgs): QuestionConnection
+  questions(pagination: PaginationInput): QuestionConnection
 }
 
 enum TrialState {

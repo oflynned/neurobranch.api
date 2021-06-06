@@ -17,9 +17,9 @@ type Team {
   name: String!
   slug: String!
   description: String
-  members(pagination: PaginationArgs): InvestigatorConnection
+  members(pagination: PaginationInput): InvestigatorConnection
   organisation: Organisation
-  trials(pagination: PaginationArgs): TrialConnection
+  trials(pagination: PaginationInput): TrialConnection
 }
 
 type TeamEdge {
