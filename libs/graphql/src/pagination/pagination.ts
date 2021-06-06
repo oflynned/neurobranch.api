@@ -18,10 +18,10 @@ export class Pagination<T> {
     private readonly codec = new Codec(),
   ) {}
 
-  static validate(args?: PaginationArgs) {
+  static validate(pagination?: PaginationArgs) {
     const codec: Codec = new Codec();
 
-    const { after, first } = args ?? {};
+    const { after, first } = pagination ?? {};
     const limit = first ?? 25;
     const defaultOffset = 0;
 
