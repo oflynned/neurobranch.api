@@ -1,10 +1,12 @@
 import {
+  BadRequestException,
   CanActivate,
   ExecutionContext,
   Inject,
   Injectable,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ForbiddenError } from 'apollo-server-express';
 import { InvestigatorService } from '../investigator';
 
 @Injectable()
@@ -18,7 +20,7 @@ export class InvestigatorGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context).getContext();
 
     if (!ctx.jwt) {
-      return false;
+      throw new BadRequestException('No jwt token included in request');
     }
 
     const investigator = await this.investigatorService.getInvestigatorByEmail(
@@ -26,7 +28,7 @@ export class InvestigatorGuard implements CanActivate {
     );
 
     if (!investigator) {
-      return false;
+      throw new ForbiddenError('Account does not exist for given jwt');
     }
 
     ctx.user = investigator;
