@@ -1,4 +1,4 @@
-input PaginationArgs {
+input PaginationInput {
   first: Int
   after: Cursor
 }

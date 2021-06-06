@@ -6,7 +6,7 @@ import {
   Organisation,
   OrganisationConnection,
   Pagination,
-  PaginationArgs,
+  PaginationInput,
   Sex,
   Trial,
   TrialConnection,
@@ -71,9 +71,9 @@ export class InvestigatorResolver {
   @ResolveField('trials')
   async getTrials(
     @Parent() investigator: Investigator,
-    @Args('pagination') args?: PaginationArgs,
+    @Args('pagination') pagination?: PaginationInput,
   ): Promise<TrialConnection> {
-    const { limit, offset } = Pagination.validate(args);
+    const { limit, offset } = Pagination.validate(pagination);
     const totalCount = await this.trialService.getInvestigatorTrialsCount(
       investigator.id,
     );
@@ -95,9 +95,9 @@ export class InvestigatorResolver {
   @ResolveField('organisations')
   async getOrganisations(
     @Parent() investigator: Investigator,
-    @Args('pagination') args?: PaginationArgs,
+    @Args('pagination') pagination?: PaginationInput,
   ): Promise<OrganisationConnection> {
-    const { limit, offset } = Pagination.validate(args);
+    const { limit, offset } = Pagination.validate(pagination);
     const totalCount = await this.organisationService.getOrganisationCount(
       investigator.id,
     );

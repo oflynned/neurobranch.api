@@ -6,7 +6,7 @@ import {
   OrganisationNotFound,
   OrganisationResult,
   Pagination,
-  PaginationArgs,
+  PaginationInput,
   Sex,
   Team,
   TeamConnection,
@@ -92,9 +92,9 @@ export class OrganisationResolver {
   @ResolveField('teams')
   async getTeams(
     @Parent() organisation: Organisation,
-    @Args('pagination') args?: PaginationArgs,
+    @Args('pagination') pagination?: PaginationInput,
   ): Promise<TeamConnection> {
-    const { limit, offset } = Pagination.validate(args);
+    const { limit, offset } = Pagination.validate(pagination);
     const totalCount = await this.teamService.getOrganisationTeamCount(
       organisation.id,
     );

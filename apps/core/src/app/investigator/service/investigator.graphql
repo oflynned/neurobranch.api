@@ -17,9 +17,9 @@ type Investigator {
   sex: Sex!
   email: String!
   isOnboarded: Boolean
-  organisations(pagination: PaginationArgs): OrganisationConnection
-  teams(pagination: PaginationArgs): TeamConnection
-  trials(pagination: PaginationArgs): TrialConnection
+  organisations(pagination: PaginationInput): OrganisationConnection
+  teams(pagination: PaginationInput): TeamConnection
+  trials(pagination: PaginationInput): TrialConnection
 }
 
 enum Sex {

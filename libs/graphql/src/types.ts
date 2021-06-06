@@ -72,7 +72,7 @@ export interface CreateTrialInput {
   teamId: string;
 }
 
-export interface PaginationArgs {
+export interface PaginationInput {
   first?: number;
   after?: Cursor;
 }
@@ -100,7 +100,7 @@ export interface IQuery {
   getOrganisationById(id: string): Organisation | Promise<Organisation>;
   getOrganisationBySlug(slug: string): Organisation | Promise<Organisation>;
   getEligibleTrials(
-    pagination?: PaginationArgs,
+    pagination?: PaginationInput,
   ): TrialConnection | Promise<TrialConnection>;
   getTrial(trialId: string): Trial | Promise<Trial>;
   getServerTime(): Timestamp | Promise<Timestamp>;

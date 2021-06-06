@@ -1,6 +1,6 @@
 import { Codec } from '@common';
 import { BadRequestException } from '@nestjs/common';
-import { PageInfo, PaginationArgs } from '../types';
+import { PageInfo, PaginationInput } from '../types';
 
 export type Edge<T> = { node: T; cursor: string };
 
@@ -18,10 +18,10 @@ export class Pagination<T> {
     private readonly codec = new Codec(),
   ) {}
 
-  static validate(args?: PaginationArgs) {
+  static validate(pagination?: PaginationInput) {
     const codec: Codec = new Codec();
 
-    const { after, first } = args ?? {};
+    const { after, first } = pagination ?? {};
     const limit = first ?? 25;
     const defaultOffset = 0;
 

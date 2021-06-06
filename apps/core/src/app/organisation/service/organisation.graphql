@@ -21,10 +21,10 @@ type Organisation {
   slug: String!
   logo: Image
   creator: Investigator
-  admins(pagination: PaginationArgs): InvestigatorConnection
-  collaborators(pagination: PaginationArgs): InvestigatorConnection
-  observers(pagination: PaginationArgs): InvestigatorConnection
-  teams(pagination: PaginationArgs): TeamConnection
+  admins(pagination: PaginationInput): InvestigatorConnection
+  collaborators(pagination: PaginationInput): InvestigatorConnection
+  observers(pagination: PaginationInput): InvestigatorConnection
+  teams(pagination: PaginationInput): TeamConnection
 }
 
 type OrganisationNotFound {
