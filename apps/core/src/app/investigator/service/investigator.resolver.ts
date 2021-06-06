@@ -3,6 +3,8 @@ import { FirebaseJwt } from '@firebase';
 import {
   CreateInvestigatorInput,
   Investigator,
+  Organisation,
+  OrganisationConnection,
   Pagination,
   PaginationArgs,
   Sex,
@@ -21,7 +23,8 @@ import {
 } from '@nestjs/graphql';
 import { InvestigatorGuard } from '../../guards/investigator.guard';
 import { JwtGuard } from '../../guards/jwt.guard';
-import { TrialService } from '../../trial';
+import { OrganisationService } from '../../organisation/service/organisation.service';
+import { TrialService } from '../../trial/service/trial.service';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
 import { InvestigatorService } from './investigator.service';
 
@@ -30,6 +33,7 @@ import { InvestigatorService } from './investigator.service';
 export class InvestigatorResolver {
   constructor(
     private readonly investigatorService: InvestigatorService,
+    private readonly organisationService: OrganisationService,
     private readonly trialService: TrialService,
   ) {}
 
@@ -74,7 +78,7 @@ export class InvestigatorResolver {
       investigator.id,
     );
 
-    const { results } = await this.trialService.getInvestigatorTrials(
+    const results = await this.trialService.getInvestigatorTrials(
       investigator.id,
       limit,
       offset,
@@ -86,5 +90,27 @@ export class InvestigatorResolver {
   @ResolveField('isOnboarded')
   async isOnboarded(@Parent() investigator: Investigator): Promise<boolean> {
     return !!investigator.name && !!investigator.dateOfBirth;
+  }
+
+  @ResolveField('organisations')
+  async getOrganisations(
+    @Parent() investigator: Investigator,
+    @Args('pagination') args?: PaginationArgs,
+  ): Promise<OrganisationConnection> {
+    const { limit, offset } = Pagination.validate(args);
+    const totalCount = await this.organisationService.getOrganisationCount(
+      investigator.id,
+    );
+    const results = await this.organisationService.getOrganisationsByCreatorId(
+      investigator.id,
+      limit,
+      offset,
+    );
+
+    return new Pagination<Organisation>(
+      results,
+      totalCount,
+      offset,
+    ).getConnection();
   }
 }

@@ -1,12 +1,24 @@
+extend type Mutation {
+  createTeam(input: CreateTeamInput):Team
+}
+
+input CreateTeamInput {
+  organisationId: ID!
+  slug: String!
+  name: String!
+  description: String
+}
+
 type Team {
   id: ID!
   auditLog: AuditConnection
   createdAt: Timestamp!
   deletedAt: Timestamp
   name: String!
+  slug: String!
   description: String
   members(pagination: PaginationArgs): InvestigatorConnection
-  organisation: Organisation!
+  organisation: Organisation
   trials(pagination: PaginationArgs): TrialConnection
 }
 

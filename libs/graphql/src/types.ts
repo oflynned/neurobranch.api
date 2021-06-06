@@ -55,6 +55,13 @@ export interface ParticipantInput {
   username: string;
 }
 
+export interface CreateTeamInput {
+  organisationId: string;
+  slug: string;
+  name: string;
+  description?: string;
+}
+
 export interface CreateTrialInput {
   startTime: Timestamp;
   duration: number;
@@ -62,6 +69,7 @@ export interface CreateTrialInput {
   synopsis: string;
   description: string;
   tags: string[];
+  teamId: string;
 }
 
 export interface PaginationArgs {
@@ -89,7 +97,8 @@ export interface AuditConnection {
 
 export interface IQuery {
   getInvestigator(): Investigator | Promise<Investigator>;
-  getOrganisation(organisationId: string): Organisation | Promise<Organisation>;
+  getOrganisationById(id: string): Organisation | Promise<Organisation>;
+  getOrganisationBySlug(slug: string): Organisation | Promise<Organisation>;
   getEligibleTrials(
     pagination?: PaginationArgs,
   ): TrialConnection | Promise<TrialConnection>;
@@ -107,6 +116,7 @@ export interface IMutation {
   createParticipantAccount(
     input?: ParticipantInput,
   ): Participant | Promise<Participant>;
+  createTeam(input?: CreateTeamInput): Team | Promise<Team>;
   createTrial(input?: CreateTrialInput): Trial | Promise<Trial>;
   getServerTime(): Timestamp | Promise<Timestamp>;
 }
@@ -146,11 +156,15 @@ export interface Organisation {
   name: string;
   slug: string;
   logo?: Image;
-  creator: Investigator;
+  creator?: Investigator;
   admins?: InvestigatorConnection;
   collaborators?: InvestigatorConnection;
   observers?: InvestigatorConnection;
   teams?: TeamConnection;
+}
+
+export interface OrganisationNotFound {
+  error: string;
 }
 
 export interface OrganisationEdge {
@@ -263,9 +277,10 @@ export interface Team {
   createdAt: Timestamp;
   deletedAt?: Timestamp;
   name: string;
+  slug: string;
   description?: string;
   members?: InvestigatorConnection;
-  organisation: Organisation;
+  organisation?: Organisation;
   trials?: TrialConnection;
 }
 
@@ -343,6 +358,7 @@ export interface PageInfo {
 export type Timestamp = any;
 export type Cursor = any;
 export type Actor = Participant | Investigator;
+export type OrganisationResult = Organisation | OrganisationNotFound;
 export type Response =
   | RadioResponse
   | CheckboxResponse

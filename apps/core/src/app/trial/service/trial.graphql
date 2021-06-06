@@ -39,9 +39,7 @@ type Trial {
   lastUpdatedAt: Timestamp
   deletedAt: Timestamp
   auditLog: AuditConnection
-
   criteria: Criteria
-
   lead: Investigator
   investigators(pagination: PaginationArgs): InvestigatorConnection
   participants(pagination: PaginationArgs): ParticipantConnection
@@ -56,7 +54,6 @@ type Trial {
   endTime: Timestamp
   triggerTime: TriggerTime
   triggerFrequency: TriggerFrequency
-
   questions(pagination: PaginationArgs): QuestionConnection
 }
 
@@ -89,4 +86,5 @@ input CreateTrialInput {
   synopsis: String!
   description: String!
   tags: [String!]!
+  teamId: String!
 }

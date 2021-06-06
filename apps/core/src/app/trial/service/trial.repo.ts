@@ -1,23 +1,11 @@
 import { InvestigatorEntity, PrismaService, TrialEntity } from '@db';
 import { Injectable } from '@nestjs/common';
-import { CreateTrialDto } from '../dto/create-trial.dto';
 
 @Injectable()
 export class TrialRepo {
   constructor(private readonly repo: PrismaService) {}
 
-  async createTrial(
-    dto: CreateTrialDto,
-    investigatorId: string,
-    createdAt = new Date(),
-  ): Promise<TrialEntity> {
-    const entity: Omit<TrialEntity, 'id'> = {
-      ...dto,
-      createdAt,
-      deletedAt: null,
-      leadId: investigatorId,
-    };
-
+  async createTrial(entity: TrialEntity): Promise<TrialEntity> {
     return this.repo.trial.create({ data: entity });
   }
 
@@ -31,7 +19,9 @@ export class TrialRepo {
     offset: number,
   ): Promise<TrialEntity[]> {
     return this.repo.trial.findMany({
-      where: { leadId: investigatorId },
+      where: {
+        leadId: investigatorId,
+      },
       take: limit,
       skip: offset,
       orderBy: {
@@ -42,7 +32,9 @@ export class TrialRepo {
 
   async getInvestigatorTrialCount(investigatorId: string): Promise<number> {
     return this.repo.trial.count({
-      where: { leadId: investigatorId },
+      where: {
+        leadId: investigatorId,
+      },
     });
   }
 }

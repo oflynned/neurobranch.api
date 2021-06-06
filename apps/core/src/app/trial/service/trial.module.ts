@@ -1,7 +1,7 @@
 import { PrismaModule } from '@db';
 import { FirebaseModule } from '@firebase';
 import { forwardRef, Module } from '@nestjs/common';
-import { InvestigatorModule } from '../../investigator';
+import { InvestigatorModule } from '../../investigator/service/investigator.module';
 import { TrialRepo } from './trial.repo';
 import { TrialResolver } from './trial.resolver';
 import { TrialService } from './trial.service';
