@@ -75,6 +75,7 @@
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
     "build": "nx build",
+    "build:core": "nx build core --production --no-cache",
     "db:migrate:down": "node -r ts-node/register apps/core/src/migrations/down.ts",
     "db:migrate:up": "node -r ts-node/register apps/core/src/migrations/up.ts",
     "dep-graph": "nx dep-graph",
