@@ -23,7 +23,7 @@ import {
 } from '@nestjs/graphql';
 import { InvestigatorGuard } from '../../guards/investigator.guard';
 import { JwtGuard } from '../../guards/jwt.guard';
-import { TeamService } from '../../team';
+import { TeamService } from '../../team/service/team.service';
 import { OrganisationService } from './organisation.service';
 
 type MinimalOrganisation = Pick<
