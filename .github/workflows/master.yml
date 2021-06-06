@@ -90,13 +90,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: eu-west-1
 
-      - name: Bump version
-        uses: 'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          commit-message: 'release: {{version}} [skip ci]'
-
       - name: Build and push image to ECR
         run: |
           TAG=$ECR_SECRET/neurobranch-core:latest &&
@@ -105,6 +98,13 @@ jobs:
           docker push $TAG
         env:
           ECR_SECRET: ${{ secrets.ECR_SECRET }}
+
+      - name: Bump version
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit-message: 'release: {{version}} [skip ci]'
 
   deploy:
     needs: build
