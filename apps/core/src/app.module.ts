@@ -11,10 +11,16 @@ import {
   CoreConfigService,
   InvestigatorModule,
   OrganisationModule,
+  TeamModule,
   TrialModule,
 } from './app';
 
-const services = [InvestigatorModule, OrganisationModule, TrialModule];
+const services = [
+  InvestigatorModule,
+  OrganisationModule,
+  TeamModule,
+  TrialModule,
+];
 
 @Module({
   imports: [
