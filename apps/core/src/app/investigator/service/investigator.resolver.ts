@@ -23,8 +23,8 @@ import {
 } from '@nestjs/graphql';
 import { InvestigatorGuard } from '../../guards/investigator.guard';
 import { JwtGuard } from '../../guards/jwt.guard';
-import { OrganisationService } from '../../organisation';
-import { TrialService } from '../../trial';
+import { OrganisationService } from '../../organisation/service/organisation.service';
+import { TrialService } from '../../trial/service/trial.service';
 import { CreateInvestigatorDto } from '../dto/create-investigator.dto';
 import { InvestigatorService } from './investigator.service';
 

@@ -6,14 +6,11 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { RedisModule } from 'nestjs-redis';
 import { join } from 'path';
-import {
-  CoreConfigModule,
-  CoreConfigService,
-  InvestigatorModule,
-  OrganisationModule,
-  TeamModule,
-  TrialModule,
-} from './app';
+import { CoreConfigModule, CoreConfigService } from './app/config';
+import { InvestigatorModule } from './app/investigator/service/investigator.module';
+import { OrganisationModule } from './app/organisation/service/organisation.module';
+import { TeamModule } from './app/team/service/team.module';
+import { TrialModule } from './app/trial/service/trial.module';
 
 const services = [
   InvestigatorModule,

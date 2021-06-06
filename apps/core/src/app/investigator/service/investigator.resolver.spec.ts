@@ -1,16 +1,19 @@
 import { Codec } from '@common';
 import { Investigator } from '@graphql';
 import { mock } from 'jest-mock-extended';
-import { TrialService } from '../../trial';
+import { OrganisationService } from '../../organisation/service/organisation.service';
+import { TrialService } from '../../trial/service/trial.service';
 import { InvestigatorFactory } from './investigator.factory';
 import { InvestigatorResolver } from './investigator.resolver';
 import { InvestigatorService } from './investigator.service';
 
 const codec = new Codec();
 const mockInvestigatorService = mock<InvestigatorService>();
+const mockOrganisationService = mock<OrganisationService>();
 const mockTrialService = mock<TrialService>();
 const resolver = new InvestigatorResolver(
   mockInvestigatorService,
+  mockOrganisationService,
   mockTrialService,
 );
 
@@ -32,11 +35,7 @@ describe('Investigator resolver', () => {
   describe('getTrials', () => {
     it('should return paginated trials', async () => {
       const investigator = new InvestigatorFactory().build();
-      mockTrialService.getInvestigatorTrials.mockImplementation(async () => ({
-        results: [],
-        limit: 20,
-        offset: 0,
-      }));
+      mockTrialService.getInvestigatorTrials.mockImplementation(async () => []);
       mockTrialService.getInvestigatorTrialsCount.mockImplementation(
         async () => 0,
       );

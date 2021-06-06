@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ForbiddenError } from 'apollo-server-express';
-import { InvestigatorService } from '../investigator';
+import { InvestigatorService } from '../investigator/service/investigator.service';
 
 @Injectable()
 export class InvestigatorGuard implements CanActivate {
