@@ -35,6 +35,7 @@ export class TrialResolver {
       description: input.description,
       synopsis: input.synopsis,
       tags: input.tags,
+      teamId: input.teamId,
       startTime: timestamp,
       endTime: timestamp,
     };

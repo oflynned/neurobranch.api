@@ -1,6 +1,6 @@
 import { InvestigatorEntity, TrialEntity } from '@db';
-import { PaginationResult } from '@graphql';
 import { Injectable } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 import { CreateTrialDto } from '../dto/create-trial.dto';
 import { TrialRepo } from './trial.repo';
 
@@ -11,8 +11,18 @@ export class TrialService {
   async createTrial(
     dto: CreateTrialDto,
     investigatorId: string,
+    id = uuid(),
+    createdAt = new Date(),
   ): Promise<TrialEntity> {
-    return this.trialRepo.createTrial(dto, investigatorId);
+    const entity: TrialEntity = {
+      ...dto,
+      id,
+      createdAt,
+      deletedAt: null,
+      leadId: investigatorId,
+    };
+
+    return this.trialRepo.createTrial(entity);
   }
 
   async getTrialLead(trialId: string): Promise<InvestigatorEntity> {
@@ -23,18 +33,8 @@ export class TrialService {
     investigatorId: string,
     limit: number,
     offset: number,
-  ): Promise<PaginationResult<TrialEntity>> {
-    const results = await this.trialRepo.getInvestigatorTrials(
-      investigatorId,
-      limit,
-      offset,
-    );
-
-    return {
-      results,
-      limit,
-      offset,
-    };
+  ): Promise<TrialEntity[]> {
+    return this.trialRepo.getInvestigatorTrials(investigatorId, limit, offset);
   }
 
   async getInvestigatorTrialsCount(investigatorId: string): Promise<number> {
