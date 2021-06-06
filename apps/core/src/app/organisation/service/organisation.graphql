@@ -20,12 +20,18 @@ type Organisation {
   name: String!
   slug: String!
   logo: Image
-  creator: Investigator!
+  creator: Investigator
   admins(pagination: PaginationArgs): InvestigatorConnection
   collaborators(pagination: PaginationArgs): InvestigatorConnection
   observers(pagination: PaginationArgs): InvestigatorConnection
   teams(pagination: PaginationArgs): TeamConnection
 }
+
+type OrganisationNotFound {
+  error: String!
+}
+
+union OrganisationResult = Organisation | OrganisationNotFound
 
 type OrganisationEdge {
   node: Organisation

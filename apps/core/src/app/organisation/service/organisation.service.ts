@@ -1,6 +1,10 @@
 import { InvestigatorEntity, OrganisationEntity } from '@db';
 import { CreateOrganisationInput } from '@graphql';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateOrganisationDto } from '../dto/create-organisation.dto';
 import { OrganisationRepo } from './organisation.repo';
 
@@ -15,7 +19,31 @@ export class OrganisationService {
       throw new BadRequestException('Id must contain a value');
     }
 
-    return this.organisationRepo.getOrganisationById(id);
+    const organisation = await this.organisationRepo.getOrganisationById(id);
+
+    if (!organisation) {
+      throw new NotFoundException('Organisation was not found');
+    }
+
+    return organisation;
+  }
+
+  async getOrganisationsByCreatorId(
+    investigatorId: string,
+    limit: number,
+    offset: number,
+  ): Promise<OrganisationEntity[]> {
+    return await this.organisationRepo.getOrganisationsByCreatorId(
+      investigatorId,
+      limit,
+      offset,
+    );
+  }
+
+  async getOrganisationCreator(
+    organisationId: string,
+  ): Promise<InvestigatorEntity> {
+    return this.organisationRepo.getOrganisationCreator(organisationId);
   }
 
   async getOrganisationBySlug(rawSlug: string): Promise<OrganisationEntity> {
@@ -26,6 +54,10 @@ export class OrganisationService {
     }
 
     return this.organisationRepo.getOrganisationBySlug(slug);
+  }
+
+  async getOrganisationCount(investigatorId: string): Promise<number> {
+    return this.organisationRepo.getOrganisationCount(investigatorId);
   }
 
   async createOrganisation(
