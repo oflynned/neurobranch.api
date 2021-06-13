@@ -26,8 +26,10 @@ export class InvestigatorRepo {
     return this.repo.investigator.update({ where: { id }, data: dto });
   }
 
-  async getInvestigatorById(id: string): Promise<InvestigatorEntity | null> {
-    return this.repo.investigator.findFirst({ where: { id } });
+  async getInvestigatorByProviderUid(
+    uid: string,
+  ): Promise<InvestigatorEntity | null> {
+    return this.repo.investigator.findFirst({ where: { providerId: uid } });
   }
 
   async createInvestigator(

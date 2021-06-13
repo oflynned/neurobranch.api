@@ -11,6 +11,12 @@ export class InvestigatorService {
     return this.investigatorRepo.getInvestigatorByEmail(email);
   }
 
+  async getInvestigatorByProviderUid(
+    uid: string,
+  ): Promise<InvestigatorEntity | null> {
+    return this.investigatorRepo.getInvestigatorByProviderUid(uid);
+  }
+
   async createInvestigator(
     dto: CreateInvestigatorDto,
   ): Promise<InvestigatorEntity> {

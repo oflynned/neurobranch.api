@@ -48,6 +48,24 @@ export class InvestigatorResolver {
     };
   }
 
+  @Query('getInvestigatorByProviderUid')
+  async getInvestigatorByProviderUid(
+    @Context('jwt') jwt: FirebaseJwt,
+  ): Promise<Investigator | null> {
+    const investigator = await this.investigatorService.getInvestigatorByProviderUid(
+      jwt.uid,
+    );
+
+    if (investigator) {
+      return {
+        ...investigator,
+        sex: investigator.sex as Sex,
+      };
+    }
+
+    return null;
+  }
+
   @Mutation('createInvestigator')
   async createInvestigator(
     @Args('input') input: CreateInvestigatorInput,

@@ -97,6 +97,7 @@ export interface AuditConnection {
 
 export interface IQuery {
   getInvestigator(): Investigator | Promise<Investigator>;
+  getInvestigatorByProviderUid(): Investigator | Promise<Investigator>;
   getOrganisationById(id: string): Organisation | Promise<Organisation>;
   getOrganisationBySlug(slug: string): Organisation | Promise<Organisation>;
   getEligibleTrials(
@@ -138,7 +139,7 @@ export interface Investigator {
 }
 
 export interface InvestigatorEdge {
-  node?: Trial;
+  node?: Investigator;
   cursor: Cursor;
 }
 

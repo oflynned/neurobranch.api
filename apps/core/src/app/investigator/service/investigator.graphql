@@ -1,5 +1,6 @@
 extend type Query {
   getInvestigator: Investigator
+  getInvestigatorByProviderUid: Investigator
 }
 
 extend type Mutation {
@@ -29,7 +30,7 @@ enum Sex {
 }
 
 type InvestigatorEdge {
-  node: Trial
+  node: Investigator
   cursor: Cursor!
 }
 
