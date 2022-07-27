@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "@aginix/nestjs-firebase-admin": "2.1.1",
-    "@nestjs/common": "7.6.15",
+    "@nestjs/common": "7.6.18",
     "@nestjs/config": "0.6.3",
-    "@nestjs/core": "7.6.15",
+    "@nestjs/core": "7.6.18",
     "@nestjs/graphql": "7.10.6",
-    "@nestjs/platform-express": "7.6.15",
+    "@nestjs/platform-express": "7.6.18",
     "@prisma/client": "2.23.0",
     "apollo-server-express": "^2.23.0",
     "class-validator": "0.13.1",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@nestjs/schematics": "7.3.1",
-    "@nestjs/testing": "7.6.15",
+    "@nestjs/testing": "7.6.18",
     "@nrwl/cli": "12.0.8",
     "@nrwl/eslint-plugin-nx": "12.0.8",
     "@nrwl/jest": "12.0.8",
