@@ -1,4 +1,4 @@
-FROM node:14.17-alpine as build
+FROM node:14.21-alpine as build
 
 RUN apk add --virtual gyp curl bash python make g++ && rm -rf /var/cache/apk/*
 RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
@@ -14,7 +14,7 @@ RUN npm run build:core
 RUN npm prune --production
 RUN /usr/local/bin/node-prune
 
-FROM node:14.17-alpine
+FROM node:14.21-alpine
 
 WORKDIR /dist
 
